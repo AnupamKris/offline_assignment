@@ -1,3 +1,28 @@
-<h1>Home Page</h1>
-<button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button>
-<button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button>
+<html>
+<head>
+	<title>Hello world</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<div class="container">
+		<div class="Menu">
+				<ul>
+					<li class="active">Home</li>
+					<li>About</li>
+					<li>Pricing</li>
+					<li>Contact</li>
+					<!--<div class="menu-btns">
+						<li class="login-btn">Login</li>
+						<li class="register-btn">Register</li>-->
+					</div>
+				</ul>
+				<div class="menu-btns">
+						<ul>
+							<li class="login-btn">Login</li>
+							<li class="register-btn">Register</li>
+						</ul>	
+				</div>
+		</div>
+	</div>
+</body>
+</html>
