@@ -16,14 +16,12 @@
 	width: 100%;
 	justify-content: center;
 	align-items: stretch;
-
 }
 
 .menu ul{
 	display: inline-flex;
 	text-decoration: none;
 	flex-wrap: wrap;
-
 }
 
 .menu ul li{
@@ -31,8 +29,6 @@
 	margin: 20px;
 	margin-right: 40px;
 	color: #fff;
-
-
 }
 
 
@@ -41,12 +37,10 @@
 	color: #01b7fd;
 }
 
-
 .menu-btns ul{
 	display: inline-flex;
 	flex-direction: row;
 	justify-content: flex-end; 
-
 }
 
 .menu-btns ul li {
@@ -55,8 +49,50 @@
 	margin-right: 40px;
 	color: #fff;
 }
-.login-btn{
 
+.login-btn{
+	width: 80px;
+	height: 30px;
+	border-style: none;
+	background-color: #DFEAF4;
+	margin: 5px ;
+	padding: 5px ;
+	text-decoration: none;
+	transition-duration: 0.5s;
 	text-decoration: none;
 	color: #fff;
 }
+
+.login-btn:hover{
+	width: 80px;
+	height: 30px;
+	border-style: none;
+	background-color: #c8d2db;
+	margin: 5px ;
+	padding: 5px ;
+	transition-duration: 0.5s;
+}
+
+.register-btn{
+	width: 80px;
+	height: 30px;
+	border-style: none;
+	background-color: #DFEAF4;
+	margin: 5px ;
+	padding: 5px ;
+	text-decoration: none;
+	transition-duration: 0.5s;
+	text-decoration: none;
+	color: #fff;
+}
+
+.register-btn:hover{
+	width: 80px;
+	height: 30px;
+	border-style: none;
+	background-color: #c8d2db;
+	margin: 5px ;
+	padding: 5px ;
+	transition-duration: 0.5s;
+}
+

@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title>Hello world</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 	<div class="container">
@@ -18,8 +18,8 @@
 				</ul>
 				<div class="menu-btns">
 						<ul>
-							<li class="login-btn">Login</li>
-							<li class="register-btn">Register</li>
+							<li class="login-btn"> <button type="button" onclick="window.location.href='{{ url_for('register') }}';">Login</button></li>
+							<li class="register-btn"><<button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button>></li>
 						</ul>	
 				</div>
 		</div>
