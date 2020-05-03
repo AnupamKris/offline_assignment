@@ -1,1 +1,27 @@
 <h1>Register Page</h1>
+<div>
+	<form method="POST" action="">
+			{{ form.hidden_tag() }}
+		<fieldset>
+			{{ form.username.label() }}<br>
+			{{ form.username() }}<br>
+		</fieldset>
+		<fieldset>
+			{{ form.password.label() }}<br>
+			{{ form.password() }}<br>
+		</fieldset>
+		<fieldset>
+			{{ form.confirmpassword.label() }}<br>
+			{{ form.confirmpassword() }}<br>
+		</fieldset>
+		<style type="text/css">
+			.subbutton{
+				color: #121212;
+				background-color: #10e6cd;
+			}
+		</style>
+		<div class = 'submit_button'>
+			{{ form.submit() }}
+		</div>
+	</form>
+</div>
