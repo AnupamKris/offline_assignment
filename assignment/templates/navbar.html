@@ -1,0 +1,22 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<nav>
+		<div class="Menu">
+			<label class="logo">M N G E</label>
+			<ul>
+				<li><a href="#" id="active">Home</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="#">Pricing</a></li>
+				<li><a href="#">Contact</a></li>
+				<div class="menu-btns">
+					<li class="login-btn"> <button type="button" onclick="window.location.href='{{ url_for('register') }}';">Login</button></li>
+					<li class="register-btn"><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>	
+				</div>
+			</ul>
+		</div>
+	</nav>
+</body>
+</html>
