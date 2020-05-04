@@ -9,7 +9,7 @@
 		.container{
 			position: absolute;
 			top:70px;
-			background: url(Untitled-1.jpg) no-repeat;
+			background: url({{ url_for('static', filename='Untitled-1.jpg') }}) no-repeat;
 			background-size: cover;
 		}
 	</style>
@@ -40,17 +40,17 @@
 				<fieldset>
 					<h1>Register</h1>
 					<i class="fas fa-hashtag"></i>
+					{{ form.admission() }}<br><br>
+					<i class="fas fa-hashtag"></i>
 					{{ form.username() }}<br><br>
 					<i class="fas fa-calendar-day"></i>
-					<input type="date" name="dob" id="dob" placeholder="Date of Birth"><br><br>
-					<i id="t-icon" class="fas fa-chalkboard-teacher"></i>
-					<input type="text" name="tid" id="tid" placeholder="Teacher ID (only for teachers)"><br><br>
+					{{ form.dob() }}<br><br>
 					<i class="fas fa-envelope"></i>
-					<input type="email" name="emailid" id="emailid" placeholder="E-mail address"><br><br>
+					{{ form.email() }}<br><br>
 					<i class="fas fa-lock"></i>
-					<input type="password" name="password" placeholder="Enter a password"><br><br>
+					{{ form.password() }}<br><br>
 					<i class="fas fa-user-lock" id="re-pwd-icon"></i>
-					<input type="password" name="confirmpassword" placeholder="Re-enter your password"> <br><br>
+					{{ form.confirmpassword() }}<br><br>
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Register</button>
 				</fieldset> 
 			</form>
