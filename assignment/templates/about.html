@@ -12,14 +12,19 @@
 		</label>
 		<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
 		<ul>
-			<li><a href="{{ url_for('home') }}" id="active">Home</a></li>
-			<li><a href="{{ url_for('about') }}">About</a></li>
+			<li><a href="{{ url_for('home') }}">Home</a></li>
+			<li><a href="{{ url_for('about') }}" id="active">About</a></li>
 			<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
 			<li><a href="{{ url_for('contact') }}">Contact</a></li>
 			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
 			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
 		</ul>	
 	</nav>
-		{% block content %}{% endblock content %}
+
+	<section style="position: relative;top: 70px;align-items: center;min-width: 100vw">
+		<h1 style="position: absolute; font-size: 40px;text-align: center;align-items: center;min-width: 100vw">ABOUT PAGE</h1>
+	</section>
+
+		<!-- {% block content %}{% endblock content %} -->
 </body>
 </html>

@@ -18,18 +18,18 @@
 <body>
 	<nav class="Menu">
 		<input type="checkbox" id="check">
-		<label for="check" class="checkbtn">				
+		<label for="check" class="checkbtn">
 			<i class="fas fa-bars"></i>
 		</label>
-		<label class="logo">M N G E</label>
+		<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
 		<ul>
-			<li><a onclick="window.location.href='{{ url_for('home') }}';	">Home</a></li>
-			<li><a href="about.html">About</a></li>
-			<li><a href="#">Pricing</a></li>
-			<li><a href="#">Contact</a></li>
-			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';	" id="activebtn">Login</button></li>
-			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';	">Register</button></li>
-			</ul>	
+			<li><a href="{{ url_for('home') }}">Home</a></li>
+			<li><a href="{{ url_for('about') }}">About</a></li>
+			<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
+			<li><a href="{{ url_for('contact') }}">Contact</a></li>
+			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';" id="activebtn">Login</button></li>
+			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
+		</ul>	
 	</nav>
 	<section class="container">
 
@@ -43,7 +43,7 @@
 					<input type="text" name="admnno" id="admnno" placeholder="Admission #"><br><br>
 					<i class="fas fa-lock"></i>
 					<input type="password" name="password" placeholder="Enter a password"><br><br>
-					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Login</button>
+					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Login</button>&nbsp;
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button>
 				</fieldset> 
 			</form>

@@ -28,15 +28,48 @@ def register():
 		return redirect(url_for('login'))
 	return render_template('registerpage.html', title='Register', form=form)
 
+
+@app.route('/tregister')
+def tregister():
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
+	form = RegistrationForm()
+	if form.validate_on_submit():
+		print('hashing')
+		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+		print('getting data')
+		user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+		print('Data:',user)
+		db.session.add(user)
+		print('added')
+		db.session.commit()
+		# flash(f'Your account has been created you can now login!', 'success')
+		return redirect(url_for('login'))
+	return render_template('tregister.html', title='Register', form=form)
+	return render_template('tregister.html')
+
+
 @app.route('/login')
 def login():
 	return render_template('login.html')
 
-@app.route('/tregister')
-def tregister():
-	return render_template('tregister.html')
-
 @app.route('/tlogin')
 def tlogin():
 	return render_template('tlogin.html')
+
+@app.route('/about')
+def about():
+	return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+	return render_template('contact.html')
+
+@app.route('/pricing')
+def pricing():
+	return render_template('pricing.html')
+
+
+
+
 

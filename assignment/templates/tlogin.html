@@ -1,0 +1,53 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<style type="text/css">
+		body{
+			display: block;
+		}
+		.container{
+			position: absolute;
+			top:70px;
+			background: url({{ url_for('static', filename='Untitled-1.jpg') }}) no-repeat;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body>
+	<nav class="Menu">
+		<input type="checkbox" id="check">
+		<label for="check" class="checkbtn">
+			<i class="fas fa-bars"></i>
+		</label>
+		<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
+		<ul>
+			<li><a href="{{ url_for('home') }}">Home</a></li>
+			<li><a href="{{ url_for('about') }}">About</a></li>
+			<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
+			<li><a href="{{ url_for('contact') }}">Contact</a></li>
+			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';" id="activebtn">Login</button></li>
+			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
+		</ul>	
+	</nav>
+	<section class="container">
+
+		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
+		<section class='login-box'>
+
+			<form>
+				<fieldset>
+					<h1>Teacher login</h1>
+					<i class="fas fa-at"></i>
+					<input type="text" name="t-username" id="admnno" placeholder="Username"><br><br>
+					<i class="fas fa-lock"></i>
+					<input type="password" name="password" placeholder="Enter a password"><br><br>
+					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Login</button>
+					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('login') }}';">Not a teacher? Click here</button>
+				</fieldset> 
+			</form>
+		</section>	
+	</section>	
+</body>
+</html>
