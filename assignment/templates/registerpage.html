@@ -22,12 +22,12 @@
 		</label>
 		<label class="logo">M N G E</label>
 		<ul>
-			<li><a href="index02.html" id="active">Home</a></li>
+			<li><a onclick="window.location.href='{{ url_for('home') }}'">Home</a></li>
 			<li><a href="about.html">About</a></li>
 			<li><a href="#">Pricing</a></li>
 			<li><a href="#">Contact</a></li>
 			<li> <button type="button" onclick="window.location.href='{{ url_for('register') }}';	">Login</button></li>
-			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';	">Register</button></li>
+			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';	" id="activebtn">Register</button></li>
 			</ul>	
 	</nav>
 	<section class="container">

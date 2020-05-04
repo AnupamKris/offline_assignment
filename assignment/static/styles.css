@@ -69,6 +69,19 @@
 	color: #ff375f;
 }
 
+#activebtn{
+	padding: 4px 10px;
+	font-size: 1em;
+	display: inline-block;
+	background-color: #ff375f;
+	text-decoration: none;
+	border: none;
+	border-radius: 9px;
+	text-align: center;	
+	color: #fff;
+	cursor: pointer;
+}
+
 .menu ul li button{
 	padding: 4px 10px;
 	font-size: 1em;
@@ -255,4 +268,13 @@
 
 #re-pwd-icon{
 	font-size: 0.75em;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red;
+  opacity: 1;
+  position: relative;
+  left: 15px;
+   /* Firefox */
 }
