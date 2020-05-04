@@ -23,9 +23,6 @@
 	background-color: #404040;
 	width: 100%;
 	height:70px;
-	/*justify-content: space-between;
-	align-items: center;
-	display: flex;*/
 	position: fixed;
 	z-index: 100;
 	align-items: center;
@@ -45,11 +42,8 @@
 }
 
 .menu ul{
-	/*display: flex;*/
 	text-decoration: none;
 	float:right;
-	/*flex-wrap: wrap;
-	align-items: center;*/
 }
 
 .menu ul li{
@@ -69,17 +63,8 @@
 	color: #ff375f;
 }
 
-#activebtn{
-	padding: 4px 10px;
-	font-size: 1em;
-	display: inline-block;
-	background-color: #ff375f;
-	text-decoration: none;
-	border: none;
-	border-radius: 9px;
-	text-align: center;	
-	color: #fff;
-	cursor: pointer;
+.menu ul #activebtn{
+	background-color: #ff375f; 
 }
 
 .menu ul li button{
@@ -124,8 +109,8 @@
     height: 100vh;
     background: #404040;
     top: 70px;
-    left: -100%;
-    text-align: center;
+    right: -100%;
+    text-align: left;
     transition: all .5s;
   }
   .menu ul li{
@@ -141,7 +126,7 @@
     color: #0082e6;
   }
   #check:checked ~ ul{
-    left: 0;
+    right: -60%;
   }
 }
 
@@ -177,7 +162,6 @@
 }
 
 .art1 h1{
-	/*transition: .5s;*/
 	display: block;
 	position: absolute;
 	top: 50%;
@@ -197,19 +181,6 @@
 	0 30px 20px rgba(0,0,0,.2);
 	letter-spacing:5px;
 }
-/*
-.art1 h1::before{
-	content: attr(data-title);
-	text-transform: uppercase;
-	position: absolute;
-	top: -5px;
-	text-align:center;
-	letter-spacing: 5px;
-
-}*/
-
-
-
 
 .login-box{
 	padding: 0;
@@ -222,10 +193,6 @@
 	align-items:center; 
 
 }
-
-/*.login-box h1{
-	font-size: 35px;
-}*/
 
 .login-box fieldset{
 	padding-left: 20px;
@@ -271,10 +238,8 @@
 }
 
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: red;
-  opacity: 1;
+::placeholder { 
   position: relative;
   left: 15px;
-   /* Firefox */
 }
+
