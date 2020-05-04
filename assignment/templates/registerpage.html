@@ -1,6 +1,6 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	<style type="text/css">
 		body{
@@ -36,10 +36,11 @@
 		<section class='login-box'>
 
 			<form>
+				{{ form.hidden_tag() }}
 				<fieldset>
 					<h1>Register</h1>
 					<i class="fas fa-hashtag"></i>
-					<input type="text" name="admnno" id="admnno" placeholder="Admission #"><br><br>
+					{{ form.username() }}<br><br>
 					<i class="fas fa-calendar-day"></i>
 					<input type="date" name="dob" id="dob" placeholder="Date of Birth"><br><br>
 					<i id="t-icon" class="fas fa-chalkboard-teacher"></i>
