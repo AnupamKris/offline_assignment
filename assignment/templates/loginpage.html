@@ -1,0 +1,52 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<style type="text/css">
+		body{
+			display: block;
+		}
+		.container{
+			position: absolute;
+			top:70px;
+			background: url(Untitled-1.jpg) no-repeat;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body>
+	<nav class="Menu">
+		<input type="checkbox" id="check">
+		<label for="check" class="checkbtn">				
+			<i class="fas fa-bars"></i>
+		</label>
+		<label class="logo">M N G E</label>
+		<ul>
+			<li><a href="index02.html" id="active">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li><a href="#">Pricing</a></li>
+			<li><a href="#">Contact</a></li>
+			<li> <button type="button" onclick="window.location.href='{{ url_for('register') }}';	">Login</button></li>
+			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';	">Register</button></li>
+			</ul>	
+	</nav>
+	<section class="container">
+
+		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
+		<section class='login-box'>
+
+			<form>
+				<fieldset>
+					<h1>Student login</h1>
+					<i class="fas fa-hashtag"></i>
+					<input type="text" name="admnno" id="admnno" placeholder="Admission #"><br><br>
+					<i class="fas fa-lock"></i>
+					<input type="password" name="password" placeholder="Enter a password"><br><br>
+					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Register</button>
+				</fieldset> 
+			</form>
+		</section>	
+	</section>	
+</body>
+</html>

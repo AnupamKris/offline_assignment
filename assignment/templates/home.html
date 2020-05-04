@@ -1,42 +1,32 @@
 <html>
 <head>
 	<title>Hello world</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body>
 	<div class="container">
 
-		<section>
-		<div class="Menu">
-				<label class="logo">M N G E</label>
-				<ul>
-					<li><a href="#" id="active">Home</a></li>
-					<li><a href="about.html">About</a></li>
-					<li><a href="#">Pricing</a></li>
-					<li><a href="#">Contact</a></li>
-					<div class="menu-btns">
-						<li class="login-btn"> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
-						<li class="register-btn"><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>	
-					</div>
-					<!--<div class="menu-btns">
-						<li class="login-btn">Login</li>
-						<li class="register-btn">Register</li>
-					</div>-->
-				</ul>
-
-				
-
-				
-		</div>
-		</section>
-
-
+		<nav class="Menu">
+			<input type="checkbox" id="check">
+			<label for="check" class="checkbtn">
+				<i class="fas fa-bars"></i>
+			</label>
+			<label class="logo">M N G E</label>
+			<ul>
+				<li><a href="#" id="active">Home</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="#">Pricing</a></li>
+				<li><a href="#">Contact</a></li>
+				<li> <button type="button" onclick="window.location.href='{{ url_for('register') }}';">Login</button></li>
+				<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
+			</ul>	
+		</nav>
 		<section class="art1">
-
-			<h1 data-title='mnge &nbsp;X&nbsp; kvhvf'>mnge &nbsp;X&nbsp; kvhvf</h1>
-			
+		<h1 data-title='mnge &nbsp;X&nbsp; kvhvf'>mnge &nbsp;X&nbsp; kvhvf</h1>
 		</section>
- 
+
 		<section>
 		<div class="art2">
 			<h1>M N G E &nbsp;&nbsp; <span id='X1'>X</span> &nbsp;&nbsp; KVHVF</h1>
