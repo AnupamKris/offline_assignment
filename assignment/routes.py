@@ -31,3 +31,12 @@ def register():
 @app.route('/login')
 def login():
 	return render_template('login.html')
+
+@app.route('/tregister')
+def tregister():
+	return render_template('tregister.html')
+
+@app.route('/tlogin')
+def tlogin():
+	return render_template('tlogin.html')
+

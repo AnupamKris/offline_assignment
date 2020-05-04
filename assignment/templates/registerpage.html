@@ -26,7 +26,7 @@
 			<li><a href="about.html">About</a></li>
 			<li><a href="#">Pricing</a></li>
 			<li><a href="#">Contact</a></li>
-			<li> <button type="button" onclick="window.location.href='{{ url_for('register') }}';	">Login</button></li>
+			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';	">Login</button></li>
 			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';	" id="activebtn">Register</button></li>
 			</ul>	
 	</nav>
@@ -38,10 +38,10 @@
 			<form>
 				{{ form.hidden_tag() }}
 				<fieldset>
-					<h1>Register</h1>
+					<h1>Student register</h1>
 					<i class="fas fa-hashtag"></i>
 					{{ form.admission() }}<br><br>
-					<i class="fas fa-hashtag"></i>
+					<i class="fas fa-at"></i>
 					{{ form.username() }}<br><br>
 					<i class="fas fa-calendar-day"></i>
 					{{ form.dob() }}<br><br>
@@ -52,6 +52,7 @@
 					<i class="fas fa-user-lock" id="re-pwd-icon"></i>
 					{{ form.confirmpassword() }}<br><br>
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Register</button>
+					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tregister') }}';">Not a student? Click here</button>
 				</fieldset> 
 			</form>
 		</section>	

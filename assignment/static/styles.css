@@ -115,7 +115,8 @@
   }
   .menu ul li{
     display: block;
-    margin: 50px 0;
+    margin: 50px 50px;
+
     line-height: 30px;
   }
   .menu ul li a{
@@ -223,6 +224,7 @@
 
 .login-box fieldset input{
 	width: 25vw;
+	padding: 10px;
 	height: 50px;
 	border:none;
 	border-radius: 5px;
@@ -237,9 +239,4 @@
 	font-size: 0.75em;
 }
 
-
-::placeholder { 
-  position: relative;
-  left: 15px;
-}
 
