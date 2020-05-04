@@ -1,81 +1,52 @@
-<html>
-<head>
-	<title>Hello world</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
-	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-</head>
-<body>
-	<div class="container">
+{% extends 'navbar.html' %}
+{% block content %}
+	<section>
+	<div class="art2">
+		<h1>M N G E &nbsp;&nbsp; <span id='X1'>X</span> &nbsp;&nbsp; KVHVF</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu <br>fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br>
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><br>
+		<br><br><br>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse<br>
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br>
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<br><br><br>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-		<nav class="Menu">
-			<input type="checkbox" id="check">
-			<label for="check" class="checkbtn">
-				<i class="fas fa-bars"></i>
-			</label>
-			<label class="logo">M N G E</label>
-			<ul>
-				<li><a href="#" id="active">Home</a></li>
-				<li><a href="about.html">About</a></li>
-				<li><a href="#">Pricing</a></li>
-				<li><a href="#">Contact</a></li>
-				<li> <button type="button" onclick="window.location.href='{{ url_for('register') }}';">Login</button></li>
-				<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
-			</ul>	
-		</nav>
-		<section class="art1">
-		<h1 data-title='mnge &nbsp;X&nbsp; kvhvf'>mnge &nbsp;X&nbsp; kvhvf</h1>
-		</section>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<br><br><br>
 
-		<section>
-		<div class="art2">
-			<h1>M N G E &nbsp;&nbsp; <span id='X1'>X</span> &nbsp;&nbsp; KVHVF</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu <br>fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br>
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><br>
-			<br><br><br>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse<br>
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br>
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<br><br><br>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<br><br><br>
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<br><br><br>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<br><br><br>
-
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-		</div>
-		</section>
 	</div>
-</body>
-</html>
+	</section>
+{% endblock content %}

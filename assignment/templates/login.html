@@ -1,6 +1,31 @@
-<h1>Login Page</h1>
-<form method="POST" action="">
-	{{ form.hidden_tag() }}
-	{{ form.email.label() }}
-	{{ form.email() }}
-</form>
+{% extends 'navbar.html' %}
+{% block content %}
+	<style type="text/css">
+		body{
+			display: block;
+		}
+		.container{
+			position: absolute;
+			top:70px;
+			background: url(Untitled-1.jpg) no-repeat;
+			background-size: cover;
+		}
+	</style>
+	<section class="container">
+
+		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
+		<section class='login-box'>
+
+			<form>
+				<fieldset>
+					<h1>Student login</h1>
+					<i class="fas fa-hashtag"></i>
+					<input type="text" name="admnno" id="admnno" placeholder="Admission #"><br><br>
+					<i class="fas fa-lock"></i>
+					<input type="password" name="password" placeholder="Enter a password"><br><br>
+					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Register</button>
+				</fieldset> 
+			</form>
+		</section>	
+	</section>	
+{% endblock content %}

@@ -1,22 +1,25 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body>
 	<nav>
 		<div class="Menu">
 			<label class="logo">M N G E</label>
 			<ul>
-				<li><a href="#" id="active">Home</a></li>
+				<li><a href="{{ url_for('Home') }}" id="active">Home</a></li>
 				<li><a href="about.html">About</a></li>
 				<li><a href="#">Pricing</a></li>
 				<li><a href="#">Contact</a></li>
 				<div class="menu-btns">
-					<li class="login-btn"> <button type="button" onclick="window.location.href='{{ url_for('register') }}';">Login</button></li>
+					<li class="login-btn"> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
 					<li class="register-btn"><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>	
 				</div>
 			</ul>
 		</div>
 	</nav>
+	{% block content %}{% endblock content %}
 </body>
 </html>
