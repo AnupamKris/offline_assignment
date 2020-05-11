@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, request
 from assignment import app, db, bcrypt
 from assignment.forms import RegistrationForm
 from assignment.models import User
@@ -12,17 +12,22 @@ def home():
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
+	serverlog = open('server.log','a')
 	if current_user.is_authenticated:
+		serverlog.write('\nLogged Already')
 		return redirect(url_for('home'))
-	form = RegistrationForm()
+	form = RegistrationForm(request.form)
+	serverlog.write('\nCheck validation ')
+	serverlog.write(str(form.validate_on_submit()))
 	if form.validate_on_submit():
-		print('hashing')
+		serverlog.write('\nhashing')
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-		print('getting data')
-		user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-		print('Data:',user)
+		serverlog.write('\ngetting data')
+		user = User(username=form.username.data, password=hashed_password, email =form.email.data)
+		serverlog.write('\nData:'+str(user))
 		db.session.add(user)
-		print('added')
+		serverlog.write('\nadded')
+		serverlog.write(str(form.dob.data))
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))

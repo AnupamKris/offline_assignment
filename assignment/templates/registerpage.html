@@ -35,7 +35,7 @@
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
 		<section class='login-box'>
 
-			<form>
+			<form method="POST">
 				{{ form.hidden_tag() }}
 				<fieldset>
 					<h1>Student register</h1>
@@ -51,7 +51,8 @@
 					{{ form.password() }}<br><br>
 					<i class="fas fa-user-lock" id="re-pwd-icon"></i>
 					{{ form.confirmpassword() }}<br><br>
-					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Register</button>&nbsp;
+					<!-- <button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Register</button>&nbsp; -->
+					{{ form.submit(id='registerbtn') }}
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tregister') }}';">Not a student? Click here</button>
 				</fieldset> 
 			</form>
