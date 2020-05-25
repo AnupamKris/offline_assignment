@@ -1,30 +1,134 @@
 <html>
+<title>M N G E | Pricing</title>
 <head>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
 	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<style type="text/css">
+		.txtanim-container div:nth-child(1){
+	position: relative;
+	width: 50%;
+	background: url({{ url_for('static', filename='pricing.jpg') }});
+	overflow: hidden;
+	background-size:cover;
+}
+	</style>
 </head>
 <body>
-	<nav class="Menu">
-		<input type="checkbox" id="check">
-		<label for="check" class="checkbtn">
-			<i class="fas fa-bars"></i>
-		</label>
-		<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
-		<ul>
-			<li><a href="{{ url_for('home') }}">Home</a></li>
-			<li><a href="{{ url_for('about') }}">About</a></li>
-			<li><a href="{{ url_for('pricing') }}" id="active">Pricing</a></li>
-			<li><a href="{{ url_for('contact') }}">Contact</a></li>
-			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
-			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
-		</ul>	
-	</nav>
+	<div class="container">
+		<nav class="Menu">
+			<input type="checkbox" id="check">
+			<label for="check" class="checkbtn">
+				<i class="fas fa-bars"></i>
+			</label>
+			<label class="logo" alt='Logo'><a href="{{ url_for('home') }}">M N G E</a></label>
+			<ul>
+				<li><a href="{{ url_for('home') }}">Home</a></li>
+				<li><a href="{{ url_for('about') }}">About</a></li>
+				<li><a href="{{ url_for('pricing') }}" id="active">Pricing</a></li>
+				<li><a href="{{ url_for('contact') }}">Contact</a></li>
+				<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
+				<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
+			</ul>	
+		</nav>
 
-	<section style="position: relative;top: 70px;align-items: center;min-width: 100vw">
-		<h1 style="position: absolute; font-size: 40px;text-align: center;align-items: center;min-width: 100vw">PRICING PAGE</h1>
-	</section>
+		<section class="txtanim-container">
+			<div>
+				<h2>Pricing for MNGE. Support your school digitally, with MNGE</h2>
+			</div>
+			<div>
+				<h2>Pricing for MNGE. Support your school digitally with, MNGE</h2>
+			</div>
+		</section>
 
-		<!-- {% block content %}{% endblock content %} -->
+		<section class="pricecard-container">
+			<div class="pricecard-column">
+				<div class="pricecard-title">
+					<i class="fa fa-paper-plane" aria-hidden="true"></i>
+					<h2>Basic</h2>
+				</div>
+				<div class="pricecard-price">
+					<h4>$ <span>25</span></h4>
+				</div>
+				<div class="pricecard-features">
+					<ul>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Propagatory website</li>
+						<li><i class="fa fa-times" aria-hidden="true"></i>
+Record mgmt system</li>
+						<li><i class="fa fa-times" aria-hidden="true"></i>
+Fee collection</li>
+						<li><i class="fa fa-times" aria-hidden="true"></i>
+Online tests</li>
+						<li><i class="fa fa-times" aria-hidden="true"></i>
+Online admission</li>
+						<li><i class="fa fa-comments" aria-hidden="true"></i>
+Tech Support: <span>GOLD</span></li>
+					</ul>
+				</div>
+				<a href="#">Check Price</a>
+			</div>
+			<!-- ----------Moderate-------------------- -->
+			<div class="pricecard-column">
+				<div class="pricecard-title">
+					<i class="fa fa-plane" aria-hidden="true"></i>
+					<h2>Standard</h2>
+				</div>
+				<div class="pricecard-price">
+					<h4>$ <span>25</span></h4>
+				</div>
+				<div class="pricecard-features">
+					<ul>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Propagatory website</li>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Record mgmt system</li>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Fee collection</li>
+						<li><i class="fa fa-times" aria-hidden="true"></i>
+Online tests</li>
+						<li><i class="fa fa-times" aria-hidden="true"></i>
+Online admission</li>
+						<li><i class="fa fa-comments" aria-hidden="true"></i>
+Tech Support: <span>GOLD</span></li>
+					</ul>
+				</div>
+				<a href="#">Check Price</a>
+			</div>
+			<!-- ----------Premium----------------------- -->
+			<div class="pricecard-column">
+				<div class="pricecard-title">
+					<i class="fa fa-rocket" aria-hidden="true"></i>
+					<h2>Premium</h2>
+				</div>
+				<div class="pricecard-price">
+					<h4>$ <span>25</span></h4>
+				</div>
+				<div class="pricecard-features">
+					<ul>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Propagatory website</li>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Record mgmt system</li>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Fee collection</li>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Online tests</li>
+						<li><i class="fa fa-check" aria-hidden="true"></i>
+Online admission</li>
+						<li><i class="fa fa-comments" aria-hidden="true"></i>
+Tech Support: <span>GOLD</span></li>
+					</ul>
+				</div>
+				<a href="#">Check Price</a>
+			</div>			
+		</section>
+	</div>
 </body>
+<footer style="position:relative; bottom:0;background-color: #404040;width: 100%;text-align: center;color: white;padding: 10px 0;">
+	<h3>M N G E &nbsp; X &nbsp; KVHVF</h3>
+	<p>An initiative of Kendriya Vidyala HVF and M N G E</p>
+	<p>Contact: +91-94980-46382</p>
+</footer>
 </html>

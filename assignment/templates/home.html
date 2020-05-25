@@ -1,9 +1,37 @@
 <html>
 <head>
-	<title>Hello world</title>
+	<title>M N G E | Home</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
 	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+
+	<style type="text/css">
+		.img-slider-container .img-slider .img-slide.slide1{
+	background: url({{ url_for('static', filename='1.jpg') }});
+	background-size: cover;
+	background-position: center; 
+}
+		.img-slider-container .img-slider .img-slide.slide2{
+	background: url({{ url_for('static', filename='2.jpg') }});
+	background-size: cover;
+	background-position: center; 
+}
+		.img-slider-container .img-slider .img-slide.slide3{
+	background: url({{ url_for('static', filename='1.jpg') }});
+	background-size: cover;
+	background-position: center; 
+}	
+	.img-slider-container .img-slider .img-slide.slide4{
+	background: url({{ url_for('static', filename='2.jpg') }});
+	background-size: cover;
+	background-position: center; 
+}
+	</style>
+
+
+
 </head>
 <body>
 	<div class="container">
@@ -23,59 +51,75 @@
 				<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
 			</ul>	
 		</nav>
-		<section class="art1">
-		<h1 data-title='mnge &nbsp;X&nbsp; kvhvf'>mnge &nbsp;X&nbsp; kvhvf</h1>
-		</section>
+		<div class="articles">
+			<section class="img-slider-container">
+				<div class="img-slider">
+					<div class="img-slide slide1">
+						<div class="img-slider-caption">
+							<h3>Slide1</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+						</div>
+					</div>
 
-		<section>
-		<div class="art2">
-			<h1>M N G E &nbsp;&nbsp; <span id='X1'>X</span> &nbsp;&nbsp; KVHVF</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu <br>fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br>
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><br>
-			<br><br><br>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse<br>
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br>
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<br><br><br>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<div class="img-slide slide2">
+						<div class="img-slider-caption">
+							<h3>Slide2</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+						</div>
+					</div>
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<br><br><br>
+						<div class="img-slide slide3">
+						<div class="img-slider-caption">
+							<h3>Slide3</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+						</div>
+					</div>
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<br><br><br>
+						<div class="img-slide slide4">
+						<div class="img-slider-caption">
+							<h3>Slide4</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+						</div>
+					</div>
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						<div class="img-slide slide1">
+						<div class="img-slider-caption">
+							<h3>Slide1</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+						</div>
+					</div>
+				</div>
+			</section>
 
+
+			<section class="home-intro">
+				<span id="page-divider">_____</span>
+				<h2>M N G E &nbsp; X &nbsp; KVHVF</h2>
+				<p>M N G E powers KVHVF with this school management system.</p> <p>M N G E thanks Kendriya Vidyalaya (Heavy Vehicles Factory) for this collaboration</p>
+				<p>This initiative exists only to serve the teachers and students of KV HVF.</p>
+				<a href="{{ url_for('about') }}">Learn more</a>
+			</section>
+
+			<section class="home-why-mnge">
+				<span id="page-divider">_____</span>
+				<h2>Why M N G E?</h2>
+				<p>M N G E provides you with so many features at a very low cost to power your school.</p>
+				<p>It provides a robust cloud support and you always have the technical team's back to help you manually in every situation</p>
+				<a href="{{ url_for('pricing')}}">Look at our plans and pricing</a>
+			</section>
+			<section class="home-intro">
+				<span id="page-divider">_____</span>
+				<h2>Hello</h2>
+				<p>jasdasljkdaskj d;;asjda;sjd</p>
+				<p>kasdlahdasjk</p>
+				
+			</section>
 		</div>
-		</section>
 	</div>
 </body>
+<footer style="position:relative;background-color: #404040;width: 100%;text-align: center;color: white;padding: 10px 0;">
+	<h3>M N G E &nbsp; X &nbsp; KVHVF</h3>
+	<p>An initiative of Kendriya Vidyala HVF and M N G E</p>
+	<p>Contact: +91-94980-46382</p>
+</footer>
 </html>
