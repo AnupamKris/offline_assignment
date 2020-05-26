@@ -29,7 +29,7 @@ html{
 }
 
 .menu{
-	background-color: #404040;
+	background-color: #000;
 	width: 100%;
 	height:70px;
 	position: sticky;
@@ -91,7 +91,7 @@ html{
 	padding: 4px 10px;
 	font-size: 1em;
 	display: inline-block;
-	background-color: #666;
+	background-color: rgba(255,255,255,.5);
 	text-decoration: none;
 	border: none;
 	border-radius: 9px;
@@ -431,11 +431,25 @@ html{
 	}
 }
 
+@media (max-width: 1080px){
+	.txtanim-container{
+		height: 18vh;
+	}
+	.txtanim-container div h2{
+		line-height: 18vh;
+	}
+	footer{
+		position: sticky;
+		bottom: 0;
+	}
+}
+
 .pricecard-container{
 	width: 100%;
 	margin: 100px auto;
 	box-sizing: border-box;
 	font-family: 'Source Sans Pro', sans-serif;
+	padding: 0 20px;
 }
 
 .pricecard-container .pricecard-column{
@@ -527,7 +541,7 @@ html{
 }
 
 .pricecard-container .pricecard-column .pricecard-features ul li .fa-comments{
-	color: #fff;
+	color: #000;
 }
 
 .pricecard-container .pricecard-column a{
@@ -550,6 +564,18 @@ html{
 .pricecard-container .pricecard-column:nth-child(3) .pricecard-title,
 .pricecard-container .pricecard-column:nth-child(3) a{
 	background: #ff7878;
+}
+
+#gold{
+	color:#D4AF37;
+}
+
+#diamond{
+	color: #b9f2ff;
+}
+
+#platinum{
+	color: #e5e4e2;
 }
 
 
