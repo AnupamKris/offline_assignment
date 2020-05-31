@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block embeddedcss %}
 	<style type="text/css">
-		
+		.container{
+			background:url({{ url_for('static', filename='Untitled-1.jpg') }});
+		}
 	</style>
 {% endblock embeddedcss %}
 

@@ -3,7 +3,7 @@ from assignment import app, db, bcrypt
 from assignment.forms import RegistrationForm, LoginForm
 from assignment.models import User
 from flask_login import login_user, current_user, logout_user, login_required
-
+from random import choice
 
 @app.route('/')
 @app.route('/home')
@@ -34,7 +34,7 @@ def register():
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))
 
-	return render_template('registerpage.html', title='Register', form=form)
+	return render_template('registerpage.html', title='Register', form=form, footer=1)
 
 
 @app.route('/tregister')
@@ -54,7 +54,7 @@ def tregister():
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))
-	return render_template('tregister.html', title='Faculty Register', form=form)
+	return render_template('tregister.html', title='Faculty Register', form=form, footer=1)
 	# return render_template('tregister.html')
 
 
@@ -76,11 +76,11 @@ def login():
 			login_user(user)
 			next_page = request.args.get('next')
 			return redirect(next_page) if next_page else redirect(url_for('user_home'))
-	return render_template('login.html', form=form, title='Student Login')
+	return render_template('login.html', form=form, title='Student Login', footer=1)
 
 @app.route('/tlogin')
 def tlogin():
-	return render_template('tlogin.html', title='Faculty Login')
+	return render_template('tlogin.html', title='Faculty Login', footer=1)
 
 @app.route('/about')
 def about():
@@ -97,7 +97,7 @@ def pricing():
 @app.route('/user-home')
 @login_required
 def user_home():
-	return render_template('user-home.html',title='Profile', user=current_user)
+	return render_template('user-home.html',title='Profile', user=current_user, choice=choice)
 
 
 @app.route('/logout')

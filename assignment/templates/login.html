@@ -4,8 +4,13 @@
 		body{
 			display: block;
 		}
-		.container{
-			position: relative;
+
+		.loginpage-bgimg{
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+			position: absolute;
 			background: url({{ url_for('static', filename='Untitled-1.jpg') }}) no-repeat;
 			background-size: cover;
 		}
@@ -15,20 +20,24 @@
 	<div class="container" style="">
 
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
-		<div class='login-box'>
+		<div class="loginpage-bgimg">
+			<div class='login-box'>
 
-			<form method="POST">
-				{{ form.hidden_tag() }}
-				<fieldset>
-					<h1>Student login</h1>
-					<i class="fas fa-hashtag"></i>
-					{{ form.admission() }}<br><br>
-					<i class="fas fa-lock"></i>
-					{{ form.password() }}<br><br>
-					{{ form.submit(id = 'registerbtn') }}
-					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button>
-				</fieldset> 
-			</form>
+				<form method="POST">
+					{{ form.hidden_tag() }}
+					<fieldset>
+						<h1>Student login</h1>
+						<i class="fas fa-hashtag"></i>
+						{{ form.admission() }}<br><br>
+						<i class="fas fa-lock"></i>
+						{{ form.password() }}<br><br>
+						{{ form.submit(id = 'registerbtn') }}
+						<br>
+						<a href="{{ url_for('tlogin') }}">Not a student? Click here</a>
+						<!-- <button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button> -->
+					</fieldset> 
+				</form>
+			</div>
 		</div>	
 	</div>	
 {% endblock body %}

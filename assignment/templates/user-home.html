@@ -3,16 +3,28 @@
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
 	<style type="text/css">
 		.container{
-			background-color: #00000030;
+			transition: .1s;
+			background-repeat: repeat; 
+			background: url({{ url_for('static', filename='email-pattern.png') }});
 		}
+
+		.container#blur.active{
+			filter: blur(7px);
+			transition: 0.1s;
+			pointer-events: none;
+			user-select: none;
+		}
+
 		.container-mid{
 			width: 60vw;
-			height: 100vh;
+			height: 100%;
 			position: relative;
 			background-color: #ffffff85; 
 			/*margin: 0 auto;*/
 			left: 50%;
 			transform: translateX(-50%);
+			padding-bottom: 30px;
+			box-sizing: border-box;
 		}
 		.container-mid section:nth-child(1){
 			margin:20px auto;
@@ -59,22 +71,25 @@
 		.container-mid section:nth-child(2){
 			border-top: 1px solid #00000040;
 			display: flex;
-			flex-direction: column;
+			/*flex-direction: column;*/
 			width: 100%;
 			padding: 30px 5px;
 			box-sizing: border-box;
+			justify-content: space-between;
 
 		}
 		.container-mid section:nth-child(2) button{
-			width: 100%;
-			height: 100px;
-			margin:5px 0;
+			width: 300px;
+			height: 300px;
+			margin:5px 10px;
+			border-radius: 10px;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 24px;
 			font-weight: 600;
 			color: white;
 			border: none;
 			transition: 1s;
+			box-shadow: 0px 5px 3px #888888;;
 		}
 		.container-mid section:nth-child(2) button:nth-child(1){
 			background: url({{ url_for('static', filename='2.jpg') }});
@@ -95,19 +110,87 @@
 			
 			transition: 1s;
 		}
+
+		.container-mid section:nth-child(3){
+			border-top: 1px solid #00000040;
+
+		}
+
+		.container-mid section:nth-child(3) h2{
+			font-family: 'Source Sans Pro', sans-serif;
+			font-weight: 700;
+			font-size: 28px;
+			margin: 25px 0;
+			/*text-decoration: underline;			*/
+		}
+
+		.container-mid .circular-box{
+			margin: auto;
+			border: 3px solid #40E0D0;
+			border-radius: 10px;
+			width: 75%;
+			text-align: left;
+			padding: 25px 40px;
+		}
+
+		.container-mid .circular-box p{
+			font-family: 'Source Sans Pro', sans-serif;
+			margin-bottom: 10px;
+			font-size: 22px;
+			font-weight: 400;			
+		}
+
+		.container-mid .circular-box span{
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 22px;
+			font-weight: 700;
+		}
+		.container-mid .circular-box span:nth-child(1){
+			color:{{ choice(['#131460','#b289c5','#450000','#b723a5']) }};
+		}
+		.container-mid .circular-box span:nth-child(2){
+			color: {{choice(['#b289c5','#450000','#5a004d','#b723a5'])}};
+		}
+		.container-mid .circular-box span:nth-child(3){
+			color:{{ choice(['#131460','#b289c5','#450000','#5a004d']) }};
+		}
+		#popup{
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			width: 70vw;
+			padding: 50px;
+			box-shadow: 0 5px 30px rgba(0,0,0,.30); 
+			background: #fff;
+			box-sizing: border-box;
+			visibility: hidden;
+			opacity: 0;
+			transition: .5s;
+
+		}
+		#popup h2{
+			margin-bottom: 10px;
+		}
+		#popup.active{
+			top: 50%;
+			visibility: visible;
+			opacity: 1;
+			transition: .5s;
+		}
 	</style>
 {% endblock embeddedcss %}
 
 {% block body %}
 	
-	<div class="container">
+	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
 				<h1>Kuralamuthan</h1>
 				<div class="detailsbox1">
 					<ul>		
 						<li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
-						<li><a href="#">Change profile picture</a></li>
+						<li><a href="#" onclick="toggle()">Change profile picture</a></li>
 					</ul>
 					<ul>
 						<li>Name: <span>Kural</span></li>
@@ -124,14 +207,25 @@
 				<button>Home Assignment</button>
 			</section>
 			<section>
-				<h2>Circular</h2>
+				<center><h2>Circular</h2></center>
 				<div class="circular-box">
-				<p>Teacher#1: Hello students!</p>
-				<p>Teacher#2: Second circular!</p>
-				<p>Teacher#1: Third circular!</p>
+					<p><span>Teacher#1:</span> Hello students!</p>
+					<p><span>Teacher#3:</span> Second circular!</p>
+					<p><span>Teacher#2:</span> Third circular!</p>
 				</div>
 			</section>
 		</div>
 	</div>
-
+	<div id="popup">
+		<h2>Update Profile</h2>
+		<a href="#" onclick="toggle()">Close</a></li>
+	</div>
+	<script type="text/javascript">
+		function toggle(){
+			var blur = document.getElementById('blur')
+			blur.classList.toggle('active')
+			var popup = document.getElementById('popup')
+			popup.classList.toggle('active')
+		}
+	</script>
 {% endblock body %}

@@ -5,7 +5,8 @@
 			display: block;
 		}
 		.container{
-			position: relative;
+			position: absolute;
+			height: 100%;
 			background: url({{ url_for('static', filename='Untitled-1.jpg') }}) no-repeat;
 			background-size: cover;
 		}
@@ -13,7 +14,7 @@
 {% endblock embeddedcss %}
 
 {% block body %}
-	<section class="container">
+	<section class="container", style="height: 100%;">
 
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
 		<section class='login-box'>

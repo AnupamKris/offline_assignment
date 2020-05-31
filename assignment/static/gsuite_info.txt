@@ -1,0 +1,5 @@
+CLIENT ID
+813191857568-jo2scs4rafs9tn81ovv5k12vi4gelhau.apps.googleusercontent.com
+
+CLIENT SECRET
+N4thwyl2Zr6Qx1fagPMM2Hns

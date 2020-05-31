@@ -21,8 +21,8 @@ html{
 }
 
 .container{
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	background: #fff;
 	display: flex;
 	flex-direction: column;
@@ -356,14 +356,22 @@ html{
 }
 
 .login-box #registerbtn{
-	align-items: center;
-	padding: 10px 50px;
+	/*align-items: center;*/
+	padding: 10px 25px;	
 	background: rgba(64,64,64,.5);
 	color: white;
 	border:none;
 	font-size: 20px;
 	border-radius: 25px;
 	position: relative;
+	margin-bottom: 15px;
+}
+
+.login-box a{
+	text-align: center;
+	position: relative;
+	font-size: 18px;
+	color: #fff;
 }
 
 .login-box fieldset input{
