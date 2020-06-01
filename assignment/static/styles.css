@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster|Oswald&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:700&display=swap');
-@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;900&display=swap');
 
 html{
 	display: flex;
@@ -579,16 +580,123 @@ html{
 }
 
 
-/*footer{
-	float: bottom;
-	z-index: 1;
-	background-color: #404040;
+
+
+/*----------------USER-HOME------------------*/
+
+
+.user-details{
+	display: flex;
+	background: #673888;
 	width: 100%;
-	text-align: center;
-	color: white;
-	padding: 1.5vh 0; 
+	min-height: 200px;
+	color: black;
+	font-family: oswald;
 }
 
-footer h3{
-	padding-bottom: 0.5vh;
-}*/
+.user-details .box1{
+	display: block;
+	padding: 15px;
+}
+
+.user-details.box1 img{
+	display: block;
+}
+
+.user-details .box1 h3{
+	text-align: center;
+	font-weight: 900;
+	color: white;
+}
+
+.user-details .box1 button{
+	border: none;
+	background: #ffffff35;
+	border-radius: 15px;
+	width: 180px;
+	height: 30px;
+	display: block;
+	margin: auto;
+	margin-top: 15px;
+}
+
+.user-details .box2{
+	display: flex;
+	flex-direction: column;
+	width: calc(100%-10px);
+	padding-left: 15px;
+	box-sizing: border-box;
+}
+
+.user-details .box2 .details{
+	font-size: 24px;
+
+}
+
+
+.user-details .box2 .details ol li{
+	list-style: none;
+	color: #ff375f;
+	font-weight: 500;
+	font-family: montserrat;
+}
+
+.user-details .box2 .details ol li span{
+	font-weight: 500;
+	color: white;
+}
+
+.user-details .box2 .buttons{
+	display: inline-block;
+	float: right;
+}
+
+.user-details .box2 button{
+	width:150px;
+	height: 30px;
+	background: #ffffff35;
+	border-radius: 50px;
+	color: white;
+	border:none;
+	padding: 3px;
+	margin-bottom: 15px;
+}
+
+.user-home-buttons{
+	min-height: 200px;
+	width: 100%;
+	background: #67388850;
+	display: block;
+	float: right;
+	overflow: auto;
+	justify-content: space-between;
+}
+
+.user-home-buttons button{
+	height: 300px;
+	width: 300px;
+	font-weight: 900;
+	font-size: 30px;
+	color: white;
+	border: none;
+	border-radius: 20px;
+	margin:30px;
+	padding:10px;
+
+}
+
+.user-home-buttons button:nth-child(1){
+	background: #7fffd4;
+}
+
+.user-home-buttons button:nth-child(2){
+	background: #d4af37;
+}
+
+.user-home-buttons button:nth-child(3){
+	background: rgb(255,95,55);
+}
+
+.user-home-buttons button:nth-child(4){
+	background: #ff7878;
+}

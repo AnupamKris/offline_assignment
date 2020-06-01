@@ -74,6 +74,10 @@ def contact():
 def pricing():
 	return render_template('pricing.html')
 
+@app.route('/user-home')
+def user_home():
+	return render_template('user-home.html')
+
 
 
 
