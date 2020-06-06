@@ -13,10 +13,10 @@
 	</style>
 {% endblock embeddedcss %}
 {% block body %}
-	<section class="container">
+	<div class="container">
 
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
-		<section class='login-box'>
+		<div class='login-box'>
 
 			<form method="POST">
 				{{ form.hidden_tag() }}
@@ -30,6 +30,6 @@
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button>
 				</fieldset> 
 			</form>
-		</section>	
-	</section>	
+		</div>	
+	</div>	
 {% endblock body %}

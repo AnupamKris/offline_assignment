@@ -13,6 +13,8 @@
 	{% endblock embeddedcss %}
 </head>
 
+<body>
+
 <nav class="Menu">
 	<input type="checkbox" id="check">
 	<label for="check" class="checkbtn">
@@ -20,16 +22,22 @@
 	</label>
 	<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
 	<ul>
-		
-		<li><a href="{{ url_for('home') }}" id="active">Home</a></li>
+		{% if not current_user.is_authenticated %}
+			<li><a href="{{ url_for('home') }}" id="active">Home</a></li>
+		{% endif %}
 		<li><a href="{{ url_for('about') }}">About</a></li>
 		<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
 		<li><a href="{{ url_for('contact') }}">Contact</a></li>
-		<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
-		<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
+		{% if current_user.is_authenticated %}
+			<li><button type="button" onclick="window.location.href='{{ url_for('user_home') }}';">Profile</button></li>
+			<li> <button type="button" onclick="window.location.href='{{ url_for('logout') }}';">Logout</button></li>
+		{% else %}
+			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
+			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
+		{% endif %}
 	</ul>	
 </nav>
-<body>
+
 	
 	{% block body %}
 	{% endblock body %}

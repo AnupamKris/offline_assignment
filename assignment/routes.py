@@ -75,7 +75,7 @@ def login():
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)
 			next_page = request.args.get('next')
-			return redirect(next_page) if next_page else redirect(url_for('home'))
+			return redirect(next_page) if next_page else redirect(url_for('user_home'))
 	return render_template('login.html', form=form, title='Student Login')
 
 @app.route('/tlogin')
@@ -96,11 +96,12 @@ def pricing():
 
 @app.route('/user-home')
 def user_home():
-	return render_template('user-home.html',title='Profile')
+	return render_template('user-home.html',title='Profile', user=current_user)
 
 
-@app.route('/1234')
-def simply():
-	return render_template('layout.html')
+@app.route('/logout')
+def logout():
+	logout_user()
+	return redirect(url_for('home'))
 
 

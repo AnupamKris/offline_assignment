@@ -23,6 +23,17 @@ class RegistrationForm(FlaskForm):
 		)
 	submit = SubmitField('Sign Up')
 
+	def validate_admission(self, admission):
+		user = User.query.filter_by(admission=admission.data).first()
+		if user:
+			raise ValidationError('The admission number entered has already registered. Try logging in')
+
+	def validate_email(self, email):
+		user = User.query.filter_by(email=email.data).first()
+		if user:
+			raise ValidationError('This email is already registered. Try another email or log in.')
+
+			 
 class LoginForm(FlaskForm):
 	admission = StringField('Admission Number', validators=[DataRequired()]
 		# ,render_kw={'placeholder':'Admission Number'}

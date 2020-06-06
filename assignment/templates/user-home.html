@@ -1,26 +1,7 @@
 {% extends "layout.html" %}
 {% block embeddedcss %}
 	<style type="text/css">
-		.img-slider-container .img-slider .img-slide.slide1{
-	background: url({{ url_for('static', filename='1.jpg') }});
-	background-size: cover;
-	background-position: center; 
-}
-		.img-slider-container .img-slider .img-slide.slide2{
-	background: url({{ url_for('static', filename='2.jpg') }});
-	background-size: cover;
-	background-position: center; 
-}
-		.img-slider-container .img-slider .img-slide.slide3{
-	background: url({{ url_for('static', filename='1.jpg') }});
-	background-size: cover;
-	background-position: center; 
-}	
-	.img-slider-container .img-slider .img-slide.slide4{
-	background: url({{ url_for('static', filename='2.jpg') }});
-	background-size: cover;
-	background-position: center; 
-}
+		
 	</style>
 {% endblock embeddedcss %}
 
@@ -36,9 +17,11 @@
 				<div class="user-details box2">
 					<div class="user-details box2 details">
 						<ol>
-							<li>Class: <span>Kural</span></li>
-							<li>Section: <span>12</span></li>
-							<li>School:<span>A</span></li>
+							<li>Name: <span>Kural</span></li>
+							<li>Admission Number: <span>{{ user.admission }}</span></li>
+							<li>Class: <span>12</span></li>
+							<li>Section: <span>A</span></li>
+							<li>School:<span>Kendriya Vidyalaya HVF</span></li>
 							<li>Roll no: <span>12107</span></li>
 							<li>Blood group: <span>B +ve</span></li>
 							<li>Address: <span>Np. 8, Indira street, Ashok nagar, Avadi, Chennai-600062</span></li>
