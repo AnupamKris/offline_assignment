@@ -1,8 +1,5 @@
-<html>
-<title>Register with MNGE</title>
-<head>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
-	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+{% extends "layout.html" %}
+{% block embeddedcss %}
 	<style type="text/css">
 		body{
 			display: block;
@@ -14,23 +11,8 @@
 			background-size: cover;
 		}
 	</style>
-</head>
-<body>
-	<nav class="Menu">
-		<input type="checkbox" id="check">
-		<label for="check" class="checkbtn">
-			<i class="fas fa-bars"></i>
-		</label>
-		<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
-		<ul>
-			<li><a href="{{ url_for('home') }}">Home</a></li>
-			<li><a href="{{ url_for('about') }}">About</a></li>
-			<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
-			<li><a href="{{ url_for('contact') }}">Contact</a></li>
-			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
-			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';" id="activebtn">Register</button></li>
-		</ul>	
-	</nav>
+{% endblock embeddedcss %}
+{% block body %}
 	<section class="container">
 
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
@@ -58,5 +40,4 @@
 			</form>
 		</section>	
 	</section>	
-</body>
-</html>
+{% endblock body %}

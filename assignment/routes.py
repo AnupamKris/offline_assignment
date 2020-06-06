@@ -8,7 +8,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/')
 @app.route('/home')
 def home():
-	return render_template('home.html')
+	return render_template('home.html',title='Home')
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -54,8 +54,8 @@ def tregister():
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))
-	return render_template('tregister.html', title='Register', form=form)
-	return render_template('tregister.html')
+	return render_template('tregister.html', title='Faculty Register', form=form)
+	# return render_template('tregister.html')
 
 
 @app.route('/login', methods = ['GET','POST'])
@@ -76,29 +76,31 @@ def login():
 			login_user(user)
 			next_page = request.args.get('next')
 			return redirect(next_page) if next_page else redirect(url_for('home'))
-	return render_template('login.html', form=form)
+	return render_template('login.html', form=form, title='Student Login')
 
 @app.route('/tlogin')
 def tlogin():
-	return render_template('tlogin.html')
+	return render_template('tlogin.html', title='Faculty Login')
 
 @app.route('/about')
 def about():
-	return render_template('about.html')
+	return render_template('about.html',title='About')
 
 @app.route('/contact')
 def contact():
-	return render_template('contact.html')
+	return render_template('contact.html',title='Contact')
 
 @app.route('/pricing')
 def pricing():
-	return render_template('pricing.html')
+	return render_template('pricing.html',title='Pricing')
 
 @app.route('/user-home')
 def user_home():
-	return render_template('user-home.html')
+	return render_template('user-home.html',title='Profile')
 
 
-
+@app.route('/1234')
+def simply():
+	return render_template('layout.html')
 
 

@@ -1,12 +1,5 @@
-<html>
-<head>
-	<title>M N G E | Home</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
-	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
-	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
-
-
+{% extends "layout.html" %}
+{% block embeddedcss %}
 	<style type="text/css">
 		.img-slider-container .img-slider .img-slide.slide1{
 	background: url({{ url_for('static', filename='1.jpg') }});
@@ -29,28 +22,10 @@
 	background-position: center; 
 }
 	</style>
+{% endblock embeddedcss %}
 
-
-
-</head>
-<body>
+{% block body %}
 	<div class="container">
-
-		<nav class="Menu">
-			<input type="checkbox" id="check">
-			<label for="check" class="checkbtn">
-				<i class="fas fa-bars"></i>
-			</label>
-			<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
-			<ul>
-				<li><a href="{{ url_for('home') }}" id="active">Home</a></li>
-				<li><a href="{{ url_for('about') }}">About</a></li>
-				<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
-				<li><a href="{{ url_for('contact') }}">Contact</a></li>
-				<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
-				<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
-			</ul>	
-		</nav>
 		<div class="articles">
 			<div class="user-details">
 				<div class="user-details box1">
@@ -83,10 +58,4 @@
 			</div>
 		</div>
 	</div>
-</body>
-<footer style="position:relative;background-color: #404040;width: 100%;text-align: center;color: white;padding: 10px 0;">
-	<h3>M N G E &nbsp; X &nbsp; KVHVF</h3>
-	<p>An initiative of Kendriya Vidyala HVF and M N G E</p>
-	<p>Contact: +91-94980-46382</p>
-</footer>
-</html>
+{% endblock body %}

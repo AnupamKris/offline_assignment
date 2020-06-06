@@ -1,29 +1,5 @@
-<html>
-<title>M N G E | About</title>
-<head>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
-	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
-	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-</head>
-<body>
-	<div class="container">
-		<nav class="Menu">
-			<input type="checkbox" id="check">
-			<label for="check" class="checkbtn">
-				<i class="fas fa-bars"></i>
-			</label>
-			<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
-			<ul>
-				<li><a href="{{ url_for('home') }}">Home</a></li>
-				<li><a href="{{ url_for('about') }}" id="active">About</a></li>
-				<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
-				<li><a href="{{ url_for('contact') }}">Contact</a></li>
-				<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
-				<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
-			</ul>	
-		</nav>
+{% extends "layout.html" %}
 
-	</div>
-		<!-- {% block content %}{% endblock content %} -->
-</body>
-</html>
+{% block body %}
+
+{% endblock body %}
