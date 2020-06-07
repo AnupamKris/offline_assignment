@@ -1,44 +1,137 @@
 {% extends "layout.html" %}
 {% block embeddedcss %}
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
 	<style type="text/css">
-		
+		.container{
+			background-color: #00000030;
+		}
+		.container-mid{
+			width: 60vw;
+			height: 100vh;
+			position: relative;
+			background-color: #ffffff85; 
+			/*margin: 0 auto;*/
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		.container-mid section:nth-child(1){
+			margin:20px auto;
+			width: 100%;
+			/*text-align: center;*/
+			padding: 0 25px;
+		}
+		.container-mid section:nth-child(1) h1{
+			font-family: 'Source Sans Pro', sans-serif;
+			font-weight: 700;
+			font-size: 32px;
+			margin-bottom: 25px;
+
+		}
+		.container-mid #usericon{
+			width: 150px;
+			height:150px;
+		}
+		.container-mid .detailsbox1{
+			display: flex;
+		}
+		.container-mid .detailsbox1 ul:nth-child(1){
+			flex:1;
+			/*text-align: center;*/
+		}
+		.container-mid .detailsbox1 ul:nth-child(2){
+			flex:2;
+			padding-left: 15px;
+			font-size: 18px;
+			border-left: 1px solid #00000020;
+			margin: auto 0;
+		}
+		.container-mid .detailsbox1 ul a{
+			text-decoration: none;
+			color: #ff375f50;
+			font-size: 12px;
+		}
+		ul{
+			list-style: none;
+		}
+		.container-mid .detailsbox1 span{
+			font-weight: 700;
+		}
+		.container-mid section:nth-child(2){
+			border-top: 1px solid #00000040;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			padding: 30px 5px;
+			box-sizing: border-box;
+
+		}
+		.container-mid section:nth-child(2) button{
+			width: 100%;
+			height: 100px;
+			margin:5px 0;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 24px;
+			font-weight: 600;
+			color: white;
+			border: none;
+			transition: 1s;
+		}
+		.container-mid section:nth-child(2) button:nth-child(1){
+			background: url({{ url_for('static', filename='2.jpg') }});
+			background-size: cover;
+			background-position: center;
+		}
+		.container-mid section:nth-child(2) button:nth-child(2){
+			background: url({{ url_for('static', filename='pricing.jpg') }});
+			background-size: cover;
+			background-position: center;
+		}
+		.container-mid section:nth-child(2) button:nth-child(3){
+			background: url({{ url_for('static', filename='teacher.jpg') }});
+			background-size: cover;
+			background-position: center;
+		}
+		.container-mid section:nth-child(2) button:hover{
+			
+			transition: 1s;
+		}
 	</style>
 {% endblock embeddedcss %}
 
 {% block body %}
+	
 	<div class="container">
-		<div class="articles">
-			<div class="user-details">
-				<div class="user-details box1">
-					<center><a href="#"><img src="{{ url_for('static', filename='def-usericon.png') }}"></a></center> 
-					<h3>Username</h3>
-					<button>Change profile picture</button>
+		<div class="container-mid">
+			<section>
+				<h1>Kuralamuthan</h1>
+				<div class="detailsbox1">
+					<ul>		
+						<li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
+						<li><a href="#">Change profile picture</a></li>
+					</ul>
+					<ul>
+						<li>Name: <span>Kural</span></li>
+						<li>Class: <span>12</span></li>
+						<li>Section: <span>A</span></li>
+						<li>Admission #<span>{{ current_user.admission }}</span></li>
+						<li><a href="#">See more details</a></li>
+					</ul>
 				</div>
-				<div class="user-details box2">
-					<div class="user-details box2 details">
-						<ol>
-							<li>Name: <span>Kural</span></li>
-							<li>Admission Number: <span>{{ user.admission }}</span></li>
-							<li>Class: <span>12</span></li>
-							<li>Section: <span>A</span></li>
-							<li>School:<span>Kendriya Vidyalaya HVF</span></li>
-							<li>Roll no: <span>12107</span></li>
-							<li>Blood group: <span>B +ve</span></li>
-							<li>Address: <span>Np. 8, Indira street, Ashok nagar, Avadi, Chennai-600062</span></li>
-						</ol>
-					</div>
-					<div class="user-details box2 buttons">
-						<button onclick="#">Request for change</button>
-						<button>Fill in details</button>
-					</div>
+			</section>
+			<section>
+				<button>Weekly Time-table</button>
+				<button>Faculty Details</button>
+				<button>Home Assignment</button>
+			</section>
+			<section>
+				<h2>Circular</h2>
+				<div class="circular-box">
+				<p>Teacher#1: Hello students!</p>
+				<p>Teacher#2: Second circular!</p>
+				<p>Teacher#1: Third circular!</p>
 				</div>
-			</div>
-			<div class="user-home-buttons">
-				<button>Class Time-table</button>
-				<button>Circulars</button>
-				<button>Submit Assignments</button>
-				<button>Teachers' details</button>
-			</div>
+			</section>
 		</div>
 	</div>
+
 {% endblock body %}

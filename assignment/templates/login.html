@@ -5,15 +5,14 @@
 			display: block;
 		}
 		.container{
-			position: absolute;
-			top:70px;
+			position: relative;
 			background: url({{ url_for('static', filename='Untitled-1.jpg') }}) no-repeat;
 			background-size: cover;
 		}
 	</style>
 {% endblock embeddedcss %}
 {% block body %}
-	<div class="container">
+	<div class="container" style="">
 
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
 		<div class='login-box'>

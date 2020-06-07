@@ -36,9 +36,9 @@ class RegistrationForm(FlaskForm):
 			 
 class LoginForm(FlaskForm):
 	admission = StringField('Admission Number', validators=[DataRequired()]
-		# ,render_kw={'placeholder':'Admission Number'}
+		,render_kw={'placeholder':'Admission Number'}
 		)
 	password = PasswordField('Password',validators=[DataRequired()]
-		# ,render_kw={'placeholder':'Password'}
+		,render_kw={'placeholder':'Password'}
 		)
 	submit = SubmitField('Log In')

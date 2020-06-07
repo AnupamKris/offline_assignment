@@ -21,8 +21,8 @@ html{
 }
 
 .container{
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
 	background: #fff;
 	display: flex;
 	flex-direction: column;
@@ -585,7 +585,7 @@ html{
 /*----------------USER-HOME------------------*/
 
 
-.user-details{
+/*.user-details{
 	display: flex;
 	background: #673888;
 	width: 100%;
@@ -699,4 +699,5 @@ html{
 
 .user-home-buttons button:nth-child(4){
 	background: #ff7878;
-}
+}*/
+

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block embeddedcss %}
+	<style type="text/css">
+		
+	</style>
+{% endblock embeddedcss %}
+
+{% block body %}
+	<div class="container">
+		<div class="articles">
+			<div class="user-details">
+				<div class="user-details box1">
+					<center><a href="#"><img src="{{ url_for('static', filename='def-usericon.png') }}"></a></center> 
+					<h3>Username</h3>
+					<button>Change profile picture</button>
+				</div>
+				<div class="user-details box2">
+					<div class="user-details box2 details">
+						<ol>
+							<li>Name: <span>Kural</span></li>
+							<li>Admission Number: <span>{{ user.admission }}</span></li>
+							<li>Class: <span>12</span></li>
+							<li>Section: <span>A</span></li>
+							<li>School:<span>Kendriya Vidyalaya HVF</span></li>
+							<li>Roll no: <span>12107</span></li>
+							<li>Blood group: <span>B +ve</span></li>
+							<li>Address: <span>Np. 8, Indira street, Ashok nagar, Avadi, Chennai-600062</span></li>
+						</ol>
+					</div>
+					<div class="user-details box2 buttons">
+						<button onclick="#">Request for change</button>
+						<button>Fill in details</button>
+					</div>
+				</div>
+			</div>
+			<div class="user-home-buttons">
+				<button>Class Time-table</button>
+				<button>Circulars</button>
+				<button>Submit Assignments</button>
+				<button>Teachers' details</button>
+			</div>
+		</div>
+	</div>
+{% endblock body %}
