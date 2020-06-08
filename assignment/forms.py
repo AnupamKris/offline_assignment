@@ -5,9 +5,6 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from assignment.models import User
 
 class RegistrationForm(FlaskForm):
-	username = StringField('Username',validators=[DataRequired(),Length(min=3, max=20)]
-		,render_kw={"placeholder": "Username"}
-		)
 	admission = StringField('Admission Number', validators=[DataRequired()]
 		,render_kw={'placeholder':'Admission Number'}
 		)
@@ -25,3 +22,11 @@ class RegistrationForm(FlaskForm):
 		,render_kw={'placeholder':'Confirm Password'}
 		)
 	submit = SubmitField('Sign Up')
+
+class LoginForm(FlaskForm):
+	admission = StringField('Admission Number', validators=[DataRequired()]
+		,render_kw={'placeholder':'Admission Number'}
+		)
+	password = PasswordField('Password',validators=[DataRequired()]
+		,render_kw={'placeholder':'Password'}
+		)

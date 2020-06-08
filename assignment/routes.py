@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, request
 from assignment import app, db, bcrypt
-from assignment.forms import RegistrationForm
+from assignment.forms import RegistrationForm, LoginForm
 from assignment.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -12,6 +12,8 @@ def home():
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
 	serverlog = open('server.log','a')
 	if current_user.is_authenticated:
 		serverlog.write('\nLogged Already')
@@ -23,7 +25,7 @@ def register():
 		serverlog.write('\nhashing')
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 		serverlog.write('\ngetting data')
-		user = User(username=form.username.data, password=hashed_password, email =form.email.data)
+		user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
 		serverlog.write('\nData:'+str(user))
 		db.session.add(user)
 		serverlog.write('\nadded')
@@ -56,7 +58,10 @@ def tregister():
 
 @app.route('/login')
 def login():
-	return render_template('login.html')
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
+	form = LoginForm
+	return render_template('login.html', form=form)
 
 @app.route('/tlogin')
 def tlogin():
