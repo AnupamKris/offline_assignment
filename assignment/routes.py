@@ -58,7 +58,7 @@ def tregister():
 	return render_template('tregister.html')
 
 
-@app.route('/login')
+@app.route('/login', methods = ['GET','POST'])
 def login():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
@@ -68,8 +68,12 @@ def login():
 	serverlog.write(str(form.validate_on_submit())+'\n')
 	if form.validate_on_submit():
 		user = User.query.filter_by(admission=form.admission.data).first()
+		serverlog.write(str(user.password))
+		serverlog.write(str(form.admission.data))
+		serverlog.write('is pass corect:'+str(bcrypt.check_password_hash(user.password, form.password.data)))
+
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
-			login_user(user, remember=form.remember.data)
+			login_user(user)
 			next_page = request.args.get('next')
 			return redirect(next_page) if next_page else redirect(url_for('home'))
 	return render_template('login.html', form=form)
