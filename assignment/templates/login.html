@@ -43,7 +43,7 @@
 					<i class="fas fa-hashtag"></i>
 					{{ form.admission() }}<br><br>
 					<i class="fas fa-lock"></i>
-					<input type="password" name="password" placeholder="Enter a password"><br><br>
+					{{ form.password() }}<br><br>
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Login</button>&nbsp;
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button>
 				</fieldset> 

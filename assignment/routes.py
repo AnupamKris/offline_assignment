@@ -33,7 +33,7 @@ def register():
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))
-		
+
 	return render_template('registerpage.html', title='Register', form=form)
 
 
@@ -61,7 +61,13 @@ def tregister():
 def login():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
-	form = LoginForm
+	form = LoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(admission=form.admission.data).first()
+		if user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user, remember=form.remember.data)
+			next_page = request.args.get('next')
+			return redirect(next_page) if next_page else redirect(url_for('home'))
 	return render_template('login.html', form=form)
 
 @app.route('/tlogin')
