@@ -43,13 +43,14 @@ def tregister():
 		return redirect(url_for('home'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		print('hashing')
+		serverlog = open("server.log",'a')
+		serverlog.write('hashing')
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-		print('getting data')
+		serverlog.write('getting data')
 		user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-		print('Data:',user)
+		serverlog.write('Data:',user)
 		db.session.add(user)
-		print('added')
+		serverlog.write('added')
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))
@@ -62,6 +63,9 @@ def login():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
 	form = LoginForm()
+	serverlog = open("server.log",'a')
+	serverlog.write('login trial')
+	serverlog.write(str(form.validate_on_submit())+'\n')
 	if form.validate_on_submit():
 		user = User.query.filter_by(admission=form.admission.data).first()
 		if user and bcrypt.check_password_hash(user.password, form.password.data):

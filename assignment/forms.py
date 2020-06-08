@@ -30,3 +30,4 @@ class LoginForm(FlaskForm):
 	password = PasswordField('Password',validators=[DataRequired()]
 		,render_kw={'placeholder':'Password'}
 		)
+	submit = SubmitField('Log In')

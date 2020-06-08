@@ -44,7 +44,7 @@
 					{{ form.admission() }}<br><br>
 					<i class="fas fa-lock"></i>
 					{{ form.password() }}<br><br>
-					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Login</button>&nbsp;
+					{{ form.submit(id = 'registerbtn') }}
 					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button>
 				</fieldset> 
 			</form>
