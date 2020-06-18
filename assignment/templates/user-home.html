@@ -154,12 +154,12 @@
 		.container-mid .circular-box span:nth-child(3){
 			color:{{ choice(['#131460','#b289c5','#450000','#5a004d']) }};
 		}
-		#popup{
+		#popup-pic, #popup-det{
 			position: absolute;
 			top: 40%;
 			left: 50%;
 			transform: translate(-50%,-50%);
-			width: 70vw;
+			width: 40vw;
 			padding: 50px;
 			box-shadow: 0 5px 30px rgba(0,0,0,.30); 
 			background: #fff;
@@ -169,10 +169,10 @@
 			transition: .5s;
 
 		}
-		#popup h2{
+		#popup-pic h2, #popup-det h2{
 			margin-bottom: 10px;
 		}
-		#popup.active{
+		#popup-pic.active, #popup-det.active{
 			top: 50%;
 			visibility: visible;
 			opacity: 1;
@@ -186,18 +186,18 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
-				<h1>Kuralamuthan</h1>
+				<h1>{{ student['Name'] }}</h1>
 				<div class="detailsbox1">
 					<ul>		
 						<li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
-						<li><a href="#" onclick="toggle()">Change profile picture</a></li>
+						<li><a href="#" onclick="togglepic()">Change profile picture</a></li>
 					</ul>
 					<ul>
-						<li>Name: <span>Kural</span></li>
-						<li>Class: <span>12</span></li>
-						<li>Section: <span>A</span></li>
+						<li>Name: <span>{{ student['Name'] }}</span></li>
+						<li>Class: <span>{{ student['Class'] }}</span></li>
+						<li>Section: <span>{{ student['Section'] }}</span></li>
 						<li>Admission #<span>{{ current_user.admission }}</span></li>
-						<li><a href="#">See more details</a></li>
+						<li><a href="#" onclick="toggledet()">See more details</a></li>
 					</ul>
 				</div>
 			</section>
@@ -216,15 +216,36 @@
 			</section>
 		</div>
 	</div>
-	<div id="popup">
+	<div id="popup-pic">
 		<h2>Update Profile</h2>
-		<a href="#" onclick="toggle()">Close</a></li>
+		<a href="#" onclick="togglepic()">Close</a></li>
+	</div>
+	<div id="popup-det">
+		<h2> {{ student['Name'] }} 's Details</h2>
+		<ul>
+			<li>Address: <span>{{ student['Address'] }}</span></li>
+			<li>Blood group: <span>{{ student['Bloodgroup'] }}</span></li>
+			<li>Mother name: <span>{{ student['Mothername'] }}</span></li>
+			<li>Father name: <span>{{ student['Fathername'] }}</span></li>
+			<li>Teacher1: <span>{{ student['Teacher1'] }}</span><img class="teachericon" src=""></li>
+			<li>Teacher2: <span>{{ student['Teacher2'] }}</span><img class="teachericon" src=""></li>
+			<li>Teacher3: <span>{{ student['Teacher3'] }}</span><img class="teachericon" src=""></li>
+			<li>Teacher4: <span>{{ student['Teacher4'] }}</span><img class="teachericon" src=""></li>
+			<li>Teacher5: <span>{{ student['Teacher5'] }}</span><img class="teachericon" src=""></li>
+		</ul>
+		<a href="#" onclick="toggledet()">Close</a>
 	</div>
 	<script type="text/javascript">
-		function toggle(){
+		function togglepic(){
 			var blur = document.getElementById('blur')
 			blur.classList.toggle('active')
-			var popup = document.getElementById('popup')
+			var popup = document.getElementById('popup-pic')
+			popup.classList.toggle('active')
+		}
+		function toggledet(){
+			var blur = document.getElementById('blur')
+			blur.classList.toggle('active')
+			var popup = document.getElementById('popup-det')
 			popup.classList.toggle('active')
 		}
 	</script>

@@ -4,6 +4,15 @@ from assignment.forms import RegistrationForm, LoginForm
 from assignment.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from random import choice
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+scope = ['https://www.googleapis.com/auth/drive']
+
+cred = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
+
+client = gspread.authorize(cred)
+
 
 @app.route('/')
 @app.route('/home')
@@ -97,7 +106,16 @@ def pricing():
 @app.route('/user-home')
 @login_required
 def user_home():
-	return render_template('user-home.html',title='Profile', user=current_user, choice=choice)
+	student = client.open('classdetails').sheet1
+	s_adm = student.col_values(1)
+	fields = student.row_values(1)
+	current_student = {}
+	for i in s_adm:
+		if i == current_user.admission:
+			row = student.row_values(s_adm.index(i)+1)
+	for i in range(13):
+		current_student[fields[i]] = row[i]
+	return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
 
 
 @app.route('/logout')
