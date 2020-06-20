@@ -8,10 +8,20 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
-	admission = db.Column(db.String(20), unique=True, nullable=False)
+	admission = db.Column(db.String(20), unique=True, nullable=True)
 	password = db.Column(db.String(60), nullable=False)
 	email = db.Column(db.String(120), nullable=False)
-	
+	name = db.Column(db.String(120), nullable=True)
+
 	
 	def __repr__(self):
 		return f"User('{self.admission}','{self.password}','{self.email}')"
+
+# class Teacher(db.Model, UserMixin):
+# 	id = db.Column(db.Integer, primary_key=True)
+# 	password = db.Column(db.String(60), nullable=False)
+# 	email = db.Column(db.String(120), nullable=False)
+	
+
+# 	def __repr__(self):
+# 		return f"User('{self.password}','{self.email}')"

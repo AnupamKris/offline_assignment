@@ -21,17 +21,20 @@
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
 		<section class='login-box'>
 
-			<form>
-				<fieldset>
-					<h1>Teacher login</h1>
-					<i class="fas fa-at"></i>
-					<input type="text" name="t-username" id="admnno" placeholder="Username"><br><br>
-					<i class="fas fa-lock"></i>
-					<input type="password" name="password" placeholder="Enter a password"><br><br>
-					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Login</button>
-					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('login') }}';">Not a teacher? Click here</button>
-				</fieldset> 
-			</form>
+			<form method="POST">
+					{{ form.hidden_tag() }}
+					<fieldset>
+						<h1>Teacher login</h1>
+						<i class="fas fa-hashtag"></i>
+						{{ form.email() }}<br><br>
+						<i class="fas fa-lock"></i>
+						{{ form.password() }}<br><br>
+						{{ form.submit(id = 'registerbtn') }}
+						<br>
+						<a href="{{ url_for('login') }}">Not a teacher? Click here</a>
+						<!-- <button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button> -->
+					</fieldset> 
+				</form>
 		</section>	
 	</section>	
 {% endblock body %}

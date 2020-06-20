@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, request
 from assignment import app, db, bcrypt
-from assignment.forms import RegistrationForm, LoginForm
+from assignment.forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
 from assignment.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from random import choice
@@ -45,26 +45,31 @@ def register():
 
 	return render_template('registerpage.html', title='Register', form=form, footer=1)
 
-
-@app.route('/tregister')
+@app.route('/tregister', methods = ['GET','POST'])
 def tregister():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
-	form = RegistrationForm()
+	serverlog = open('server.log','a')
+	if current_user.is_authenticated:
+		serverlog.write('\nLogged Already')
+		return redirect(url_for('home'))
+	form = TeacherRegistrationForm(request.form)
+	serverlog.write('\nCheck validation ')
+	serverlog.write(str(form.validate_on_submit()))
 	if form.validate_on_submit():
-		serverlog = open("server.log",'a')
-		serverlog.write('hashing')
+		serverlog.write('\nhashing')
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-		serverlog.write('getting data')
-		user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-		serverlog.write('Data:',user)
+		serverlog.write('\ngetting data')
+		user = User(name=form.name.data, password=hashed_password, email =form.email.data)
+		serverlog.write('\nData:'+str(user))
 		db.session.add(user)
-		serverlog.write('added')
+		serverlog.write('\nadded')
+		serverlog.write(str(form.securitykey.data))
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
-		return redirect(url_for('login'))
-	return render_template('tregister.html', title='Faculty Register', form=form, footer=1)
-	# return render_template('tregister.html')
+		return redirect(url_for('tlogin'))
+
+	return render_template('tregister.html', title='Teacher Register', form=form, footer=1)
 
 
 @app.route('/login', methods = ['GET','POST'])
@@ -87,9 +92,27 @@ def login():
 			return redirect(next_page) if next_page else redirect(url_for('user_home'))
 	return render_template('login.html', form=form, title='Student Login', footer=1)
 
-@app.route('/tlogin')
+@app.route('/tlogin', methods = ['GET', 'POST'])
 def tlogin():
-	return render_template('tlogin.html', title='Faculty Login', footer=1)
+	global current_user
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
+	form = TeacherLoginForm()
+	serverlog = open("server.log",'a')
+	serverlog.write('login trial')
+	serverlog.write(str(form.validate_on_submit())+'\n')
+	if form.validate_on_submit():
+		user = User.query.filter_by(email=form.email.data).first()
+		serverlog.write(str(user.password))
+		serverlog.write(str(form.email.data))
+		serverlog.write('is pass corect:'+str(bcrypt.check_password_hash(user.password, form.password.data)))
+
+		if user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user)
+			serverlog.write('LOGGING TEACHER:'+user.email+user.name+current_user.email+current_user.name)
+			next_page = request.args.get('next')
+			return redirect(next_page) if next_page else redirect(url_for('user_home'))
+	return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
 
 @app.route('/about')
 def about():
@@ -106,16 +129,27 @@ def pricing():
 @app.route('/user-home')
 @login_required
 def user_home():
-	student = client.open('classdetails').sheet1
-	s_adm = student.col_values(1)
-	fields = student.row_values(1)
-	current_student = {}
-	for i in s_adm:
-		if i == current_user.admission:
-			row = student.row_values(s_adm.index(i)+1)
-	for i in range(13):
-		current_student[fields[i]] = row[i]
-	return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
+	global current_user
+	if current_user.name == '':
+		student = client.open('classdetails').sheet1
+		s_adm = student.col_values(1)
+		fields = student.row_values(1)
+		current_student = {}
+		file = open('server.log','a')
+		file.write('\nTeacher ::::: ' + str(current_user.admission))
+		file.write('\n' + str(current_user.name))
+		file.close()
+		for i in s_adm:
+			if i == current_user.admission:
+				row = student.row_values(s_adm.index(i)+1)
+		for i in range(13):
+			current_student[fields[i]] = row[i]
+		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
+	else:
+		current_student = {'Name':current_user.name, 'Class':1, 'Section':5}
+		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
+
+	
 
 
 @app.route('/logout')
