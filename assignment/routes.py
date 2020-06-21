@@ -32,15 +32,14 @@ def uploadfile(filename, foldername):
         password='hard2reach',
         app_id='42511')
     for i in range(20):
-        try:
-            print('doing upload')
-            result = client.upload_file(imagepath, "mf:/{foldername}/")
-            fileinfo = client.api.file_get_info(result.quickkey)
-            link = fileinfo['file_info']['links']['normal_download']
-            break   
-        except:
-            print('retrying')
-    
+    	try:
+        	print('doing upload')
+        	result = client.upload_file(imagepath, f"mf:/{foldername}/")
+        	fileinfo = client.api.file_get_info(result.quickkey)
+        	link = fileinfo['file_info']['links']['normal_download']
+        	break   
+    	except:
+        	print('retrying')    
     return link
 
 @app.route('/')
@@ -196,7 +195,12 @@ def create_assignment():
 		f.save('/home/anupamkris/imgdir/QP.pdf')
 		filename = request.form.get('testname')
 		createfolder(filename)
-		uploadfile('QP.pdf', filename)
+		link = uploadfile('QP.pdf', filename)
+		global client
+		testsheet = client.open('tests')
+		worksheet = testsheet.add_worksheet(filename, rows = 100, cols = 3)
+		datalist = [current_user.email, request.form.get('class'), link]
+		worksheet.insert_row(datalist, 1)
 	else:
 		return render_template('create-assignment.html')
 
