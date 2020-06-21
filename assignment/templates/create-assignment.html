@@ -44,7 +44,7 @@
 			margin-bottom: 25px;
 		}
 		
-		.container-mid section:nth-child(1) a button{
+		.container-mid section:nth-child(1) button{
 			box-sizing: border-box;
 			margin-top: 20px; 
 			font-size: 16px;
@@ -138,50 +138,32 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
-				<h1>Home Assignment</h1>
-				<p>Welcome to the Home Assignment section. Click on the below button to create a new assignment</p>
-				<a href="{{ url_for('create_assignment') }}"><button>Create Assignment</button></a>
+				<h1>Create Assignment</h1>
+				<p>Enter the following details to create the Assignment for the targetted class.</p>
 			</section>
 			<section>
-				<h2>Previous assignments</h2>			
-				<table>
-					<thead>
-						<tr>
-							<th>Serial</th>
-							<th>Name</th>
-							<th>Class</th>
-							<th>Date</th>
-							<th>Completion</th>
-							<th>Correction</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Syllabels 1</td>
-							<td>10A,10B</td>
-							<td>21-06-2002</td>
-							<td>12/42</td>
-							<td><a href="#">Correct</a></td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Grammar 1</td>
-							<td>9A,9D</td>
-							<td>18-06-2002</td>
-							<td>36/41</td>
-							<td><a href="#">Correct</a></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Passage 1</td>
-							<td>10A,10B</td>
-							<td>14-06-2002</td>
-							<td>42/42</td>
-							<td><a href="#">View details</a></td>
-						</tr>
-					</tbody>
-				</table>
+				<h2>Assignment Details</h2>			
+				<form method="POST" enctype="multipart/form-data">
+					<fieldset>
+						<br>
+						<label for="testname">Testname:</label>
+						<input type="text" name="testname">
+						<br>
+						<label for="class">Class:</label>
+						<select name="class">
+							<option>10A</option>
+							<option>10B</option>
+							<option>10C</option>
+							<option>10D</option>
+							<option>11A</option>
+						</select>
+						<br>
+						<label for="qpupload">Upload the Question Paper (PDF):</label>
+						<input placeholder="Upload QP" type="file" name="qpupload" accept=".pdf">
+						<br>
+						<input type="submit" name="submit" value="Create Assignment">
+					</fieldset>
+				</form>
 			</section>
 		</div>
 	</div>

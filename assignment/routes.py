@@ -183,6 +183,10 @@ def user_home():
 def home_assignment():
 	return render_template('t-home-assignment.html', choice=choice)	
 
+@app.route('/create-assignment', methods=['GET','POST'])
+@login_required
+def create_assignment():
+	return render_template('create-assignment.html')
 
 @app.route('/logout')
 def logout():
