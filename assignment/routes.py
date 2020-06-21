@@ -6,6 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from random import choice
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from mediafire.client import MediaFireClient, File, Folder
 
 scope = ['https://www.googleapis.com/auth/drive']
 
@@ -13,6 +14,34 @@ cred = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
 
 client = gspread.authorize(cred)
 
+def createfolder(foldername):
+    client = MediaFireClient()
+    client.login( email='mediamngeforkvhvf@gmail.com',
+        password='hard2reach',
+        app_id='42511')
+    client.create_folder('/'+foldername)
+
+def uploadfile(filename, foldername):
+    imagepath = '/home/mngeforkvhvf/savedir/'
+    imagepath+=filename
+    print(imagepath)
+    print(filename)
+    client = MediaFireClient()
+    print('login')
+    client.login( email='mediamngeforkvhvf@gmail.com',
+        password='hard2reach',
+        app_id='42511')
+    for i in range(20):
+        try:
+            print('doing upload')
+            result = client.upload_file(imagepath, "mf:/{foldername}/")
+            fileinfo = client.api.file_get_info(result.quickkey)
+            link = fileinfo['file_info']['links']['normal_download']
+            break   
+        except:
+            print('retrying')
+    
+    return link
 
 @app.route('/')
 @app.route('/home')
