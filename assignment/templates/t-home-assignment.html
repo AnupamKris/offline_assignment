@@ -189,15 +189,23 @@
 		<h2>Create New Assignment</h2>
 		<form method="POST" enctype="multipart/form-data">
 			<fieldset>
+				<br>
+				<label for="testname">Testname:</label>
 				<input type="text" name="testname">
-				<select>
+				<br>
+				<label for="class">Class:</label>
+				<select name="class">
 					<option>10A</option>
 					<option>10B</option>
 					<option>10C</option>
 					<option>10D</option>
 					<option>11A</option>
 				</select>
-
+				<br>
+				<label for="qpupload">Upload the Question Paper (PDF):</label>
+				<input placeholder="Upload QP" type="file" name="qpupload" accept=".pdf">
+				<br>
+				<input type="submit" name="submit" value="Create Assignment">
 			</fieldset>
 		</form>
 		<a href="#" onclick="toggleass()">Close</a></li>
