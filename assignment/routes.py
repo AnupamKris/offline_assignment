@@ -16,19 +16,19 @@ client = gspread.authorize(cred)
 
 def createfolder(foldername):
     client = MediaFireClient()
-    client.login( email='mediamngeforkvhvf@gmail.com',
+    client.login( email='mngeforkvhvf@gmail.com',
         password='hard2reach',
         app_id='42511')
     client.create_folder('/'+foldername)
 
 def uploadfile(filename, foldername):
-    imagepath = '/home/mngeforkvhvf/savedir/'
+    imagepath = '/home/anupamkris/imgdir/'
     imagepath+=filename
     print(imagepath)
     print(filename)
     client = MediaFireClient()
     print('login')
-    client.login( email='mediamngeforkvhvf@gmail.com',
+    client.login( email='mngeforkvhvf@gmail.com',
         password='hard2reach',
         app_id='42511')
     for i in range(20):
@@ -178,15 +178,27 @@ def user_home():
 		current_teacher = {'Name':current_user.name, 'Class':1, 'Section':5}
 		return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher)
 
-@app.route('/home-assignment')
+@app.route('/home-assignment', methods = ['GET', 'POST'])
 @login_required
 def home_assignment():
 	return render_template('t-home-assignment.html', choice=choice)	
 
+
 @app.route('/create-assignment', methods=['GET','POST'])
 @login_required
 def create_assignment():
-	return render_template('create-assignment.html')
+	serverlog = open('server.log','a')
+	serverlog.write('\n' + str(request.method))
+	if request.method == 'POST':
+		serverlog.write('\nSaving File\n')
+		serverlog.write(f'\n{request.form.get("testname")}\n')
+		f = request.files['qpupload']
+		f.save('/home/anupamkris/imgdir/QP.pdf')
+		filename = request.form.get('testname')
+		createfolder(filename)
+		uploadfile('QP.pdf', filename)
+	else:
+		return render_template('create-assignment.html')
 
 @app.route('/logout')
 def logout():
