@@ -146,10 +146,13 @@ def user_home():
 			current_student[fields[i]] = row[i]
 		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
 	else:
-		current_student = {'Name':current_user.name, 'Class':1, 'Section':5}
-		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
+		current_teacher = {'Name':current_user.name, 'Class':1, 'Section':5}
+		return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher)
 
-	
+@app.route('/home-assignment')
+@login_required
+def home_assignment():
+	return render_template('t-home-assignment.html', choice=choice)	
 
 
 @app.route('/logout')
