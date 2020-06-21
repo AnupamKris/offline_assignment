@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
 	submit = SubmitField('Sign Up')
 
 	def validate_admission(self, admission):
-		user = Student.query.filter_by(admission=admission.data).first()
+		user = User.query.filter_by(admission=admission.data).first()
 		if user:
 			raise ValidationError('The admission number entered has already registered. Try logging in')
 

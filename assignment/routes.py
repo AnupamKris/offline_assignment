@@ -130,7 +130,7 @@ def pricing():
 @login_required
 def user_home():
 	global current_user
-	if current_user.name == '':
+	if not current_user.name:
 		student = client.open('classdetails').sheet1
 		s_adm = student.col_values(1)
 		fields = student.row_values(1)
