@@ -78,26 +78,34 @@ def tregister():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
 	serverlog = open('server.log','a')
+
 	if current_user.is_authenticated:
 		serverlog.write('\nLogged Already')
 		return redirect(url_for('home'))
-	form = TeacherRegistrationForm(request.form)
-	serverlog.write('\nCheck validation ')
-	serverlog.write(str(form.validate_on_submit()))
-	if form.validate_on_submit():
-		serverlog.write('\nhashing')
-		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-		serverlog.write('\ngetting data')
-		user = User(name=form.name.data, password=hashed_password, email =form.email.data)
-		serverlog.write('\nData:'+str(user))
-		db.session.add(user)
-		serverlog.write('\nadded')
-		serverlog.write(str(form.securitykey.data))
-		db.session.commit()
-		# flash(f'Your account has been created you can now login!', 'success')
-		return redirect(url_for('tlogin'))
+	if request.method == 'POST':
+		serverlog.write('\nCheck validation ')
+		securitykey = request.form.get('securitykey')
+		name = request.form.get('name')
+		password = request.form.get('password')
+		confirmpassword = request.form.get('confirmpassword')
+		email = request.form.get('email')
+		subject = request.form.get('select')
+		classes = request.form.getlist('classes')
+		print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
+		if True:
+			serverlog.write('\nhashing')
+			hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+			serverlog.write('\ngetting data')
+			user = User(name=name, password=hashed_password, email =email)
+			serverlog.write('\nData:'+str(user))
+			db.session.add(user)
+			serverlog.write('\nadded')
+			serverlog.write(str(securitykey))
+			db.session.commit()
+			# flash(f'Your account has been created you can now login!', 'success')
+			return redirect(url_for('tlogin'))
 
-	return render_template('tregister.html', title='Teacher Register', form=form, footer=1)
+	return render_template('tregister.html', title='Teacher Register', footer=1)
 
 
 @app.route('/login', methods = ['GET','POST'])
