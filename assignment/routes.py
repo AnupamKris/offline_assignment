@@ -22,7 +22,7 @@ def createfolder(foldername):
     client.create_folder('/'+foldername)
 
 def uploadfile(filename, foldername):
-    imagepath = 'C:/Users/Bkura/OneDrive/Documents/MNGE/'
+    imagepath = '/home/anupamkris/imgdir/'
     imagepath+=filename
     print(imagepath)
     print(filename)
@@ -32,13 +32,13 @@ def uploadfile(filename, foldername):
         password='hard2reach',
         app_id='42511')
     for i in range(20):
-    	try:
+    	# try:
         	print('doing upload')
         	result = client.upload_file(imagepath, f"mf:/{foldername}/")
         	fileinfo = client.api.file_get_info(result.quickkey)
         	link = fileinfo['file_info']['links']['normal_download']
         	break   
-    	except:
+    	# except:
         	print('retrying')    
     return link
 
@@ -186,7 +186,6 @@ def home_assignment():
 		return render_template('t-home-assignment.html')	
 
 
-
 @app.route('/create-assignment', methods=['GET','POST'])
 @login_required
 def create_assignment():
@@ -197,24 +196,73 @@ def create_assignment():
 			serverlog.write('\nSaving File\n')
 			serverlog.write(f'\n{request.form.get("testname")}\n')
 			f = request.files['qpupload']
-			f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/QP.pdf')
+			f.save('/home/anupamkris/imgdir/QP.pdf')
 			filename = request.form.get('testname')
 			createfolder(filename)
 			link = uploadfile('QP.pdf', filename)
 			global client
 			testsheet = client.open('tests')
-			worksheet = testsheet.add_worksheet(filename, rows = 100, cols = 3)
-			datalist = [current_user.email, request.form.get('class'), link]
+			worksheet = testsheet.worksheet('testsheet')
+			datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
 			worksheet.insert_row(datalist, 1)
 		else:
 			return render_template('create-assignment.html')
 	else:
 		return redirect(url_for('user_home'))
-@app.route('/submit-assignment')
+@app.route('/submit-assignment/<testname>', methods = ['GET', 'POST'])
 @login_required
-def submit_assignment():
+def submit_assignment(testname=None):
 	if not current_user.name:
-		return render_template('submit-assignment.html')
+		if request.method == 'POST':
+			serverlog = open('server.log','a')
+			serverlog.write('Files : ')
+			serverlog.write(str(request.files.get('assupload1')))
+			serverlog.close()
+			global client
+			spreadsheet = client.open('tests')
+			worksheet = spreadsheet.worksheet('testsheet')
+			fulldata = worksheet.get_all_values()
+			serverlog = open('server.log', 'a')
+			serverlog.write(str(fulldata))
+			print('\n\n\n\n\n\n\n\n\n\n_________________________________n\\n\n\n\n\n\n\n\n\n\n\n')
+			print(fulldata)
+			for i in range(len(fulldata)):
+				serverlog.write(str(fulldata[i]))
+				if fulldata[i][2] == testname:
+					print(fulldata[i][2])
+					dd = {}
+					exec(f"updata = {fulldata[i][4]}", dd)	
+					updata = dd['updata']
+					print('\n\n\n\n\n\n\n', updata)
+					try:
+						print('running Try block')
+						if len(updata) == 0:
+							raise Error
+						for j in updata:
+							print(j)
+							if current_user.admission in list(j.values()):
+								print('running if')
+								print('\n\n\n\n\n\n\n\n Already Submitted you fool! \n\n\n\n\n\n\n\n')
+								return render_template('register.html')
+						else:
+							f = request.files['assupload']
+							f.save('/home/anupamkris/imgdir/'+current_user.admission+'.pdf')
+							link = uploadfile(current_user.admission+'.pdf', testname)
+							print('running else')
+							updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
+							worksheet.update_cell(i+1, 5, str(updata))
+					except:
+						f = request.files['assupload']
+						f.save('/home/anupamkris/imgdir/'+current_user.admission+'.pdf')
+						link = uploadfile(current_user.admission+'.pdf', testname)
+						print('running except')
+						updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
+						print(updata)
+						worksheet.update_cell(i+1, 5, str(updata))
+			return render_template('successpage')
+		else:
+			return render_template('submit-assignment.html')
+
 
 @app.route('/sample-pdf-viewer')
 @login_required

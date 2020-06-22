@@ -185,12 +185,12 @@
 			<section>
 				<h1>Submit Assignment</h1>
 				<p>Welcome to the Submit Assignment section. Please attach your assignment in the form of pdf below.</p>
-				<form method="POST">
+				<form method="POST" enctype="multipart/form-data">
 					<fieldset>												
 						<label for="assupload" id="assuploadbutt">
 							Upload PDF
-							<input type="file" id="assupload" name="assupload" accept=".pdf" hidden>
 						</label>
+						<input type="file" id="assupload" name="assupload" accept=".pdf">
 						<br><br>
 						<input type="Submit" name="submit" id="submit">
 						<br>
