@@ -374,7 +374,7 @@ html{
 	color: #fff;
 }
 
-.login-box fieldset input{
+.login-box fieldset input, select{
 	width: 25vw;
 	padding: 10px;
 	height: 50px;

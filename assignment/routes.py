@@ -216,6 +216,11 @@ def submit_assignment():
 	if not current_user.name:
 		return render_template('submit-assignment.html')
 
+@app.route('/sample-pdf-viewer')
+@login_required
+def pdf_viewer():
+	return render_template('embedpdf.html')
+
 @app.route('/logout')
 def logout():
 	logout_user()

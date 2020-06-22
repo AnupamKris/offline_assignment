@@ -35,7 +35,8 @@
 					{{ form.confirmpassword() }}<br><br>
 					<!-- <button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('register') }}';">Register</button>&nbsp; -->
 					{{ form.submit(id='registerbtn') }}
-					<button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tregister') }}';">Not a student? Click here</button>
+					<br>
+					<a href="{{ url_for('tregister') }}";>Not a student? Click here</a>
 				</fieldset> 
 			</form>
 		</section>	
