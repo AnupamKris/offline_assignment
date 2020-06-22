@@ -20,7 +20,7 @@
 		}
 
 		.container-mid{
-			width: 60vw;
+			width: 60%;
 			min-height: 100vh;
 			position: relative;
 			background-color: #ffffff85; 
@@ -29,6 +29,11 @@
 			transform: translateX(-50%);
 			padding-bottom: 30px;
 			box-sizing: border-box;
+		}
+		@media only screen and (orientation: portrait){
+			.container-mid{
+				width: 100%;
+			}
 		}
 		.container-mid section:nth-child(1){
 			margin:20px auto;
@@ -65,70 +70,7 @@
 			font-weight: 600;
 			font-size: 1.2em;
 		}
-
-		.container-mid section:nth-child(2) table{
-			border-collapse: collapse;
-			width: 100%;
-			background: #f2f2f2;
-			border-radius: 8px 8px 0 0;
-			overflow: hidden;
-			box-shadow: 0 0 20px #00000015;
-		}
-
-		.container-mid section:nth-child(2) table thead tr{
-			text-align: left;
-			font-weight: 700;
-			color: #fff;
-			background-color: #ff738f;
-		}
-
-		.container-mid section:nth-child(2) table th,.container-mid section:nth-child(2) table td{
-			padding: 12px 25px;
-		}
-
-		.container-mid section:nth-child(2) table tbody tr{
-			border-bottom: 1px solid #ddd;
-		}
-
-		.container-mid section:nth-child(2) table tbody tr:last-of-type{
-			border-bottom: 2px solid #ff738f;
-		}
-
-		.container-mid section:nth-child(2) table tr:nth-child(even){
-			background-color:#e5e5e5; 
-		}
-
-		.container-mid section:nth-child(2) h2{
-			font-family: 'Source Sans Pro', sans-serif;
-			font-weight: 700;
-			font-size: 28px;
-			margin: 25px 0;
-			/*text-decoration: underline;			*/
-		}
-
-		#popup-ass, #popup-det{
-			position: absolute;
-			top: 40%;
-			left: 50%;
-			transform: translate(-50%,-50%);
-			width: 40vw;
-			padding: 50px;
-			box-shadow: 0 5px 30px rgba(0,0,0,.30); 
-			background: #fff;
-			box-sizing: border-box;
-			visibility: hidden;
-			opacity: 0;
-			transition: .5s;
-
-		}
-		#popup-ass h2, #popup-det h2{
-			margin-bottom: 10px;
-		}
-		#popup-ass.active, #popup-det.active{
-			top: 50%;
-			visibility: visible;
-			opacity: 1;
-			transition: .5s;
+		
 		}
 	</style>
 {% endblock embeddedcss %}
@@ -167,44 +109,5 @@
 			</section>
 		</div>
 	</div>
-	<div id="popup-ass">
-		<h2>Create New Assignment</h2>
-		<form method="POST" enctype="multipart/form-data">
-			<fieldset>
-				<br>
-				<label for="testname">Testname:</label>
-				<input type="text" name="testname">
-				<br>
-				<label for="class">Class:</label>
-				<select name="class">
-					<option>10A</option>
-					<option>10B</option>
-					<option>10C</option>
-					<option>10D</option>
-					<option>11A</option>
-				</select>
-				<br>
-				<label for="qpupload">Upload the Question Paper (PDF):</label>
-				<input placeholder="Upload QP" type="file" name="qpupload" accept=".pdf">
-				<br>
-				<input type="submit" name="submit" value="Create Assignment">
-			</fieldset>
-		</form>
-		<a href="" onclick="toggleass()">Close</a></li>
-	</div>
-	
-	<script type="text/javascript">
-		function toggleass(){
-			var blur = document.getElementById('blur')
-			blur.classList.toggle('active')
-			var popup = document.getElementById('popup-ass')
-			popup.classList.toggle('active')
-		}
-		function toggledet(){
-			var blur = document.getElementById('blur')
-			blur.classList.toggle('active')
-			var popup = document.getElementById('popup-det')
-			popup.classList.toggle('active')
-		}
-	</script>
+		
 {% endblock body %}

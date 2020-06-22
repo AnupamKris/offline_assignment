@@ -22,7 +22,7 @@ def createfolder(foldername):
     client.create_folder('/'+foldername)
 
 def uploadfile(filename, foldername):
-    imagepath = '/home/anupamkris/imgdir/'
+    imagepath = 'C:/Users/Bkura/OneDrive/Documents/MNGE/'
     imagepath+=filename
     print(imagepath)
     print(filename)
@@ -180,29 +180,41 @@ def user_home():
 @app.route('/home-assignment', methods = ['GET', 'POST'])
 @login_required
 def home_assignment():
-	return render_template('t-home-assignment.html', choice=choice)	
+	if not current_user.name:
+		return render_template('s-home-assignment.html')
+	else:
+		return render_template('t-home-assignment.html')	
+
 
 
 @app.route('/create-assignment', methods=['GET','POST'])
 @login_required
 def create_assignment():
-	serverlog = open('server.log','a')
-	serverlog.write('\n' + str(request.method))
-	if request.method == 'POST':
-		serverlog.write('\nSaving File\n')
-		serverlog.write(f'\n{request.form.get("testname")}\n')
-		f = request.files['qpupload']
-		f.save('/home/anupamkris/imgdir/QP.pdf')
-		filename = request.form.get('testname')
-		createfolder(filename)
-		link = uploadfile('QP.pdf', filename)
-		global client
-		testsheet = client.open('tests')
-		worksheet = testsheet.add_worksheet(filename, rows = 100, cols = 3)
-		datalist = [current_user.email, request.form.get('class'), link]
-		worksheet.insert_row(datalist, 1)
+	if current_user.name:
+		serverlog = open('server.log','a')
+		serverlog.write('\n' + str(request.method))
+		if request.method == 'POST':
+			serverlog.write('\nSaving File\n')
+			serverlog.write(f'\n{request.form.get("testname")}\n')
+			f = request.files['qpupload']
+			f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/QP.pdf')
+			filename = request.form.get('testname')
+			createfolder(filename)
+			link = uploadfile('QP.pdf', filename)
+			global client
+			testsheet = client.open('tests')
+			worksheet = testsheet.add_worksheet(filename, rows = 100, cols = 3)
+			datalist = [current_user.email, request.form.get('class'), link]
+			worksheet.insert_row(datalist, 1)
+		else:
+			return render_template('create-assignment.html')
 	else:
-		return render_template('create-assignment.html')
+		return redirect(url_for('user_home'))
+@app.route('/submit-assignment')
+@login_required
+def submit_assignment():
+	if not current_user.name:
+		return render_template('submit-assignment.html')
 
 @app.route('/logout')
 def logout():

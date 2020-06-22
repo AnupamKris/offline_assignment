@@ -37,8 +37,8 @@
 			font-weight: 700;
 			font-size: 32px;
 			margin-bottom: 25px;
-
 		}
+
 		.container-mid #usericon{
 			width: 150px;
 			height:150px;
@@ -78,7 +78,7 @@
 			justify-content: space-between;
 
 		}
-		.container-mid section:nth-child(2) button{
+		.container-mid section:nth-child(2) a button{
 			width: 300px;
 			height: 300px;
 			margin:5px 10px;
@@ -91,22 +91,22 @@
 			transition: 1s;
 			box-shadow: 0px 5px 3px #888888;;
 		}
-		.container-mid section:nth-child(2) button:nth-child(1){
+		.container-mid section:nth-child(2) a:nth-child(1) button{
 			background: url({{ url_for('static', filename='2.jpg') }});
 			background-size: cover;
 			background-position: center;
 		}
-		.container-mid section:nth-child(2) button:nth-child(2){
+		.container-mid section:nth-child(2) a:nth-child(2) button{
 			background: url({{ url_for('static', filename='pricing.jpg') }});
 			background-size: cover;
 			background-position: center;
 		}
-		.container-mid section:nth-child(2) button:nth-child(3){
+		.container-mid section:nth-child(2) a:nth-child(3) button{
 			background: url({{ url_for('static', filename='teacher.jpg') }});
 			background-size: cover;
 			background-position: center;
 		}
-		.container-mid section:nth-child(2) button:hover{
+		.container-mid section:nth-child(2) a button:hover{
 			
 			transition: 1s;
 		}
@@ -202,9 +202,9 @@
 				</div>
 			</section>
 			<section>
-				<button>Weekly Time-table</button>
-				<button>Faculty Details</button>
-				<button>Home Assignment</button>
+				<a><button>Weekly Time-table</button></a>
+				<a><button>Faculty Details</button></a>
+				<a href="{{ url_for('home_assignment') }}"><button>Home Assignment</button></a>
 			</section>
 			<section>
 				<center><h2>Circular</h2></center>
