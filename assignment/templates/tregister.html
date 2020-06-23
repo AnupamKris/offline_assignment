@@ -27,11 +27,31 @@
 					<i class="fas fa-at"></i>
 					<input type="text" name="name" placeholder="Name"><br><br>
 					<i class="fas fa-hashtag"></i>
-					<input type="text" name="securitykey" placeholder="Security Key"><br><br>
+					<input type="password" name="securitykey" placeholder="Security Key"><br><br>
 					<i class="fas fa-envelope"></i>
 					<input type="email" name="email" placeholder="Email"><br><br>
+					<i class="fa fa-user" aria-hidden="true"></i>
+					<select name="classteacherof">
+						<option disabled selected>Class Teacher of</option>
+						<option>None</option>
+						<optgroup label="10th Std">
+							<option>10 A</option>
+							<option>10 B</option>
+							<option>10 C</option>
+							<option>10 D</option>
+						</optgroup>
+						<optgroup label="11th Std">
+							<option>11 A</option>
+							<option>11 B</option>
+						</optgroup>
+						<optgroup label="12th Std">
+							<option>12 A</option>
+							<option>12 B</option>
+						</optgroup>
+					</select><br><br>
 					<i class="fa fa-graduation-cap" aria-hidden="true" style="font-size: 30px;"></i>
 					<select id="mselect" multiple="" name = "classes" style="width: 25vw;">
+						<option disabled selected>Select all classes handled</option>
 						<optgroup label="10th Std">
 							<option>10 A</option>
 							<option>10 B</option>
@@ -49,6 +69,7 @@
 					</select><br><br>
 					<i class="fa fa-book" aria-hidden="true"></i>
 					<select name = 'select'>
+						<option disabled selected>Select Subject</option>
 						<option>Math</option>
 						<option>English</option>
 						<option>Physics</option>

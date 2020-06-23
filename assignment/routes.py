@@ -14,6 +14,8 @@ cred = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
 
 client = gspread.authorize(cred)
 
+current_teacher = {}
+
 def createfolder(foldername):
     client = MediaFireClient()
     client.login( email='mngeforkvhvf@gmail.com',
@@ -91,6 +93,12 @@ def tregister():
 		email = request.form.get('email')
 		subject = request.form.get('select')
 		classes = request.form.getlist('classes')
+		classteacherof = request.form.get('classteacherof')
+		global client
+		spreadsheet = client.open('teachers')
+		worksheet = spreadsheet.worksheet('Sheet1')
+		teacherdetails = [str(name), str(email), str(subject), str(classes), str(classteacherof)]
+		worksheet.insert_row(teacherdetails,2)
 		print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
 		if True:
 			serverlog.write('\nhashing')
@@ -101,6 +109,9 @@ def tregister():
 			db.session.add(user)
 			serverlog.write('\nadded')
 			serverlog.write(str(securitykey))
+			db.session.commit()
+			teacher = Teacher(name=name, email=email, classeshandled =classes, classteacher=classteacherof, subject=subject)
+			db.session.add(teacher)
 			db.session.commit()
 			# flash(f'Your account has been created you can now login!', 'success')
 			return redirect(url_for('tlogin'))
@@ -167,9 +178,10 @@ def pricing():
 def user_home():
 	global current_user
 	if not current_user.name:
-		student = client.open('classdetails').sheet1
-		s_adm = student.col_values(1)
-		fields = student.row_values(1)
+		spreadsheet = client.open('students')
+		worksheet = spreadsheet.worksheet('Sheet1')
+		s_adm = worksheet.col_values(2)
+		fields = worksheet.row_values(1)
 		current_student = {}
 		file = open('server.log','a')
 		file.write('\nTeacher ::::: ' + str(current_user.admission))
@@ -177,13 +189,25 @@ def user_home():
 		file.close()
 		for i in s_adm:
 			if i == current_user.admission:
-				row = student.row_values(s_adm.index(i)+1)
-		for i in range(13):
+				row = worksheet.row_values(s_adm.index(i)+1)
+		for i in range(6):
 			current_student[fields[i]] = row[i]
+
 		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
 	else:
-		current_teacher = {'Name':current_user.name, 'Class':1, 'Section':5}
-		return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher)
+		global current_teacher
+		spreadsheet = client.open('teachers')
+		worksheet = spreadsheet.worksheet('Sheet1')
+		t_email = worksheet.col_values(2)
+		fields = worksheet.row_values(1)
+		current_teacher = {}
+		for i in t_email:
+			if i == current_user.email:
+				row = worksheet.row_values(t_email.index(i)+1)
+		for i in range(5):
+			current_teacher[fields[i]] = row[i]
+		print(current_teacher)
+		return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher, eval=eval, len=len)
 
 @app.route('/home-assignment', methods = ['GET', 'POST'])
 @login_required
@@ -191,7 +215,19 @@ def home_assignment():
 	if not current_user.name:
 		return render_template('s-home-assignment.html')
 	else:
-		return render_template('t-home-assignment.html')	
+		tests = client.open('tests')
+		testsheet = tests.worksheet('testsheet')
+		emails = testsheet.col_values(1)
+		teacher_tests = []
+		for i in emails:
+			if i == current_user.email:
+				row = testsheet.row_values(emails.index(i)+1)
+				teacher_tests.append(row)
+		if teacher_tests:
+			print('\n\n\n\n\n'+teacher_tests+'\n\n\n\n\n\n')
+		else:
+			print('\n\n\n\n\n\n\n\nNo tests yet\n\n\n\n\n\n')
+		return render_template('t-home-assignment.html', teacher = current_teacher)	
 
 
 @app.route('/create-assignment', methods=['GET','POST'])
@@ -212,9 +248,9 @@ def create_assignment():
 			testsheet = client.open('tests')
 			worksheet = testsheet.worksheet('testsheet')
 			datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
-			worksheet.insert_row(datalist, 1)
+			worksheet.insert_row(datalist, 2)
 		else:
-			return render_template('create-assignment.html')
+			return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
 	else:
 		return redirect(url_for('user_home'))
 @app.route('/submit-assignment/<testname>', methods = ['GET', 'POST'])

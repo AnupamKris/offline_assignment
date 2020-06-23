@@ -54,7 +54,9 @@
 			background: #f2f2f2;
 			border:1px solid black;
 		}
-
+		.container-mid section:nth-child(1) a button:hover{
+			background: #00000015;
+		}
 		.container-mid section:nth-child(2){
 			border-top: 1px solid #00000040;
 			margin:20px auto;
@@ -140,7 +142,7 @@
 			<section>
 				<h1>Home Assignment</h1>
 				<p>Welcome to the Home Assignment section. Click on the below button to create a new assignment</p>
-				<a href="{{ url_for('create_assignment') }}"><button>Create Assignment</button></a>
+				<a href="{{ url_for('create_assignment', teacher=teacher, eval=eval) }}"><button>Create Assignment</button></a>
 			</section>
 			<section>
 				<h2>Previous assignments</h2>			

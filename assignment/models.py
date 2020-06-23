@@ -17,11 +17,14 @@ class User(db.Model, UserMixin):
 	def __repr__(self):
 		return f"User('{self.admission}','{self.password}','{self.email}')"
 
-# class Teacher(db.Model, UserMixin):
-# 	id = db.Column(db.Integer, primary_key=True)
-# 	password = db.Column(db.String(60), nullable=False)
-# 	email = db.Column(db.String(120), nullable=False)
+class Teacher(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(25), nullable=False)
+	email = db.Column(db.String(120), unique=True, nullable=False)
+	classeshandled = db.Column(db.String(120), nullable=False)
+	classteacher = db.Column(db.String(120), nullable=False)
+	subject = db.Column(db.String(120), nullable=False)
 	
 
-# 	def __repr__(self):
-# 		return f"User('{self.password}','{self.email}')"
+	def __repr__(self):
+		return f"Teacher('{self.name}','{self.email}','{self.classteacher}','{self.classeshandled}','{self.subject}')"

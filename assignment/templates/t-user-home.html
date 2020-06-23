@@ -188,17 +188,25 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
-				<h1>{{ teacher['Name'] }}</h1>
+				<h1>{{ teacher['name'] }}</h1>
 				<div class="detailsbox1">
 					<ul>		
 						<li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
 						<li><a href="#" onclick="togglepic()">Change profile picture</a></li>
 					</ul>
 					<ul>
-						<li>Name: <span>{{ teacher['Name'] }}</span></li>
-						<li>Subject: <span>{{ teacher['subject'] }}</span></li>
-						<li>Type: <span>{{ teacher['type'] }}</span></li>
-						<li>Class Teacher of:<span>{{ teacher['classteacherof'] }}</span></li>
+						<li>Name: &nbsp;<span>{{ teacher['name'] }}</span></li>
+						<li>Subject: &nbsp;<span>{{ teacher['subject'] }}</span></li>
+						<li>Class Teacher of: &nbsp;<span>{{ teacher['classteacherof'] }}</span></li>
+						<li>Classes Handled: &nbsp;
+						{% for class in eval(teacher['classeshandled']) %}
+							{% if eval(teacher['classeshandled']).index(class) == len(eval(teacher['classeshandled']))-1 %}
+								<span>{{ class }}</span>
+							{% else %}						
+								<span>{{ class }}, </span>
+							{% endif %}
+						{% endfor %}
+						</li>
 						<li><a href="#" onclick="toggledet()">See more details</a></li>
 					</ul>
 				</div>
@@ -206,7 +214,7 @@
 			<section>
 				<a href="#"><button>Weekly Time-table</button></a>
 				<a href="#"><button>Student Details</button></a>
-				<a href="{{ url_for('home_assignment') }}"><button>Home Assignment</button></a>
+				<a href="{{ url_for('home_assignment', teacher=teacher, eval=eval) }}"><button>Home Assignment</button></a>
 			</section>
 			<section>
 				<center><h2>Teachers' Circular</h2></center>

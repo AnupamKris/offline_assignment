@@ -186,16 +186,16 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
-				<h1>{{ student['Name'] }}</h1>
+				<h1>{{ student['name'] }}</h1>
 				<div class="detailsbox1">
 					<ul>		
 						<li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
 						<li><a href="#" onclick="togglepic()">Change profile picture</a></li>
 					</ul>
 					<ul>
-						<li>Name: <span>{{ student['Name'] }}</span></li>
-						<li>Class: <span>{{ student['Class'] }}</span></li>
-						<li>Section: <span>{{ student['Section'] }}</span></li>
+						<li>Name: <span>{{ student['name'] }}</span></li>
+						<li>Class: <span>{{ student['class'] }}</span></li>
+						<li>Section: <span>{{ student['section'] }}</span></li>
 						<li>Admission #<span>{{ current_user.admission }}</span></li>
 						<li><a href="#" onclick="toggledet()">See more details</a></li>
 					</ul>
@@ -204,7 +204,7 @@
 			<section>
 				<a><button>Weekly Time-table</button></a>
 				<a><button>Faculty Details</button></a>
-				<a href="{{ url_for('home_assignment') }}"><button>Home Assignment</button></a>
+				<a href="{{ url_for('home_assignment', student = student) }}"><button>Home Assignment</button></a>
 			</section>
 			<section>
 				<center><h2>Circular</h2></center>

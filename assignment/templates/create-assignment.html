@@ -93,11 +93,9 @@
 						<br>
 						<label for="class">Class:</label>
 						<select name="class">
-							<option>10A</option>
-							<option>10B</option>
-							<option>10C</option>
-							<option>10D</option>
-							<option>11A</option>
+							{% for class in eval(teacher['classeshandled']) %}
+								<option>{{ class }}</option>
+							{% endfor %}
 						</select>
 						<br>
 						<label for="qpupload">Upload the Question Paper (PDF):</label>
