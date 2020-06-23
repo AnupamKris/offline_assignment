@@ -7,6 +7,7 @@ from random import choice
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from mediafire.client import MediaFireClient, File, Folder
+import pandas as pd
 
 scope = ['https://www.googleapis.com/auth/drive']
 
@@ -49,26 +50,28 @@ def uploadfile(filename, foldername):
 def home():
 	return render_template('home.html',title='Home')
 
+fullstudentdata = pd.read_excel('/home/anupamkris/Desktop/offline_assignment/offline_assignment/assignment/static/students.xlsx')
+
 @app.route('/register', methods = ['GET','POST'])
 def register():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
-	serverlog = open('server.log','a')
+
 	if current_user.is_authenticated:
-		serverlog.write('\nLogged Already')
+	
 		return redirect(url_for('home'))
 	form = RegistrationForm(request.form)
-	serverlog.write('\nCheck validation ')
-	serverlog.write(str(form.validate_on_submit()))
+
+
 	if form.validate_on_submit():
-		serverlog.write('\nhashing')
+	
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-		serverlog.write('\ngetting data')
+	
 		user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
-		serverlog.write('\nData:'+str(user))
+	
 		db.session.add(user)
-		serverlog.write('\nadded')
-		serverlog.write(str(form.dob.data))
+	
+	
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))
@@ -79,13 +82,13 @@ def register():
 def tregister():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
-	serverlog = open('server.log','a')
+
 
 	if current_user.is_authenticated:
-		serverlog.write('\nLogged Already')
+	
 		return redirect(url_for('home'))
 	if request.method == 'POST':
-		serverlog.write('\nCheck validation ')
+	
 		securitykey = request.form.get('securitykey')
 		name = request.form.get('name')
 		password = request.form.get('password')
@@ -101,14 +104,14 @@ def tregister():
 		worksheet.insert_row(teacherdetails,2)
 		print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
 		if True:
-			serverlog.write('\nhashing')
+		
 			hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-			serverlog.write('\ngetting data')
+		
 			user = User(name=name, password=hashed_password, email =email)
-			serverlog.write('\nData:'+str(user))
+		
 			db.session.add(user)
-			serverlog.write('\nadded')
-			serverlog.write(str(securitykey))
+		
+		
 			db.session.commit()
 			teacher = Teacher(name=name, email=email, classeshandled =str(classes), classteacher=classteacherof, subject=subject)
 			db.session.add(teacher)
@@ -124,14 +127,14 @@ def login():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
 	form = LoginForm()
-	serverlog = open("server.log",'a')
-	serverlog.write('login trial')
-	serverlog.write(str(form.validate_on_submit())+'\n')
+
+
+
 	if form.validate_on_submit():
 		user = User.query.filter_by(admission=form.admission.data).first()
-		serverlog.write(str(user.password))
-		serverlog.write(str(form.admission.data))
-		serverlog.write('is pass corect:'+str(bcrypt.check_password_hash(user.password, form.password.data)))
+	
+	
+	
 
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)
@@ -145,18 +148,18 @@ def tlogin():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
 	form = TeacherLoginForm()
-	serverlog = open("server.log",'a')
-	serverlog.write('login trial')
-	serverlog.write(str(form.validate_on_submit())+'\n')
+
+
+
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
-		serverlog.write(str(user.password))
-		serverlog.write(str(form.email.data))
-		serverlog.write('is pass corect:'+str(bcrypt.check_password_hash(user.password, form.password.data)))
+	
+	
+	
 
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)
-			serverlog.write('LOGGING TEACHER:'+user.email+user.name+current_user.email+current_user.name)
+		
 			next_page = request.args.get('next')
 			return redirect(next_page) if next_page else redirect(url_for('user_home'))
 	return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
@@ -178,20 +181,14 @@ def pricing():
 def user_home():
 	global current_user
 	if not current_user.name:
-		spreadsheet = client.open('students')
-		worksheet = spreadsheet.worksheet('Sheet1')
-		s_adm = worksheet.col_values(2)
-		fields = worksheet.row_values(1)
+		s_adm = fullstudentdata['admission']
+		fields = list(fullstudentdata.columns)
 		current_student = {}
-		file = open('server.log','a')
-		file.write('\nTeacher ::::: ' + str(current_user.admission))
-		file.write('\n' + str(current_user.name))
-		file.close()
-		for i in s_adm:
-			if i == current_user.admission:
-				row = worksheet.row_values(s_adm.index(i)+1)
-		for i in range(6):
+		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
+		for i in range(5):
 			current_student[fields[i]] = row[i]
+
+		print('\n\n Stud Data', current_student)
 
 		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
 	else:
@@ -204,7 +201,7 @@ def user_home():
 		for i in t_email:
 			if i == current_user.email:
 				row = worksheet.row_values(t_email.index(i)+1)
-		for i in range(5):
+		for i in range(6):
 			current_teacher[fields[i]] = row[i]
 		print(current_teacher)
 		return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher, eval=eval, len=len)
@@ -234,11 +231,11 @@ def home_assignment():
 @login_required
 def create_assignment():
 	if current_user.name:
-		serverlog = open('server.log','a')
-		serverlog.write('\n' + str(request.method))
+	
+	
 		if request.method == 'POST':
-			serverlog.write('\nSaving File\n')
-			serverlog.write(f'\n{request.form.get("testname")}\n')
+		
+		
 			f = request.files['qpupload']
 			f.save('/home/anupamkris/imgdir/QP.pdf')
 			filename = request.form.get('testname')
@@ -258,20 +255,20 @@ def create_assignment():
 def submit_assignment(testname=None):
 	if not current_user.name:
 		if request.method == 'POST':
-			serverlog = open('server.log','a')
-			serverlog.write('Files : ')
-			serverlog.write(str(request.files.get('assupload1')))
-			serverlog.close()
+		
+		
+		
+		
 			global client
 			spreadsheet = client.open('tests')
 			worksheet = spreadsheet.worksheet('testsheet')
 			fulldata = worksheet.get_all_values()
-			serverlog = open('server.log', 'a')
-			serverlog.write(str(fulldata))
+		
+		
 			print('\n\n\n\n\n\n\n\n\n\n_________________________________n\\n\n\n\n\n\n\n\n\n\n\n')
 			print(fulldata)
 			for i in range(len(fulldata)):
-				serverlog.write(str(fulldata[i]))
+			
 				if fulldata[i][2] == testname:
 					print(fulldata[i][2])
 					dd = {}
