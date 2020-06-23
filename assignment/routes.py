@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, request
 from assignment import app, db, bcrypt
 from assignment.forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
-from assignment.models import User
+from assignment.models import User, Teacher
 from flask_login import login_user, current_user, logout_user, login_required
 from random import choice
 import gspread
@@ -110,7 +110,7 @@ def tregister():
 			serverlog.write('\nadded')
 			serverlog.write(str(securitykey))
 			db.session.commit()
-			teacher = Teacher(name=name, email=email, classeshandled =classes, classteacher=classteacherof, subject=subject)
+			teacher = Teacher(name=name, email=email, classeshandled =str(classes), classteacher=classteacherof, subject=subject)
 			db.session.add(teacher)
 			db.session.commit()
 			# flash(f'Your account has been created you can now login!', 'success')
