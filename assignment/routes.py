@@ -223,14 +223,14 @@ def home_assignment():
 		classes = testsheet.col_values(2)
 		student_tests = []
 		s_class = str(current_student['class'])+' '+current_student['section'] 
-		for i in classes:
-			if i == s_class:
-				row = testsheet.row_values(classes.index(i)+1)
+		for i in range(len(classes)):
+			if classes[i] == s_class:
+				row = testsheet.row_values(i+1)
 				student_tests.append(row)
 		print('\n\n\n\n\n','Classes:',classes,'\n\n\n\n\n')
 		print('\n\n\n\n\n','Class:',s_class,'\n\n\n\n\n')
 		print('\n\n\n\n\n','Tests:',student_tests,'\n\n\n\n\n')
-		return render_template('s-home-assignment.html', student=current_student, tests=student_tests)
+		return render_template('s-home-assignment.html', student=current_student, student_tests=student_tests)
 	else:
 		#Getting current teacher details
 		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
@@ -239,17 +239,10 @@ def home_assignment():
 		testsheet = tests.worksheet('testsheet')
 		emails = testsheet.col_values(1)
 		teacher_tests = []
-		emails.pop(0)
-		while emails:
-			if emails[0] == current_user.email:
-				row = testsheet.row_values(i+1)
-				teacher_tests.append(row)
-			emails.pop(0)
 		for i in range(len(emails)):
 			if emails[i] == current_user.email:
 				row = testsheet.row_values(i+1)
 				teacher_tests.append(row)
-				emails.pop(0)
 		#loading the teacher's classes' strength
 		Class = list(fullstudentdata['class'])
 		section = list(fullstudentdata['section'])

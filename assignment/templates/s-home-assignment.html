@@ -171,12 +171,10 @@
 									<td>{{ test[2] }}</td>
 									<td>N/A</td>
 									<td>N/A</td>
-									{% for i in test[4] %}
-										{% if i['marks'] == 'None' %}
-											<td><a href="#">Correct</a></td>
-										{% endif %}
+									{% for i in test[4] if i['admno'] == student['admission'] and i['marks'] == 'None' %}		
+										<td><a href="{{ test[3] }}">Download QP</a> Result Pending</td>			
 									{% else %}
-										<td><a href="#">View details</a></td>
+										<td><a href="{{ test[3] }}">Download QP</a> <a href="{{ url_for('submit_assignment', testname = test[2]) }}">Submit Assignment</a></td>
 									{% endfor %}
 								</tr>
 							{% endfor %}
