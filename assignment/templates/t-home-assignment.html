@@ -158,30 +158,31 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Syllabels 1</td>
-							<td>10A,10B</td>
-							<td>21-06-2002</td>
-							<td>12/42</td>
-							<td><a href="#">Correct</a></td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Grammar 1</td>
-							<td>9A,9D</td>
-							<td>18-06-2002</td>
-							<td>36/41</td>
-							<td><a href="#">Correct</a></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Passage 1</td>
-							<td>10A,10B</td>
-							<td>14-06-2002</td>
-							<td>42/42</td>
-							<td><a href="#">View details</a></td>
-						</tr>
+						{% if teacher_tests %}
+							{% for test in teacher_tests %}
+								<tr>
+									<td>{{ teacher_tests.index(test)+1 }}</td>
+									<td>{{ test[2] }}</td>
+									<td>{{ test[1] }}</td>
+									<td>{{ len(eval(test[4])) }}/{{ strength[test[1]] }}</td>
+									<td>N/A</td>
+									{% for i in test[4] if i['marks'] == 'None' %}
+											<td><a href="#">Correct</a></td>
+									{% else %}
+										<td><a href="#">View details</a></td>
+									{% endfor %}
+								</tr>
+							{% endfor %}
+						{% else %}
+							<tr>
+								<th>1</th>
+								<th>No tests created</th>
+								<th>N/A</th>
+								<th>N/A</th>
+								<th>N/A</th>
+								<th><a href="{{ url_for('create_assignment') }}">Create an assignment</a></th>
+							</tr>
+						{% endif %}
 					</tbody>
 				</table>
 			</section>

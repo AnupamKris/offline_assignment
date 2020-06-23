@@ -197,7 +197,7 @@
 					<ul>
 						<li>Name: &nbsp;<span>{{ teacher['name'] }}</span></li>
 						<li>Subject: &nbsp;<span>{{ teacher['subject'] }}</span></li>
-						<li>Class Teacher of: &nbsp;<span>{{ teacher['classteacherof'] }}</span></li>
+						<li>Class Teacher of: &nbsp;<span>{{ teacher['classteacher'] }}</span></li>
 						<li>Classes Handled: &nbsp;
 						{% for class in eval(teacher['classeshandled']) %}
 							{% if eval(teacher['classeshandled']).index(class) == len(eval(teacher['classeshandled']))-1 %}
@@ -214,7 +214,7 @@
 			<section>
 				<a href="#"><button>Weekly Time-table</button></a>
 				<a href="#"><button>Student Details</button></a>
-				<a href="{{ url_for('home_assignment', teacher=teacher, eval=eval) }}"><button>Home Assignment</button></a>
+				<a href="{{ url_for('home_assignment') }}"><button>Home Assignment</button></a>
 			</section>
 			<section>
 				<center><h2>Teachers' Circular</h2></center>

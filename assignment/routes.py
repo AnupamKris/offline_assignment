@@ -9,13 +9,22 @@ from oauth2client.service_account import ServiceAccountCredentials
 from mediafire.client import MediaFireClient, File, Folder
 import pandas as pd
 
+#GSpread---------------------------------------------------------------------------
 scope = ['https://www.googleapis.com/auth/drive']
 
 cred = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
 
 client = gspread.authorize(cred)
+#----------------------------------------------------------------------------------
 
-current_teacher = {}
+#Student Excel Loading-------------------------------------------------------------
+fullstudentdata = pd.read_excel("D:/I'm a Developer/OFF/offline_assignment/assignment/static/students.xlsx")
+
+s_adm = fullstudentdata['admission']
+
+fields = list(fullstudentdata.columns)
+#----------------------------------------------------------------------------------
+
 
 def createfolder(foldername):
     client = MediaFireClient()
@@ -25,7 +34,7 @@ def createfolder(foldername):
     client.create_folder('/'+foldername)
 
 def uploadfile(filename, foldername):
-    imagepath = '/home/anupamkris/imgdir/'
+    imagepath = 'C:/Users/Bkura/OneDrive/Documents/MNGE/'
     imagepath+=filename
     print(imagepath)
     print(filename)
@@ -50,7 +59,6 @@ def uploadfile(filename, foldername):
 def home():
 	return render_template('home.html',title='Home')
 
-fullstudentdata = pd.read_excel('/home/anupamkris/Desktop/offline_assignment/offline_assignment/assignment/static/students.xlsx')
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -97,11 +105,11 @@ def tregister():
 		subject = request.form.get('select')
 		classes = request.form.getlist('classes')
 		classteacherof = request.form.get('classteacherof')
-		global client
-		spreadsheet = client.open('teachers')
-		worksheet = spreadsheet.worksheet('Sheet1')
-		teacherdetails = [str(name), str(email), str(subject), str(classes), str(classteacherof)]
-		worksheet.insert_row(teacherdetails,2)
+		# global client
+		# spreadsheet = client.open('teachers')
+		# worksheet = spreadsheet.worksheet('Sheet1')
+		# teacherdetails = [str(name), str(email), str(subject), str(classes), str(classteacherof)]
+		# worksheet.insert_row(teacherdetails,2)
 		print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
 		if True:
 		
@@ -181,8 +189,9 @@ def pricing():
 def user_home():
 	global current_user
 	if not current_user.name:
-		s_adm = fullstudentdata['admission']
-		fields = list(fullstudentdata.columns)
+		global fullstudentdata
+		global s_adm
+		global fields
 		current_student = {}
 		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
 		for i in range(5):
@@ -192,52 +201,84 @@ def user_home():
 
 		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
 	else:
-		global current_teacher
-		spreadsheet = client.open('teachers')
-		worksheet = spreadsheet.worksheet('Sheet1')
-		t_email = worksheet.col_values(2)
-		fields = worksheet.row_values(1)
-		current_teacher = {}
-		for i in t_email:
-			if i == current_user.email:
-				row = worksheet.row_values(t_email.index(i)+1)
-		for i in range(6):
-			current_teacher[fields[i]] = row[i]
+		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
 		print(current_teacher)
 		return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher, eval=eval, len=len)
 
 @app.route('/home-assignment', methods = ['GET', 'POST'])
 @login_required
 def home_assignment():
+	global fullstudentdata
+	global s_adm 
+	global fields
 	if not current_user.name:
-		return render_template('s-home-assignment.html')
+		#Fetching current student details from EXCEL
+		current_student = {}
+		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
+		for i in range(5):
+			current_student[fields[i]] = row[i]
+		#Fetching current student's test details from GOOGLESHEETS
+		tests = client.open('tests')
+		testsheet = tests.worksheet('testsheet')
+		classes = testsheet.col_values(2)
+		student_tests = []
+		s_class = str(current_student['class'])+' '+current_student['section'] 
+		for i in classes:
+			if i == s_class:
+				row = testsheet.row_values(classes.index(i)+1)
+				student_tests.append(row)
+		print('\n\n\n\n\n','Classes:',classes,'\n\n\n\n\n')
+		print('\n\n\n\n\n','Class:',s_class,'\n\n\n\n\n')
+		print('\n\n\n\n\n','Tests:',student_tests,'\n\n\n\n\n')
+		return render_template('s-home-assignment.html', student=current_student, tests=student_tests)
 	else:
+		#Getting current teacher details
+		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+		#Fetching current teacher's test details
 		tests = client.open('tests')
 		testsheet = tests.worksheet('testsheet')
 		emails = testsheet.col_values(1)
 		teacher_tests = []
-		for i in emails:
-			if i == current_user.email:
-				row = testsheet.row_values(emails.index(i)+1)
+		emails.pop(0)
+		while emails:
+			if emails[0] == current_user.email:
+				row = testsheet.row_values(i+1)
 				teacher_tests.append(row)
+			emails.pop(0)
+		for i in range(len(emails)):
+			if emails[i] == current_user.email:
+				row = testsheet.row_values(i+1)
+				teacher_tests.append(row)
+				emails.pop(0)
+		#loading the teacher's classes' strength
+		Class = list(fullstudentdata['class'])
+		section = list(fullstudentdata['section'])
+		for i in range(len(Class)):
+			Class[i]=str(Class[i])+' '+section[i]
+		strength = {}
+		for i in eval(current_teacher.classeshandled):
+			strength[i]=Class.count(i)
 		if teacher_tests:
-			print('\n\n\n\n\n'+teacher_tests+'\n\n\n\n\n\n')
+			print('\n\n\n\n\n',teacher_tests,'\n\n\n\n\n\n')
 		else:
 			print('\n\n\n\n\n\n\n\nNo tests yet\n\n\n\n\n\n')
-		return render_template('t-home-assignment.html', teacher = current_teacher)	
+		# print('\n\n\n\n\n','Class:',Class,'\n\n\n\n\n')
+		# print('\n\n\n\n\n','Strength:',strength,'\n\n\n\n\n')
+		print('\n\n\n\n\n','Tests:',teacher_tests,'\n\n\n\n\n')
+		return render_template('t-home-assignment.html', teacher = current_teacher, teacher_tests=teacher_tests, strength=strength, eval=eval, len=len)	
 
 
 @app.route('/create-assignment', methods=['GET','POST'])
 @login_required
 def create_assignment():
 	if current_user.name:
-	
+		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
 	
 		if request.method == 'POST':
 		
 		
 			f = request.files['qpupload']
-			f.save('/home/anupamkris/imgdir/QP.pdf')
+			f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/QP.pdf')
 			filename = request.form.get('testname')
 			createfolder(filename)
 			link = uploadfile('QP.pdf', filename)
@@ -287,14 +328,14 @@ def submit_assignment(testname=None):
 								return render_template('register.html')
 						else:
 							f = request.files['assupload']
-							f.save('/home/anupamkris/imgdir/'+current_user.admission+'.pdf')
+							f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/'+current_user.admission+'.pdf')
 							link = uploadfile(current_user.admission+'.pdf', testname)
 							print('running else')
 							updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
 							worksheet.update_cell(i+1, 5, str(updata))
 					except:
 						f = request.files['assupload']
-						f.save('/home/anupamkris/imgdir/'+current_user.admission+'.pdf')
+						f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/'+current_user.admission+'.pdf')
 						link = uploadfile(current_user.admission+'.pdf', testname)
 						print('running except')
 						updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
@@ -302,7 +343,14 @@ def submit_assignment(testname=None):
 						worksheet.update_cell(i+1, 5, str(updata))
 			return render_template('successpage')
 		else:
-			return render_template('submit-assignment.html')
+			global fullstudentdata
+			global s_adm 
+			global fields
+			current_student = {}
+			row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
+			for i in range(5):
+				current_student[fields[i]] = row[i]
+			return render_template('submit-assignment.html', student=current_student, eval=eval, str=str)
 
 
 @app.route('/sample-pdf-viewer')
