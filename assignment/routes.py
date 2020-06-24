@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, session
 from assignment import app, db, bcrypt
 from assignment.forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
 from assignment.models import User, Teacher
@@ -227,10 +227,16 @@ def home_assignment():
 			if classes[i] == s_class:
 				row = testsheet.row_values(i+1)
 				student_tests.append(row)
+		#fetching list of admissions submitted
+		submitted_admno = {}
+		for test in student_tests:
+			submitted_admno[test[2]] = [sub['admno'] for sub in eval(test[4])]
 		print('\n\n\n\n\n','Classes:',classes,'\n\n\n\n\n')
 		print('\n\n\n\n\n','Class:',s_class,'\n\n\n\n\n')
-		print('\n\n\n\n\n','Tests:',student_tests,'\n\n\n\n\n')
-		return render_template('s-home-assignment.html', student=current_student, student_tests=student_tests)
+		print('\n\n\n\n\n','Tests:',student_tests,'\n\n\n\n\n')		
+		print('\n\n\n\n\n','Submits',submitted_admno,'\n\n\n\n\n')
+
+		return render_template('s-home-assignment.html', student=current_student, student_tests=student_tests, str=str, int=int, eval=eval, sub_admno=submitted_admno)
 	else:
 		#Getting current teacher details
 		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
@@ -255,11 +261,66 @@ def home_assignment():
 			print('\n\n\n\n\n',teacher_tests,'\n\n\n\n\n\n')
 		else:
 			print('\n\n\n\n\n\n\n\nNo tests yet\n\n\n\n\n\n')
+		#fetching list of marks of tests
+		submitted_marks = {}
+		for test in teacher_tests:
+			submitted_marks[test[2]] = [str(sub['marks']) for sub in eval(test[4])]
 		# print('\n\n\n\n\n','Class:',Class,'\n\n\n\n\n')
 		# print('\n\n\n\n\n','Strength:',strength,'\n\n\n\n\n')
-		print('\n\n\n\n\n','Tests:',teacher_tests,'\n\n\n\n\n')
-		return render_template('t-home-assignment.html', teacher = current_teacher, teacher_tests=teacher_tests, strength=strength, eval=eval, len=len)	
+		print('\n\n\n\n\n','marks:',submitted_marks,'\n\n\n\n\n')
 
+		return render_template('t-home-assignment.html', teacher = current_teacher, teacher_tests=teacher_tests, strength=strength, sub_marks=submitted_marks, eval=eval, len=len, str=str)	
+
+
+@app.route('/view-details/<testname>', methods = ['GET', 'POST'])
+@login_required
+def view_assignment_details(testname=None):
+	if current_user.name:
+		if testname:
+			current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+			global fullstudentdata
+			global client
+			tests = client.open('tests')
+			testsheet = tests.worksheet('testsheet')
+			testnames = testsheet.col_values(3)
+			for i in testnames:
+				if i == testname:
+					current_test = testsheet.row_values(testnames.index(i)+1)
+					break
+			test_class = current_test[1]
+
+			Class = list(fullstudentdata['class'])
+			section = list(fullstudentdata['section'])
+			for i in range(len(Class)):
+				Class[i]=str(Class[i])+' '+section[i]
+			name = list(fullstudentdata['name'])
+			admno = list(fullstudentdata['admission'])
+			student_details = {}
+			student_list = []
+			print(f'\n\n\n\n\nClass{Class}{len(Class)}\n\n\nname{name}{len(name)}\n\n')
+
+			for i in range(len(Class)):
+				print(i)
+				if Class[i] == test_class: 
+					print(i, name[i])
+					print(i, Class[i])
+					print(i, admno[i])
+					# student_details['name'] = name[i]
+					# student_details['class'] = Class[i]
+					# student_details['admno'] = admno[i]
+					student_details = {'name': name[i], 'class':Class[i],'admno':admno[i]}
+					student_list.append(student_details)					
+			sub_adm = []
+			sub_adm = [str(sub['admno']) for sub in eval(current_test[4])]
+			notsub_count = len(student_list) - len(sub_adm)
+			for student in student_list:
+				if str(student['admno']) in sub_adm:
+					print('\n\n\n\n\n\n',current_test)
+					print(f'\n\n\n\n',eval(current_test[4])[sub_adm.index(str(student['admno']))]['link'],'\n\n\n\n\n\n')
+			
+			return render_template('t-view-ass-details.html', student_list=student_list, current_test=current_test, sub_adm=sub_adm, eval=eval, str=str, len=len)
+	else:
+		return redirect(url_for('user_home'))
 
 @app.route('/create-assignment', methods=['GET','POST'])
 @login_required

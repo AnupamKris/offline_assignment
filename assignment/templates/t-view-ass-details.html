@@ -43,6 +43,10 @@
 			font-size: 32px;
 			margin-bottom: 25px;
 		}
+
+		.container-mid section:nth-child(1) span{
+			font-weight: bold;
+		}
 		
 		.container-mid section:nth-child(1) a button{
 			box-sizing: border-box;
@@ -140,49 +144,75 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
-				<h1>Home Assignment</h1>
-				<p>Welcome to the Home Assignment section. Click on the below button to create a new assignment</p>
-				<a href="{{ url_for('create_assignment', teacher=teacher, eval=eval) }}"><button>Create Assignment</button></a>
+				<h1>{{ current_test[2] }}'s Details</h1>
+				
+				<p>Total number of students: <span>{{ len(student_list) }}</span></p>
+				<p>Number of students submitted: <span>{{ len(sub_adm) }}</span></p>
+				<p>Number of students defaulted: <span>{{ len(student_list) - len(sub_adm) }}</span></p>
 			</section>
 			<section>
-				<h2>Previous assignments</h2>			
+				<h2>Students who submitted</h2>			
 				<table>
 					<thead>
 						<tr>
-							<th>Serial</th>
+							<th>Admission No.</th>
 							<th>Name</th>
 							<th>Class</th>
 							<th>Date</th>
-							<th>Completion</th>
 							<th>Correction</th>
 						</tr>
 					</thead>
 					<tbody>
-						{% if teacher_tests %}
-							{% for test in teacher_tests %}
+						{% if sub_adm %}						
+							{% for student in student_list %}
+								{% if str(student['admno']) in sub_adm %}
+								{{ current_test[4][sub_adm.index(str(student['admno']))]['link'] }}
 								<tr>
-									<td>{{ teacher_tests.index(test)+1 }}</td>
-									<td>{{ test[2] }}</td>
-									<td>{{ test[1] }}</td>
+									<td>{{ student['admno'] }}</td>
+									<td>{{ student['name'] }}</td>
+									<td>{{ student['class'] }}</td>
 									<td>N/A</td>
-									<td>{{ len(eval(test[4])) }}/{{ strength[test[1]] }}</td>
-									{% if 'None' in sub_marks[test[2]] %}
-										<td><a href="{{ url_for('view_assignment_details', testname=test[2]) }}">View Details</a></td>
-									{% else %}
-										<td><a href="{{ url_for('view_assignment_details', testname=test[2]) }}">View details</a></td>
-									{% endif %}
+
+									<td><a href="{{ eval(current_test[4])[sub_adm.index(str(student['admno']))]['link'] }}">Download</a></td>
 								</tr>
+								{% endif %}
 							{% endfor %}
 						{% else %}
 							<tr>
-								<th>1</th>
-								<th>No tests created</th>
-								<th>N/A</th>
-								<th>N/A</th>
-								<th>N/A</th>
-								<th><a href="{{ url_for('create_assignment') }}">Create an assignment</a></th>
-							</tr>
-						{% endif %}
+							<td></td>
+							<td>No student has submitted</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						{% endif %}						
+					</tbody>
+				</table>
+				<br><br>
+				<h2>Students who didn't submit</h2>
+				<br><br>
+				<table>
+					<thead>
+						<tr>
+							<th>Admission No.</th>
+							<th>Name</th>
+							<th>Class</th>
+							<th>Date</th>
+							<th>Submission</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for student in student_list %}
+							{% if str(student['admno']) not in sub_adm %}
+								<tr>
+									<td>{{ student['admno'] }}</td>
+									<td> {{ student['name'] }} </td>
+									<td> {{ student['class'] }} </td>
+									<td>N/A</td>
+									<td>NOT SUBMITTED</td>
+								</tr>
+							{% endif %}
+						{% endfor %}						
 					</tbody>
 				</table>
 			</section>
