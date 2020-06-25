@@ -30,11 +30,16 @@
 			padding-bottom: 30px;
 			box-sizing: border-box;
 		}
+
 		@media only screen and (orientation: portrait){
 			.container-mid{
 				width: 100%;
 			}
+			.container-mid section:nth-child(1) h1{
+				font-size: 100px;
+			}
 		}
+
 		.container-mid section:nth-child(1){
 			margin:20px auto;
 			width: 100%;
@@ -63,7 +68,7 @@
 		.container-mid section:nth-child(2){
 
 			margin:20px auto;
-			padding: 35px 25px;
+			padding: 10px 25px;
 		}
 
 		.container-mid section:nth-child(2) h2{
@@ -71,6 +76,104 @@
 			font-size: 1.2em;
 		}
 
+		.container-mid section:nth-child(2) table{
+			border-collapse: collapse;
+			width: 100%;
+			background: #f2f2f2;
+			border-radius: 8px 8px 0 0;
+			overflow: hidden;
+			box-shadow: 0 0 20px #00000015;
+		}
+
+		.container-mid section:nth-child(2) table thead tr{
+			text-align: left;
+			font-weight: 700;
+			color: #fff;
+			background-color: #ff738f;
+		}
+
+		.container-mid section:nth-child(2) table th,.container-mid section:nth-child(2) table td{
+			padding: 12px 25px;
+		}
+
+		.container-mid section:nth-child(2) table tbody tr{
+			border-bottom: 1px solid #ddd;
+		}
+
+		.container-mid section:nth-child(2) table tbody tr:last-of-type{
+			border-bottom: 2px solid #ff738f;
+		}
+
+		.container-mid section:nth-child(2) table tr:nth-child(even){
+			background-color:#e5e5e5;
+		}
+
+		.container-mid section:nth-child(2) h2{
+			font-family: 'Source Sans Pro', sans-serif;
+			font-weight: 700;
+			font-size: 28px;
+			margin: 25px 0;
+			/*text-decoration: underline;			*/
+		}
+
+		form{
+			margin:50px 0px;
+			border:none;
+		}
+
+		fieldset{
+			margin: 10px ;
+			border:none;
+			height: 30px;
+		}
+
+
+		#assuploadbutt{
+			background: #fff;
+			padding: 10px 20px;
+			margin-top: 30px;
+			border:2px solid #ff738f;
+			border-radius: 10px;
+			box-shadow: 0 5px 10px #00000030;
+			font-weight: bold;
+			color: #ff738f;
+			transition: .2s;
+			cursor: pointer;
+		}
+
+		#assuploadbutt:hover{
+			transform: scale(1.01);
+			transition: .2s;
+			background: #00000010
+		}
+
+		#assuploadbutt.active{
+			background-color: #ff738f;
+			border:2px solid #fff;
+			color: #fff;
+		}
+
+		#assuploadbutt span{
+			font-weight: normal;
+		}
+
+		#submit{
+			background: #fff;
+			padding: 10px 20px;
+			margin-top: 30px;
+			border:2px solid #ff738f;
+			border-radius: 10px;
+			box-shadow: 0 5px 10px #00000030;
+			font-weight: bold;
+			color: #ff738f;
+			transition: .2s;
+			cursor: pointer;
+		}
+
+		#submit:hover{
+			background: #00000010;
+			transition: .2s;
+		}
 		.loadersec{
 			padding: 50px;
 			box-shadow: 0 5px 30px rgba(0,0,0,.30);
@@ -114,7 +217,7 @@
 			height: 200px;
 			border-radius: 50%;
 			background: linear-gradient(45deg,transparent,transparent 40%, #e5f403);
-			animation: loaderanim 2s linear infinite;
+			animation: loaderanim 2s linear;
 			}
 
 			@keyframes loaderanim {
@@ -152,67 +255,6 @@
 				filter: blur(30px);
 
 			}
-			form{
-				border: none;
-				align-items: left;
-				margin-top: 20px;
-				}
-			fieldset{
-				border:none;
-			}
-			input, select{
-				width: 200px;
-				padding: 8px 5px;
-				border:none;
-				border-bottom: 1px solid #ff375f;
-				margin-bottom:50px;
-			}
-			input[type=file]{
-				border:none;
-			}
-			input[type=submit]{
-				font-weight: 500;
-				border-radius: 15px;
-				border: 1px solid #ff375f;
-				background: #fff;
-				cursor: pointer;
-				width:160px;
-			}
-			input[type=submit]:hover{
-				background: #00000008
-			}
-			label{
-				font-weight: 500;
-				margin-bottom: 3px;
-			}
-			#qpuploadbutt{
-				background: #fff;
-				padding: 10px 20px;
-				margin-top: 30px;
-				border:2px solid #ff738f;
-				border-radius: 10px;
-				box-shadow: 0 5px 10px #00000030;
-				font-weight: bold;
-				color: #ff738f;
-				transition: .2s;
-				cursor: pointer;
-			}
-
-			#qpuploadbutt:hover{
-				transform: scale(1.01);
-				transition: .2s;
-				background: #00000010
-			}
-
-			#qpuploadbutt.active{
-				background-color: #ff738f;
-				border:2px solid #fff;
-				color: #fff;
-			}
-
-			#qpuploadbutt span{
-				font-weight: normal;
-			}
 	</style>
 {% endblock embeddedcss %}
 
@@ -221,32 +263,17 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
-				<h1>Create Assignment</h1>
-				<p>Enter the following details to create the Assignment for the targetted class.</p>
-			</section>
-			<section>
-				<h2>Assignment Details</h2>
+				<h1>Submit Assignment</h1>
+				<p>Welcome to the Submit Assignment section. Please attach your assignment in the form of pdf below.</p>
 				<form method="POST" enctype="multipart/form-data">
 					<fieldset>
-						<br>
-						<label for="testname">Testname:</label>
-						<br>
-						<input type="text" name="testname" placeholder="Enter Testname">
-						<br>
-						<label for="class">Class:</label>
-						<br>
-						<select name="class">
-							{% for class in eval(teacher['classeshandled']) %}
-								<option>{{ class }}</option>
-							{% endfor %}
-						</select>
-						<br>
-						<label for="qpupload" id="qpuploadbutt">
+						<label for="assupload" id="assuploadbutt">
 							Upload PDF
 						</label>
-						<input type="file" id="qpupload" name="qpupload" accept=".pdf" hidden="" required>
-						<br><br><br>
-						<input type="submit" name="submit" value="Create Assignment">
+						<input type="file" id="assupload" name="assupload" accept=".pdf" hidden="" required>
+						<br><br>
+						<input type="Submit" name="submit" id="submit" onclick="toggleloader()">
+						<br>
 					</fieldset>
 				</form>
 			</section>
@@ -259,24 +286,24 @@
 			<h1>Uploading</h1>
 		</center>
 	</section>
-<script type="text/javascript">
-	function toggleloader(){
-		var blur = document.getElementById('blur')
-		blur.classList.toggle('active')
-		var popup = document.getElementById('popup')
-		popup.classList.toggle('active')
-	}
-	var loader = function(e){
-		let file = e.target.files;
+	<script type="text/javascript">
+		function toggleloader(){
+			var blur = document.getElementById('blur')
+			blur.classList.toggle('active')
+			var popup = document.getElementById('popup')
+			popup.classList.toggle('active')
+		}
+		var loader = function(e){
+			let file = e.target.files;
 
-		let show = '<span>Selected file : </span>' + file[0].name;
+			let show = '<span>Selected file : </span>' + file[0].name;
 
-		let output = document.getElementById("qpuploadbutt");
-		output.innerHTML = show;
-		output.classList.add('active');
-	};
+			let output = document.getElementById("assuploadbutt");
+			output.innerHTML = show;
+			output.classList.add('active');
+		};
 
-	let fileInput = document.getElementById("qpupload");
-	fileInput.addEventListener("change",loader);
-</script>
+		let fileInput = document.getElementById("assupload");
+		fileInput.addEventListener("change",loader);
+	</script>
 {% endblock body %}

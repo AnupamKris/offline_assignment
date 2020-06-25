@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block embeddedcss %}
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&display=swap" rel="stylesheet">
 	<style type="text/css">
 		*{
 			box-sizing: border-box;
@@ -197,10 +198,16 @@
 		}
 		.loadersec h1{
 			position: absolute;
-			top: 50%;
+			top: 43%;
 			left: 50%;
 			transform: translate(-50%,-50%);
 			z-index: 2000;
+		}
+		.loadersec h2{
+			position: relative;
+			font-family: 'Oswald', sans-serif;
+			font-weight: 300;
+			margin-top: 50px;
 		}
 		.loadersec.active{
 			top: 50%;
@@ -284,6 +291,7 @@
 			<div class="loader">
 			</div>
 			<h1>Uploading</h1>
+			<h2>M &nbsp; N &nbsp; G &nbsp; E</h2>
 		</center>
 	</section>
 	<script type="text/javascript">

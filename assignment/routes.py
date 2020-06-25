@@ -445,7 +445,7 @@ def submit_assignment(testname=None):
 						updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
 						print(updata)
 						worksheet.update_cell(i+1, 5, str(updata))
-			return render_template('successpage')
+			return redirect(url_for('home_assignment'))
 		else:
 			global fullstudentdata
 			global s_adm
