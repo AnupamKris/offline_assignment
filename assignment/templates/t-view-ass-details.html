@@ -30,6 +30,14 @@
 			padding-bottom: 30px;
 			box-sizing: border-box;
 		}
+		@media only screen and (orientation: portrait){
+			.container-mid{
+				width: 100%;
+			}
+			.container-mid section:nth-child(1) h1{
+				font-size: 100px;
+			}
+		}
 		.container-mid section:nth-child(1){
 			margin:20px auto;
 			width: 100%;
@@ -146,10 +154,10 @@
 			<section>
 				<h1>{{ current_test[2] }}'s Details</h1>
 
-				<p>Total number of students: <span>{{ len(student_list) }}</span></p>
 				<p>Number of students submitted: <span>{{ len(sub_adm) }}</span></p>
 				<p>Number of students defaulted: <span>{{ len(student_list) - len(sub_adm) }}</span></p>
-				<iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="150" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/young-shahrukh/1514411410?i=1514411416"></iframe>
+				<p>Total number of students: <span>{{ len(student_list) }}</span></p>
+				<!-- <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="150" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/young-shahrukh/1514411410?i=1514411416"></iframe> -->
 			</section>
 			<section>
 				<h2>Students who submitted</h2>
@@ -173,8 +181,12 @@
 									<td>{{ student['name'] }}</td>
 									<td>{{ student['class'] }}</td>
 									<td>N/A</td>
-
-									<td><a href="{{ url_for('pdf_viewer', testname=current_test[2], admno=student['admno']) }}">Download</a></td>
+									{% if not eval(current_test[4])[sub_adm.index(str(student['admno']))]['marks'] %}
+										<td><a href="{{ url_for('pdf_viewer', testname=current_test[2], admno=student['admno']) }}">Download</a></td>
+									{% endif %}
+									{% if eval(current_test[4])[sub_adm.index(str(student['admno']))]['marks'] %}
+										<td>[Corrected] &nbsp;<a href="{{ url_for('pdf_viewer', testname=current_test[2], admno=student['admno'], mark= eval(current_test[4])[sub_adm.index(str(student['admno']))]['marks'])}}">View marks</a></td>
+									{% endif %}
 								</tr>
 								{% endif %}
 							{% endfor %}

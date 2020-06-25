@@ -6,7 +6,9 @@
 			box-sizing: border-box;
 		}
 		.container{
-			min-height: calc(100vh);
+			display: flex;
+			flex-direction: column;
+			min-height: calc(110vh);
 			transition: .1s;
 			background-repeat: repeat;
 			background: url({{ url_for('static', filename='email-pattern.png') }});
@@ -21,7 +23,7 @@
 
 		.container-mid{
 			width: 60%;
-			min-height: 100vh;
+			min-height: 110vh;
 			position: relative;
 			background-color: #ffffff85;
 			/*margin: 0 auto;*/
@@ -66,22 +68,30 @@
 		}
 
 		.container-mid section:nth-child(2){
-			margin:20px auto;
-			padding: 10px 25px;
+			position: relative;
 		}
 
 		.container-mid section:nth-child(2) form{
-			padding:10px;
+			padding:10px 0;
+			margin: 15px 0;
+			position: relative;
 		}
 
 		.container-mid section:nth-child(2) fieldset{
 			padding:10px;
+			margin: 15px;
+
 		}
 
 		.container-mid section:nth-child(2) input{
 			margin:10px 0;
 			padding: 10px 5px;
-			border:1px solid #;
+			border:1px solid #ff738f;
+
+		}
+
+		input[type=submit]{
+			cursor: pointer;
 		}
 
 		.container-mid section:nth-child(2) h2{
@@ -97,8 +107,12 @@
 			/*text-decoration: underline;			*/
 		}
 
+		label{
+			font-weight: bold;
+		}
+
 		form{
-			margin:50px 0px;
+			margin:10px 0px;
 			border:none;
 		}
 
@@ -164,19 +178,25 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
-				<h1>Submit Assignment</h1>
-				<p>Welcome to the Submit Assignment section. Please attach your assignment in the form of pdf below.</p>
-
+				<h1>Answer Sheet Viewer</h1>
+				{% if not mark %}
+					<p>You can view the answer sheet and fill in the marks at the end of the page</p>
+				{% endif %}
+				{% if mark %}
+					<p>You have already corrected the answer sheet of this student.</p>
+					<p>The student scored: <span>{{ mark }}</span> </p>
+				{% endif %}
 			</section>
 			<section>
 				<h2>PDF</h2>
 				<embed src="{{ url_for('static', filename=filename) }}" type="application/pdf" width="100%" height="600px"></embed>
-				<br><br><br>
+				<br>
 				<form method="POST">
 					<fieldset>
-						<label for="marks">Enter marks</label>
+						<!-- <h2>Enter Marks</h2> -->
+						<label for="marks"> Enter Marks</label>
 						<br>
-						<input type="text" id='marks' name="marks">
+						<input type="text" id='marks' name="marks" placeholder="Enter Marks (Eg. '12/25')">
 						<br>
 						<input type="textarea" name="remark" placeholder="Enter your remarks here">
 						<br>

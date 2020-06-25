@@ -4,7 +4,7 @@
 	<style type="text/css">
 		.container{
 			transition: .1s;
-			background-repeat: repeat; 
+			background-repeat: repeat;
 			background: url({{ url_for('static', filename='email-pattern.png') }});
 		}
 
@@ -19,7 +19,7 @@
 			width: 60vw;
 			height: 100%;
 			position: relative;
-			background-color: #ffffff85; 
+			background-color: #ffffff85;
 			/*margin: 0 auto;*/
 			left: 50%;
 			transform: translateX(-50%);
@@ -38,7 +38,11 @@
 			font-size: 32px;
 			margin-bottom: 25px;
 		}
-
+		@media only screen and (orientation: portrait){
+			.container-mid{
+				width: 100%;
+			}
+		}
 		.container-mid #usericon{
 			width: 150px;
 			height:150px;
@@ -107,7 +111,7 @@
 			background-position: center;
 		}
 		.container-mid section:nth-child(2) a button:hover{
-			
+
 			transition: 1s;
 		}
 
@@ -137,7 +141,7 @@
 			font-family: 'Source Sans Pro', sans-serif;
 			margin-bottom: 10px;
 			font-size: 22px;
-			font-weight: 400;			
+			font-weight: 400;
 		}
 
 		.container-mid .circular-box span{
@@ -161,7 +165,7 @@
 			transform: translate(-50%,-50%);
 			width: 40vw;
 			padding: 50px;
-			box-shadow: 0 5px 30px rgba(0,0,0,.30); 
+			box-shadow: 0 5px 30px rgba(0,0,0,.30);
 			background: #fff;
 			box-sizing: border-box;
 			visibility: hidden;
@@ -182,13 +186,13 @@
 {% endblock embeddedcss %}
 
 {% block body %}
-	
+
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
 				<h1>{{ student['name'] }}</h1>
 				<div class="detailsbox1">
-					<ul>		
+					<ul>
 						<li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
 						<li><a href="#" onclick="togglepic()">Change profile picture</a></li>
 					</ul>

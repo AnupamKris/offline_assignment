@@ -8,7 +8,7 @@
 		.container{
 			min-height: calc(100vh);
 			transition: .1s;
-			background-repeat: repeat; 
+			background-repeat: repeat;
 			background: url({{ url_for('static', filename='email-pattern.png') }});
 		}
 
@@ -23,7 +23,7 @@
 			width: 60%;
 			min-height: 100vh;
 			position: relative;
-			background-color: #ffffff85; 
+			background-color: #ffffff85;
 			/*margin: 0 auto;*/
 			left: 50%;
 			transform: translateX(-50%);
@@ -53,10 +53,10 @@
 			font-size: 32px;
 			margin-bottom: 25px;
 		}
-		
+
 		.container-mid section:nth-child(1) button{
 			box-sizing: border-box;
-			margin-top: 20px; 
+			margin-top: 20px;
 			font-size: 16px;
 			padding: 10px;
 			color: #ff738f;
@@ -66,7 +66,7 @@
 		}
 
 		.container-mid section:nth-child(2){
-			
+
 			margin:20px auto;
 			padding: 10px 25px;
 		}
@@ -105,7 +105,7 @@
 		}
 
 		.container-mid section:nth-child(2) table tr:nth-child(even){
-			background-color:#e5e5e5; 
+			background-color:#e5e5e5;
 		}
 
 		.container-mid section:nth-child(2) h2{
@@ -124,7 +124,7 @@
 		fieldset{
 			margin: 10px ;
 			border:none;
-			height: 30px; 
+			height: 30px;
 		}
 
 
@@ -140,7 +140,7 @@
 			transition: .2s;
 			cursor: pointer;
 		}
-		
+
 		#assuploadbutt:hover{
 			transform: scale(1.01);
 			transition: .2s;
@@ -154,7 +154,7 @@
 		}
 
 		#assuploadbutt span{
-			font-weight: normal;		
+			font-weight: normal;
 		}
 
 		#submit{
@@ -174,35 +174,125 @@
 			background: #00000010;
 			transition: .2s;
 		}
+		.loadersec{
+			padding: 50px;
+			box-shadow: 0 5px 30px rgba(0,0,0,.30);
+			box-sizing: border-box;
+			visibility: hidden;
+			opacity: 0;
+			transition: .5s;
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			height: 50vh;
+			width: 70vw;
+			justify-content: center;
+			display: flex;
+			align-items: center;
+			background: #000;
+			text-align: center;
+			color: #fff;
+			border-radius: 20px;
+		}
+		.loadersec h1{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			z-index: 2000;
+		}
+		.loadersec.active{
+			top: 50%;
+			visibility: visible;
+			opacity: 1;
+			transition: .5s;
+		}
+		.loader{
+			position: relative;
+			/* top: 50%;
+			left: 50%;
+			transform: translate(-50%,-100%); */
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			background: linear-gradient(45deg,transparent,transparent 40%, #e5f403);
+			animation: loaderanim 2s linear infinite;
+			}
 
+			@keyframes loaderanim {
+				0%{
+					transform: rotate(0deg);
+					filter: hue-rotate(0deg);
+				}
+				100%{
+					transform: rotate(360deg);
+					filter: hue-rotate(360deg);
+				}
+			}
+
+			.loader:before{
+				content: '';
+				position: absolute;
+				top: 6px;
+				left: 6px;
+				right: 6px;
+				bottom: 6px;
+				background: #000;
+				border-radius: 50%;
+				z-index: 1000;
+			}
+			.loader:after{
+				content: '';
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				background: linear-gradient(45deg,transparent,transparent 40%, #e5f403);
+				border-radius: 50%;
+				z-index: 1;
+				filter: blur(30px);
+
+			}
 	</style>
 {% endblock embeddedcss %}
 
 {% block body %}
-	
+
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
 				<h1>Submit Assignment</h1>
 				<p>Welcome to the Submit Assignment section. Please attach your assignment in the form of pdf below.</p>
 				<form method="POST" enctype="multipart/form-data">
-					<fieldset>												
+					<fieldset>
 						<label for="assupload" id="assuploadbutt">
 							Upload PDF
 						</label>
-						<input type="file" id="assupload" name="assupload" accept=".pdf" hidden="">
+						<input type="file" id="assupload" name="assupload" accept=".pdf" hidden="" required>
 						<br><br>
-						<input type="Submit" name="submit" id="submit">
+						<input type="Submit" name="submit" id="submit" onclick="toggleloader()">
 						<br>
 					</fieldset>
 				</form>
 			</section>
-			<section>
-				<h2></h2>			
-			</section>
 		</div>
 	</div>
+	<section class="loadersec" id="popup">
+		<center>
+			<div class="loader">
+			</div>
+			<h1>Uploading</h1>
+		</center>
+	</section>
 	<script type="text/javascript">
+		function toggleloader(){
+			var blur = document.getElementById('blur')
+			blur.classList.toggle('active')
+			var popup = document.getElementById('popup')
+			popup.classList.toggle('active')
+		}
 		var loader = function(e){
 			let file = e.target.files;
 

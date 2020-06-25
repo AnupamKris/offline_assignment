@@ -320,9 +320,9 @@ def view_assignment_details(testname=None):
 	else:
 		return redirect(url_for('user_home'))
 
-@app.route('/pdf-viewer/<testname>/<admno>', methods=['GET','POST'])
+@app.route('/pdf-viewer/<testname>/<admno>/', methods=['GET','POST'])
 @login_required
-def pdf_viewer(testname = None, admno = None):
+def pdf_viewer(testname = None, admno = None, mark=None):
     if current_user.name:
         if request.method == 'POST':
             # input field name?? and submit_marks is the submit
@@ -360,7 +360,7 @@ def pdf_viewer(testname = None, admno = None):
             mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"C:/Users/Bkura/github/offline_assignment/assignment/static/{testname}{admno}.pdf")
             loc=f'C:/Users/Bkura/github/offline_assignment/assignment/static/{testname}{admno}.pdf'
             filename = testname+admno+'.pdf'
-            return render_template('embedpdf.html', filename=filename)
+            return render_template('embedpdf.html', filename=filename, footer='hah')
         # os.remove(f'C:/Users/Bkura/github/offline_assignment/assignment/static/{testname}{admno}.pdf')\
     else:
         #got it
