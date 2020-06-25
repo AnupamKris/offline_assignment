@@ -8,7 +8,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from mediafire.client import MediaFireClient, File, Folder
 import pandas as pd
-
+import os
 #GSpread---------------------------------------------------------------------------
 scope = ['https://www.googleapis.com/auth/drive']
 
@@ -18,8 +18,8 @@ client = gspread.authorize(cred)
 #----------------------------------------------------------------------------------
 
 #Student Excel Loading-------------------------------------------------------------
-fullstudentdata = pd.read_excel("D:/I'm a Developer/OFF/offline_assignment/assignment/static/students.xlsx")
-
+fullstudentdata = pd.read_excel("C:/Users/Bkura/github/offline_assignment/assignment/static/students.xlsx")
+# Bye
 s_adm = fullstudentdata['admission']
 
 fields = list(fullstudentdata.columns)
@@ -49,9 +49,9 @@ def uploadfile(filename, foldername):
         	result = client.upload_file(imagepath, f"mf:/{foldername}/")
         	fileinfo = client.api.file_get_info(result.quickkey)
         	link = fileinfo['file_info']['links']['normal_download']
-        	break   
+        	break
     	# except:
-        	print('retrying')    
+        	print('retrying')
     return link
 
 @app.route('/')
@@ -66,20 +66,20 @@ def register():
 		return redirect(url_for('home'))
 
 	if current_user.is_authenticated:
-	
+
 		return redirect(url_for('home'))
 	form = RegistrationForm(request.form)
 
 
 	if form.validate_on_submit():
-	
+
 		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-	
+
 		user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
-	
+
 		db.session.add(user)
-	
-	
+
+
 		db.session.commit()
 		# flash(f'Your account has been created you can now login!', 'success')
 		return redirect(url_for('login'))
@@ -93,10 +93,10 @@ def tregister():
 
 
 	if current_user.is_authenticated:
-	
+
 		return redirect(url_for('home'))
 	if request.method == 'POST':
-	
+
 		securitykey = request.form.get('securitykey')
 		name = request.form.get('name')
 		password = request.form.get('password')
@@ -112,14 +112,14 @@ def tregister():
 		# worksheet.insert_row(teacherdetails,2)
 		print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
 		if True:
-		
+
 			hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-		
+
 			user = User(name=name, password=hashed_password, email =email)
-		
+
 			db.session.add(user)
-		
-		
+
+
 			db.session.commit()
 			teacher = Teacher(name=name, email=email, classeshandled =str(classes), classteacher=classteacherof, subject=subject)
 			db.session.add(teacher)
@@ -140,9 +140,9 @@ def login():
 
 	if form.validate_on_submit():
 		user = User.query.filter_by(admission=form.admission.data).first()
-	
-	
-	
+
+
+
 
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)
@@ -161,13 +161,9 @@ def tlogin():
 
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
-	
-	
-	
-
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)
-		
+
 			next_page = request.args.get('next')
 			return redirect(next_page) if next_page else redirect(url_for('user_home'))
 	return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
@@ -209,7 +205,7 @@ def user_home():
 @login_required
 def home_assignment():
 	global fullstudentdata
-	global s_adm 
+	global s_adm
 	global fields
 	if not current_user.name:
 		#Fetching current student details from EXCEL
@@ -222,7 +218,7 @@ def home_assignment():
 		testsheet = tests.worksheet('testsheet')
 		classes = testsheet.col_values(2)
 		student_tests = []
-		s_class = str(current_student['class'])+' '+current_student['section'] 
+		s_class = str(current_student['class'])+' '+current_student['section']
 		for i in range(len(classes)):
 			if classes[i] == s_class:
 				row = testsheet.row_values(i+1)
@@ -233,7 +229,7 @@ def home_assignment():
 			submitted_admno[test[2]] = [sub['admno'] for sub in eval(test[4])]
 		print('\n\n\n\n\n','Classes:',classes,'\n\n\n\n\n')
 		print('\n\n\n\n\n','Class:',s_class,'\n\n\n\n\n')
-		print('\n\n\n\n\n','Tests:',student_tests,'\n\n\n\n\n')		
+		print('\n\n\n\n\n','Tests:',student_tests,'\n\n\n\n\n')
 		print('\n\n\n\n\n','Submits',submitted_admno,'\n\n\n\n\n')
 
 		return render_template('s-home-assignment.html', student=current_student, student_tests=student_tests, str=str, int=int, eval=eval, sub_admno=submitted_admno)
@@ -269,7 +265,7 @@ def home_assignment():
 		# print('\n\n\n\n\n','Strength:',strength,'\n\n\n\n\n')
 		print('\n\n\n\n\n','marks:',submitted_marks,'\n\n\n\n\n')
 
-		return render_template('t-home-assignment.html', teacher = current_teacher, teacher_tests=teacher_tests, strength=strength, sub_marks=submitted_marks, eval=eval, len=len, str=str)	
+		return render_template('t-home-assignment.html', teacher = current_teacher, teacher_tests=teacher_tests, strength=strength, sub_marks=submitted_marks, eval=eval, len=len, str=str)
 
 
 @app.route('/view-details/<testname>', methods = ['GET', 'POST'])
@@ -295,13 +291,15 @@ def view_assignment_details(testname=None):
 				Class[i]=str(Class[i])+' '+section[i]
 			name = list(fullstudentdata['name'])
 			admno = list(fullstudentdata['admission'])
-			student_details = {}
+			student_details = {} #u there? See, now we gotta create a folder with the name of the test to save the student's answer paper eaxh time
 			student_list = []
-			print(f'\n\n\n\n\nClass{Class}{len(Class)}\n\n\nname{name}{len(name)}\n\n')
-
+			print(f'\n\n\n\n\nClass{Class}{len(Class)}\n\n\nname{name}{len(name)}\n\n') # what dows this fucntion do??
+#which function? view_assignment_details? yeah:... it collecsts the student info from the class to which the test is assigned and passes that data to the view_assignment_details render render_template#
+# so we'll make a nwe route for downloading or for the embed page, just pass the testname and student admno as vars for urlfor('pdf_viewer', testname = '', admno = '')?got it
+#for showing the table of students who finishhed and who didnt finish
 			for i in range(len(Class)):
 				print(i)
-				if Class[i] == test_class: 
+				if Class[i] == test_class:
 					print(i, name[i])
 					print(i, Class[i])
 					print(i, admno[i])
@@ -309,7 +307,7 @@ def view_assignment_details(testname=None):
 					# student_details['class'] = Class[i]
 					# student_details['admno'] = admno[i]
 					student_details = {'name': name[i], 'class':Class[i],'admno':admno[i]}
-					student_list.append(student_details)					
+					student_list.append(student_details)
 			sub_adm = []
 			sub_adm = [str(sub['admno']) for sub in eval(current_test[4])]
 			notsub_count = len(student_list) - len(sub_adm)
@@ -317,57 +315,108 @@ def view_assignment_details(testname=None):
 				if str(student['admno']) in sub_adm:
 					print('\n\n\n\n\n\n',current_test)
 					print(f'\n\n\n\n',eval(current_test[4])[sub_adm.index(str(student['admno']))]['link'],'\n\n\n\n\n\n')
-			
+
 			return render_template('t-view-ass-details.html', student_list=student_list, current_test=current_test, sub_adm=sub_adm, eval=eval, str=str, len=len)
 	else:
 		return redirect(url_for('user_home'))
 
+@app.route('/pdf-viewer/<testname>/<admno>', methods=['GET','POST'])
+@login_required
+def pdf_viewer(testname = None, admno = None):
+    if current_user.name:
+        if request.method == 'POST':
+            # input field name?? and submit_marks is the submit
+            marks = request.form.get('marks')
+            # i didnt read it
+            tests = client.open('tests')
+            testsheet = tests.worksheet('testsheet')
+            testname1 = testsheet.col_values(3)
+            for i in range(len(testname1)):
+                if testname1[i] == testname:
+                    row = testsheet.row_values(i+1)
+                    rowindex = i+1
+                    break
+            submitteddata = eval(row[4])# this is python indexing
+            # dd = {}
+            # #!!dict['marks'] is the key for marks of the student
+            # # dict['admno'] is admno right?? ok
+            # exec(f'datalist = {submitteddata}')
+            # datalist = dd['datalist']
+            # for i in range(len(datalist)):
+            #     if datalist[i]['admno'] == admno:
+            #         datalist[i]['marks'] = marks
+            #         break
+            for i in submitteddata:
+                if i['admno'] == admno:
+                    i['marks'] = marks
+            print('\n\n\n\n\nDATA',marks,'\n\n\n\n\n')
+            testsheet.update_cell(rowindex, 5, str(submitteddata))
+            os.remove(f'C:/Users/Bkura/github/offline_assignment/assignment/static/{testname}{admno}.pdf')
+            return redirect(url_for('view_assignment_details', testname=testname))
+            s_class = str(current_student['class'])+' '+current_student['section']
+        else:
+            mclient = MediaFireClient()
+            mclient.login(email='mngeforkvhvf@gmail.com', password = 'hard2reach', app_id = '42511')
+            mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"C:/Users/Bkura/github/offline_assignment/assignment/static/{testname}{admno}.pdf")
+            loc=f'C:/Users/Bkura/github/offline_assignment/assignment/static/{testname}{admno}.pdf'
+            filename = testname+admno+'.pdf'
+            return render_template('embedpdf.html', filename=filename)
+        # os.remove(f'C:/Users/Bkura/github/offline_assignment/assignment/static/{testname}{admno}.pdf')\
+    else:
+        #got it
+        return redirect(url_for('user_home'))
+
+
+
+
 @app.route('/create-assignment', methods=['GET','POST'])
 @login_required
 def create_assignment():
-	if current_user.name:
-		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
-	
-		if request.method == 'POST':
-		
-		
-			f = request.files['qpupload']
-			f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/QP.pdf')
-			filename = request.form.get('testname')
-			createfolder(filename)
-			link = uploadfile('QP.pdf', filename)
-			global client
-			testsheet = client.open('tests')
-			worksheet = testsheet.worksheet('testsheet')
-			datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
-			worksheet.insert_row(datalist, 2)
-		else:
-			return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
-	else:
-		return redirect(url_for('user_home'))
+    if current_user.name:
+        current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+        if request.method == 'POST':
+            for i in range(10):
+                f = request.files['qpupload']
+                # Why pink!
+                # okay
+                f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/QP.pdf')
+                filename = request.form.get('testname')
+                createfolder(filename)
+                link = uploadfile('QP.pdf', filename)
+                break
+            global client
+            testsheet = client.open('tests')
+            worksheet = testsheet.worksheet('testsheet')
+            datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
+            worksheet.insert_row(datalist, 2)
+            return redirect(url_for('home_assignment'))
+        else:
+        	return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
+    else:
+    	return redirect(url_for('user_home'))
 @app.route('/submit-assignment/<testname>', methods = ['GET', 'POST'])
 @login_required
 def submit_assignment(testname=None):
 	if not current_user.name:
 		if request.method == 'POST':
-		
-		
-		
-		
+
+
+
+
 			global client
 			spreadsheet = client.open('tests')
 			worksheet = spreadsheet.worksheet('testsheet')
 			fulldata = worksheet.get_all_values()
-		
-		
+
+
 			print('\n\n\n\n\n\n\n\n\n\n_________________________________n\\n\n\n\n\n\n\n\n\n\n\n')
 			print(fulldata)
 			for i in range(len(fulldata)):
-			
+
 				if fulldata[i][2] == testname:
 					print(fulldata[i][2])
 					dd = {}
-					exec(f"updata = {fulldata[i][4]}", dd)	
+					exec(f"updata = {fulldata[i][4]}", dd)
 					updata = dd['updata']
 					print('\n\n\n\n\n\n\n', updata)
 					try:
@@ -380,12 +429,13 @@ def submit_assignment(testname=None):
 								print('running if')
 								print('\n\n\n\n\n\n\n\n Already Submitted you fool! \n\n\n\n\n\n\n\n')
 								return render_template('register.html')
+
 						else:
 							f = request.files['assupload']
 							f.save('C:/Users/Bkura/OneDrive/Documents/MNGE/'+current_user.admission+'.pdf')
 							link = uploadfile(current_user.admission+'.pdf', testname)
 							print('running else')
-							updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
+							updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
 							worksheet.update_cell(i+1, 5, str(updata))
 					except:
 						f = request.files['assupload']
@@ -398,7 +448,7 @@ def submit_assignment(testname=None):
 			return render_template('successpage')
 		else:
 			global fullstudentdata
-			global s_adm 
+			global s_adm
 			global fields
 			current_student = {}
 			row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
@@ -407,14 +457,8 @@ def submit_assignment(testname=None):
 			return render_template('submit-assignment.html', student=current_student, eval=eval, str=str)
 
 
-@app.route('/sample-pdf-viewer')
-@login_required
-def pdf_viewer():
-	return render_template('embedpdf.html')
 
 @app.route('/logout')
 def logout():
 	logout_user()
 	return redirect(url_for('home'))
-
-

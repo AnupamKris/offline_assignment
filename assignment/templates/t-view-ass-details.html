@@ -8,7 +8,7 @@
 		.container{
 			min-height: calc(100vh);
 			transition: .1s;
-			background-repeat: repeat; 
+			background-repeat: repeat;
 			background: url({{ url_for('static', filename='email-pattern.png') }});
 		}
 
@@ -23,7 +23,7 @@
 			width: 60vw;
 			min-height: 100vh;
 			position: relative;
-			background-color: #ffffff85; 
+			background-color: #ffffff85;
 			/*margin: 0 auto;*/
 			left: 50%;
 			transform: translateX(-50%);
@@ -47,10 +47,10 @@
 		.container-mid section:nth-child(1) span{
 			font-weight: bold;
 		}
-		
+
 		.container-mid section:nth-child(1) a button{
 			box-sizing: border-box;
-			margin-top: 20px; 
+			margin-top: 20px;
 			font-size: 16px;
 			padding: 10px;
 			color: #ff738f;
@@ -101,7 +101,7 @@
 		}
 
 		.container-mid section:nth-child(2) table tr:nth-child(even){
-			background-color:#e5e5e5; 
+			background-color:#e5e5e5;
 		}
 
 		.container-mid section:nth-child(2) h2{
@@ -119,7 +119,7 @@
 			transform: translate(-50%,-50%);
 			width: 40vw;
 			padding: 50px;
-			box-shadow: 0 5px 30px rgba(0,0,0,.30); 
+			box-shadow: 0 5px 30px rgba(0,0,0,.30);
 			background: #fff;
 			box-sizing: border-box;
 			visibility: hidden;
@@ -140,18 +140,19 @@
 {% endblock embeddedcss %}
 
 {% block body %}
-	
+
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
 				<h1>{{ current_test[2] }}'s Details</h1>
-				
+
 				<p>Total number of students: <span>{{ len(student_list) }}</span></p>
 				<p>Number of students submitted: <span>{{ len(sub_adm) }}</span></p>
 				<p>Number of students defaulted: <span>{{ len(student_list) - len(sub_adm) }}</span></p>
+				<iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="150" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/in/album/young-shahrukh/1514411410?i=1514411416"></iframe>
 			</section>
 			<section>
-				<h2>Students who submitted</h2>			
+				<h2>Students who submitted</h2>
 				<table>
 					<thead>
 						<tr>
@@ -163,7 +164,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% if sub_adm %}						
+						{% if sub_adm %}
 							{% for student in student_list %}
 								{% if str(student['admno']) in sub_adm %}
 								{{ current_test[4][sub_adm.index(str(student['admno']))]['link'] }}
@@ -173,7 +174,7 @@
 									<td>{{ student['class'] }}</td>
 									<td>N/A</td>
 
-									<td><a href="{{ eval(current_test[4])[sub_adm.index(str(student['admno']))]['link'] }}">Download</a></td>
+									<td><a href="{{ url_for('pdf_viewer', testname=current_test[2], admno=student['admno']) }}">Download</a></td>
 								</tr>
 								{% endif %}
 							{% endfor %}
@@ -185,7 +186,7 @@
 							<td></td>
 							<td></td>
 						</tr>
-						{% endif %}						
+						{% endif %}
 					</tbody>
 				</table>
 				<br><br>
@@ -212,7 +213,7 @@
 									<td>NOT SUBMITTED</td>
 								</tr>
 							{% endif %}
-						{% endfor %}						
+						{% endfor %}
 					</tbody>
 				</table>
 			</section>
@@ -243,7 +244,7 @@
 		</form>
 		<a href="" onclick="toggleass()">Close</a></li>
 	</div>
-	
+
 	<script type="text/javascript">
 		function toggleass(){
 			var blur = document.getElementById('blur')
