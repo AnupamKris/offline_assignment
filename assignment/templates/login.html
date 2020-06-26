@@ -18,9 +18,15 @@
 {% endblock embeddedcss %}
 {% block body %}
 	<div class="container" style="">
-		
-
-
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category,message in messages %}
+					<div class='flash flash-{{ category }}'>
+					<h3>{{ message }}</h3>
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
 		<div class="loginpage-bgimg">
 			<div class='login-box'>
 
