@@ -18,8 +18,17 @@
 {% endblock embeddedcss %}
 {% block body %}
 	<div class="container" style="">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<div class="flash flash-{{ category }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
 
-		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
+
 		<div class="loginpage-bgimg">
 			<div class='login-box'>
 
@@ -35,9 +44,9 @@
 						<br>
 						<a href="{{ url_for('tlogin') }}">Not a student? Click here</a>
 						<!-- <button type="button" id="registerbtn" onclick="window.location.href='{{ url_for('tlogin') }}';">Not a student? Click here</button> -->
-					</fieldset> 
+					</fieldset>
 				</form>
 			</div>
-		</div>	
-	</div>	
+		</div>
+	</div>
 {% endblock body %}

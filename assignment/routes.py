@@ -86,7 +86,7 @@ def register():
 
 
             db.session.commit()
-            # flash(f'Your account has been created you can now login!', 'success')
+            flash(f'Your account has been created you can now login!', 'success')
             return redirect(url_for('login'))
         else:
             pass
