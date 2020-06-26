@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% block body %}
+
+
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       {% for i in message in messages %}
@@ -7,4 +7,3 @@
       {% endfor %}
     {% endif %}
   {% endwith %}
-{% endblock body %}
