@@ -61,6 +61,7 @@ def home():
 
 @app.route('/flash')
 def flash():
+    flash('This is a flashed message')
 	return render_template('flash.html',title='flash')
 
 @app.route('/register', methods = ['GET','POST'])
