@@ -189,8 +189,9 @@
 			</section>
 			<section>
 				<h2>PDF</h2>
-				<embed src="{{ url_for('static', filename=filename) }}" type="application/pdf" width="100%" height="600px"></embed>
+				<!--<embed src="{{ url_for('static', filename=filename) }}" type="application/pdf" width="100%" height="600px"></embed>-->
 				<br>
+				{% if not mark %}
 				<form method="POST">
 					<fieldset>
 						<!-- <h2>Enter Marks</h2> -->
@@ -204,6 +205,7 @@
 						<!-- now we gotta tke this mark and [Yah forgot that] -->
 					</fieldset>
 				</form>
+				{% endif %}
 			</section>
 		</div>
 	</div>

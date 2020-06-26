@@ -185,7 +185,7 @@
 										<td><a href="{{ url_for('pdf_viewer', testname=current_test[2], admno=student['admno']) }}">Download</a></td>
 									{% endif %}
 									{% if eval(current_test[4])[sub_adm.index(str(student['admno']))]['marks'] %}
-										<td>[Corrected] &nbsp;<a href="{{ url_for('pdf_viewer', testname=current_test[2], admno=student['admno'], mark= eval(current_test[4])[sub_adm.index(str(student['admno']))]['marks'])}}">View marks</a></td>
+										<td>[Corrected] &nbsp;<a href="{{ url_for('pdf_viewer', testname=current_test[2], admno=student['admno'], mark= (eval(current_test[4])[sub_adm.index(str(student['admno']))]['marks']).replace('/',' Out of ')) }}">View marks</a></td>
 									{% endif %}
 								</tr>
 								{% endif %}
