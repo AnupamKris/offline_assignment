@@ -62,7 +62,7 @@ def home():
 @app.route('/flash')
 # <<<<<<< HEAD
 def flash12():
-    flash('This is a flashed message')
+    flash('This is a flashed message', 'success')
     return render_template('flash.html',title='flash')
 # =======
 # def flash():

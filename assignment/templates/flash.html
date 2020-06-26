@@ -1,7 +1,12 @@
-{% with messages = get_flashed_messages() %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    {% for message in messages %}
-      <h3>{{ message }}</h3>
+    {% for category,message in messages %}
+      <div class="flash flash-{{ category }}">
+          <h3>{{ message }}</h3>
+      </div>
     {% endfor %}
   {% endif %}
 {% endwith %}
