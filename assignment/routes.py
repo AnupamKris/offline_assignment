@@ -65,24 +65,28 @@ def register():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
 
-	if current_user.is_authenticated:
-
-		return redirect(url_for('home'))
 	form = RegistrationForm(request.form)
 
+    global fullstudentdata
 
 	if form.validate_on_submit():
 
-		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        cur_student = df.loc[df['admno'] == int(form.admission.data)]
 
-		user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
+        if cur_student['dob'].values == form.dob.data:
 
-		db.session.add(user)
+    		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+
+    		user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
+
+    		db.session.add(user)
 
 
-		db.session.commit()
-		# flash(f'Your account has been created you can now login!', 'success')
-		return redirect(url_for('login'))
+    		db.session.commit()
+    		# flash(f'Your account has been created you can now login!', 'success')
+    		return redirect(url_for('login'))
+        else:
+            pass
 
 	return render_template('registerpage.html', title='Register', form=form, footer=1)
 
