@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, request, session
+from flask import render_template, flash, url_for, redirect, request, session
 from assignment import app, db, bcrypt
 from assignment.forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
 from assignment.models import User, Teacher
