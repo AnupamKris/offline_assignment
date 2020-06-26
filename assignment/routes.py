@@ -62,33 +62,36 @@ def home():
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
-	if current_user.is_authenticated:
-		return redirect(url_for('home'))
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
 
-	form = RegistrationForm(request.form)
+    form = RegistrationForm(request.form)
 
     global fullstudentdata
 
-	if form.validate_on_submit():
+    if form.validate_on_submit():
 
-        cur_student = df.loc[df['admno'] == int(form.admission.data)]
+        cur_student = fullstudentdata.loc[fullstudentdata['admission'] == int(form.admission.data)]
+        print('\n\n\n\n\n\n\n\n\n', cur_student, '\n\n\n\n\n\n', form.dob.data)
+        rawdob = str(form.dob.data).split('-')[::-1]
+        dob = '/'.join(rawdob)
+        print(dob)
+        if cur_student['dob'].values == dob:
 
-        if cur_student['dob'].values == form.dob.data:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 
-    		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
 
-    		user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
-
-    		db.session.add(user)
+            db.session.add(user)
 
 
-    		db.session.commit()
-    		# flash(f'Your account has been created you can now login!', 'success')
-    		return redirect(url_for('login'))
+            db.session.commit()
+            # flash(f'Your account has been created you can now login!', 'success')
+            return redirect(url_for('login'))
         else:
             pass
 
-	return render_template('registerpage.html', title='Register', form=form, footer=1)
+    return render_template('registerpage.html', title='Register', form=form, footer=1)
 
 @app.route('/tregister', methods = ['GET','POST'])
 def tregister():
@@ -381,16 +384,22 @@ def create_assignment():
     if current_user.name:
         current_teacher = Teacher.query.filter_by(email=current_user.email).first()
         if request.method == 'POST':
+            filename = request.form.get('testname')
+            global client
+            worksheet = client.open('tests')
+            testsheet = worksheet.worksheet('testsheet')
+            testnames = testsheet.col_values(3)
+            for test in testnames:
+                if filename == test:
+                    return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
             for i in range(10):
                 f = request.files['qpupload']
                 # Why pink!
                 # okay
                 f.save('/home/mngeforkvhvf/mnge/QP.pdf')
-                filename = request.form.get('testname')
                 createfolder(filename)
                 link = uploadfile('QP.pdf', filename)
                 break
-            global client
             testsheet = client.open('tests')
             worksheet = testsheet.worksheet('testsheet')
             datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
