@@ -1,6 +1,6 @@
 {% with messages = get_flashed_messages() %}
   {% if messages %}
-    {% for i in message in messages %}
+    {% for message in messages %}
       <h3>{{ message }}</h3>
     {% endfor %}
   {% endif %}

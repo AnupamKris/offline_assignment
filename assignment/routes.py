@@ -60,9 +60,9 @@ def home():
 	return render_template('home.html',title='Home')
 
 @app.route('/flash')
-def flash():
+def flash12():
     flash('This is a flashed message')
-	return render_template('flash.html',title='flash')
+    return render_template('flash.html',title='flash')
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -319,7 +319,7 @@ def view_assignment_details(testname=None):
 					# student_details['name'] = name[i]
 					# student_details['class'] = Class[i]
 					# student_details['admno'] = admno[i]
-					student_details = {'name': name[i], 'class':Class[i],'admno':admno[i]}
+					student_details = {'name': name[i], 'class':Class[i],'admno':admno[i],}
 					student_list.append(student_details)
 			sub_adm = []
 			sub_adm = [str(sub['admno']) for sub in eval(current_test[4])]
@@ -373,6 +373,8 @@ def pdf_viewer(testname = None, admno = None, mark=None):
             # mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf")
             # loc=f'/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf'
             # filename = testname+admno+'.pdf'
+            if mark == 'None':
+                mark = None
             return render_template('embedpdf.html', footer='hah', mark = mark)
         # os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/static/{testname}{admno}.pdf')\
     else:
