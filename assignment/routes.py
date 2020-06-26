@@ -60,9 +60,15 @@ def home():
 	return render_template('home.html',title='Home')
 
 @app.route('/flash')
+# <<<<<<< HEAD
 def flash12():
     flash('This is a flashed message')
     return render_template('flash.html',title='flash')
+# =======
+# def flash():
+#     flash(message='This is a flashed message!', category='nice')
+# 	return render_template('flash.html',title='flash')
+# >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -373,8 +379,12 @@ def pdf_viewer(testname = None, admno = None, mark=None):
             # mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf")
             # loc=f'/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf'
             # filename = testname+admno+'.pdf'
+# <<<<<<< HEAD
             if mark == 'None':
                 mark = None
+# =======
+
+# >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
             return render_template('embedpdf.html', footer='hah', mark = mark)
         # os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/static/{testname}{admno}.pdf')\
     else:
