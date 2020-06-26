@@ -59,6 +59,9 @@ def uploadfile(filename, foldername):
 def home():
 	return render_template('home.html',title='Home')
 
+@app.route('/flash')
+def flash():
+	return render_template('flash.html',title='flash')
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
