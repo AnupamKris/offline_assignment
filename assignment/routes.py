@@ -99,7 +99,7 @@ def register():
             flash(f'Your account has been created you can now login!', 'success')
             return redirect(url_for('login'))
         else:
-            pass
+            flash('Admission Number and DOB does not match', 'fail')
 
     return render_template('registerpage.html', title='Register', form=form, footer=1)
 
@@ -129,7 +129,13 @@ def tregister():
         print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
         teacher = Teacher.query.filter_by(email = email).first()
 
-        if (password == confirmpassword) and teacher == None:
+        if securitykey != 'qwertyuiop':
+            flash("Security Key is Not Correct", 'fail')
+        elif teacher != None:
+            flash('Email already registered', 'fail')
+        elif password != confirmpassword:
+            flash("Passwords and confirm password doesn't match", 'fail')
+        if teacher == None and password == confirmpassword and securitykey == 'qwertyuiop':
 
             hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
@@ -142,7 +148,7 @@ def tregister():
             teacher = Teacher(name=name, email=email, classeshandled =str(classes), classteacher=classteacherof, subject=subject)
             db.session.add(teacher)
             db.session.commit()
-            # flash(f'Your account has been created you can now login!', 'success')
+            flash(f'Your account has been created you can now login!', 'success')
             return redirect(url_for('tlogin'))
         else:
             return render_template('tregister.html', title='Teacher Register', footer=1)
@@ -151,41 +157,39 @@ def tregister():
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
-	if current_user.is_authenticated:
-		return redirect(url_for('home'))
-	form = LoginForm()
-
-
-
-	if form.validate_on_submit():
-		user = User.query.filter_by(admission=form.admission.data).first()
-
-
-
-
-		if user and bcrypt.check_password_hash(user.password, form.password.data):
-			login_user(user)
-			next_page = request.args.get('next')
-			return redirect(next_page) if next_page else redirect(url_for('user_home'))
-	return render_template('login.html', form=form, title='Student Login', footer=1)
+    if current_user.is_authenticated:
+    	return redirect(url_for('home'))
+    form = LoginForm()
+    if form.validate_on_submit():
+    	user = User.query.filter_by(admission=form.admission.data).first()
+    	if not user:
+    	    flash("This admission isn't registered. Please try registering.", 'fail')
+    	elif user and bcrypt.check_password_hash(user.password, form.password.data):
+    		login_user(user)
+    		next_page = request.args.get('next')
+    		return redirect(next_page) if next_page else redirect(url_for('user_home'))
+    	elif bcrypt.check_password_hash(user.password, form.password.data) == False:
+    	    flash('Entered password is wrong. Please try again.', 'fail')
+    return render_template('login.html', form=form, title='Student Login', footer=1)
 
 @app.route('/tlogin', methods = ['GET', 'POST'])
 def tlogin():
-	global current_user
-	if current_user.is_authenticated:
-		return redirect(url_for('home'))
-	form = TeacherLoginForm()
-
-
-
-	if form.validate_on_submit():
-		user = User.query.filter_by(email=form.email.data).first()
-		if user and bcrypt.check_password_hash(user.password, form.password.data):
-			login_user(user)
-
-			next_page = request.args.get('next')
-			return redirect(next_page) if next_page else redirect(url_for('user_home'))
-	return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
+    if current_user.is_authenticated:
+    	return redirect(url_for('home'))
+    form = TeacherLoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if not user:
+            flash("This email isn't registered. Please try registering.", 'fail')
+        elif user.admission:
+            flash("This email isn't registered. Please try registering.", 'fail')
+        elif user and bcrypt.check_password_hash(user.password, form.password.data):
+        	login_user(user)
+        	next_page = request.args.get('next')
+        	return redirect(next_page) if next_page else redirect(url_for('user_home'))
+        elif bcrypt.check_password_hash(user.password, form.password.data) == False:
+            flash('Entered password is wrong. Please try again.', 'fail')
+    return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
 
 @app.route('/about')
 def about():
@@ -407,6 +411,7 @@ def create_assignment():
             testnames = testsheet.col_values(3)
             for test in testnames:
                 if filename == test:
+                    flash('Test Name already exists please use another name', 'fail2')
                     return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
             for i in range(10):
                 f = request.files['qpupload']
@@ -420,6 +425,7 @@ def create_assignment():
             worksheet = testsheet.worksheet('testsheet')
             datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
             worksheet.insert_row(datalist, 2)
+            flash('Assignment created Successfully!', 'success2')
             return redirect(url_for('home_assignment'))
         else:
         	return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
@@ -474,6 +480,7 @@ def submit_assignment(testname=None):
 						updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
 						print(updata)
 						worksheet.update_cell(i+1, 5, str(updata))
+			flash('Assignment Submitted!', 'success2')
 			return redirect(url_for('home_assignment'))
 		else:
 			global fullstudentdata
@@ -485,7 +492,21 @@ def submit_assignment(testname=None):
 				current_student[fields[i]] = row[i]
 			return render_template('submit-assignment.html', student=current_student, eval=eval, str=str)
 
-
+@app.route('/resultpage/<testname>/<admission>')
+def resultpage(testname=None, admission=None):
+    global client
+    worksheet = client.open('tests')
+    testsheet = worksheet.worksheet('testsheet')
+    testnames = testsheet.col_values(3)
+    for i in range(len(testnames)):
+        if testnames[i] == testname:
+            row = testsheet.row_values(i+1)
+            rowindex = i+1
+            break
+    for i in eval(row[4]):
+        if i['admno'] == admission:
+            mark = i['marks']
+    return render_template('resultpage.html', mark=mark, testname=testname)
 
 @app.route('/logout')
 def logout():

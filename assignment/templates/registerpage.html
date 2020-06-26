@@ -18,7 +18,42 @@
 
 		<!--img src="D:\I'm a Developer\Web designing\Project2\static\Untitled-1.jpg"-->
 		<section class='login-box'>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category,message in messages %}
+					    <div class='flash'>
+						    {% if category == 'success' %}
+								<div class="flash flash-{{ category }}">
+								<h3><i class="fas fa-check"></i> &nbsp; {{ message }}</h3>
+								</div>
+							{% endif %}
+							{% if category == 'fail' %}
+								<div class="flash flash-{{ category }}">
+								<h3><i class="fas fa-times"></i> &nbsp; {{ message }}</h3>
+								</div>
+                            {% endif %}
 
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			{% if form.email.errors %}
+                <div class="flash">
+                    {% for error in form.email.errors %}
+                        <div class='flash-fail'>
+                        <span>{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% elif form.admission.errors %}
+                <div class="flash">
+                    {% for error in form.admission.errors %}
+                        <div class='flash-fail'>
+                        <span>{{ error }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 			<form method="POST">
 				{{ form.hidden_tag() }}
 				<fieldset>
@@ -37,8 +72,8 @@
 					{{ form.submit(id='registerbtn') }}
 					<br>
 					<a href="{{ url_for('tregister') }}";>Not a student? Click here</a>
-				</fieldset> 
+				</fieldset>
 			</form>
-		</section>	
-	</section>	
+		</section>
+	</section>
 {% endblock body %}

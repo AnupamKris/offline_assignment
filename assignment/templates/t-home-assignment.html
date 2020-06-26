@@ -148,6 +148,25 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
+			    {% with messages = get_flashed_messages(with_categories=true) %}
+    				{% if messages %}
+    					{% for category,message in messages %}
+    					    <div class='flash'>
+    						    {% if category == 'success' %}
+    								<div class="flash flash-{{ category }}">
+    								<h3><i class="fas fa-check"></i> &nbsp; {{ message }}</h3>
+    								</div>
+    							{% endif %}
+    							{% if category == 'success2' %}
+    								<div class="flash flash-{{ category }}">
+    								<h3><i class="fas fa-check"></i> &nbsp; {{ message }}</h3>
+    								</div>
+                                {% endif %}
+
+    						</div>
+    					{% endfor %}
+    				{% endif %}
+    			{% endwith %}
 				<h1>Home Assignment</h1>
 				<p>Welcome to the Home Assignment section. Click on the below button to create a new assignment</p>
 				<a href="{{ url_for('create_assignment', teacher=teacher, eval=eval) }}"><button>Create Assignment</button></a>

@@ -148,6 +148,25 @@
 	<div class="container" id="blur">
 		<div class="container-mid">
 			<section>
+			    {% with messages = get_flashed_messages(with_categories=true) %}
+    				{% if messages %}
+    					{% for category,message in messages %}
+    					    <div class='flash'>
+    						    {% if category == 'success' %}
+    								<div class="flash flash-{{ category }}">
+    								<h3><i class="fas fa-check"></i> &nbsp; {{ message }}</h3>
+    								</div>
+    							{% endif %}
+    							{% if category == 'success2' %}
+    								<div class="flash flash-{{ category }}">
+    								<h3><i class="fas fa-check"></i> &nbsp; {{ message }}</h3>
+    								</div>
+                                {% endif %}
+
+    						</div>
+    					{% endfor %}
+    				{% endif %}
+    			{% endwith %}
 				<h1>Home Assignment</h1>
 				<p>Welcome to the Home Assignment section. You can find your home assignments below.</p>
 			</section>
@@ -175,7 +194,7 @@
 										<td><a href="{{ test[3] }}">Download QP</a> Result Pending</td>
 									{% endfor %}
 									{% for i in eval(test[4]) if int(i['admno']) == student['admission'] and str(i['marks']) != 'None' %}
-										<td><a href="{{ test[3] }}">Download QP</a> <a href="url_for('resultpage', testname=test[2], admission=student['admission'])">View Result</a></td>
+										<td><a href="{{ test[3] }}">Download QP</a> <a href="{{url_for('resultpage', testname=test[2], admission=student['admission'])}}">View Result</a></td>
 									{% endfor %}
 									{% if str(student['admission']) not in sub_admno[test[2]] %}
 										<td><a href="{{ test[3] }}">Download QP</a> <a href="{{ url_for('submit_assignment', testname = test[2]) }}">Submit Assignment</a></td>
