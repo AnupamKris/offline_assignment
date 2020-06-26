@@ -61,7 +61,7 @@ def home():
 
 @app.route('/flash')
 def flash():
-    flash('This is a flashed message')
+    flash(message='This is a flashed message!', category='nice')
 	return render_template('flash.html',title='flash')
 
 @app.route('/register', methods = ['GET','POST'])
@@ -373,6 +373,7 @@ def pdf_viewer(testname = None, admno = None, mark=None):
             # mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf")
             # loc=f'/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf'
             # filename = testname+admno+'.pdf'
+
             return render_template('embedpdf.html', footer='hah', mark = mark)
         # os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/static/{testname}{admno}.pdf')\
     else:
