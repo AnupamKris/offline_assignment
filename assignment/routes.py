@@ -210,9 +210,9 @@ def user_home(circmess = None, ):
 	global client
 	circularsheet = client.open('circular')
 	studentcirculars = circularsheet.worksheet('student')
-	student_circular_messages = studentcirculars.get_all_values()[::-1][:5]
+	student_circular_messages = studentcirculars.get_all_values()[::-1]
 	teachercirculars = circularsheet.worksheet('teacher')
-	teacher_circular_messages = teachercirculars.get_all_values()[::-1][:5]
+	teacher_circular_messages = teachercirculars.get_all_values()[::-1][:10]
 	if request.method == 'POST':
 		teacher_circular_message = request.form.get('teacher_circular_message')
 		student_circular_message = request.form.get('student_circular_message')

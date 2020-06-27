@@ -4,11 +4,7 @@
 .container {
         transition: .1s;
         background-repeat: repeat;
-        background: url({{ url_for('static', filename='email-pattern.png')
-    }
-}
-);
-
+        background: url({{ url_for('static', filename='email-pattern.png')}});
 }
 .container#blur.active {
     filter: blur(7px);
@@ -103,34 +99,19 @@ ul {
     text-decoration: none;
 }
 .container-mid section:nth-child(2) a:nth-child(1) button {
-    background: url({{ url_for('static', filename='2.jpg')
-}
-
-}
-);
-background-size: cover;
-background-position: center;
-
-}
+    background: url({{ url_for('static', filename='2.jpg')}});
+    background-size: cover;
+    background-position: center;
+    }
 .container-mid section:nth-child(2) a:nth-child(2) button {
-    background: url({{ url_for('static', filename='pricing.jpg')
-}
-
-}
-);
-background-size: cover;
-background-position: center;
-
+    background: url({{ url_for('static', filename='pricing.jpg')}});
+    background-size: cover;
+    background-position: center;
 }
 .container-mid section:nth-child(2) a:nth-child(3) button {
-    background: url({{ url_for('static', filename='teacher.jpg')
-}
-
-}
-);
-background-size: cover;
-background-position: center;
-
+    background: url({{ url_for('static', filename='teacher.jpg')}});
+    background-size: cover;
+    background-position: center;
 }
 .container-mid section:nth-child(2) a button:hover {
     transition: 1s;
@@ -162,43 +143,18 @@ background-position: center;
     font-weight: 400;
 }
 .container-mid .circular-box span {
-    font-family: 'Source Sans Pro',
-    sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 22px;
     font-weight: 700;
 }
 .container-mid .circular-box span:nth-child(1) {
-    color: {
-        {
-            choice(['#131460',
-            '#b289c5',
-            '#450000',
-            '#b723a5'])
-        }
-    }
-    ;
+    color: {{ choice(['#131460','#b289c5','#450000','#b723a5'])}};
 }
 .container-mid .circular-box span:nth-child(2) {
-    color: {
-        {
-            choice(['#b289c5',
-            '#450000',
-            '#5a004d',
-            '#b723a5'])
-        }
-    }
-    ;
+    color: {{ choice(['#b289c5','#450000','#5a004d','#b723a5'])}};
 }
 .container-mid .circular-box span:nth-child(3) {
-    color: {
-        {
-            choice(['#131460',
-            '#b289c5',
-            '#450000',
-            '#5a004d'])
-        }
-    }
-    ;
+    color: {{ choice(['#131460','#b289c5','#450000','#5a004d'])}};
 }
 #popup-pic,
 #popup-det {
@@ -264,11 +220,14 @@ background-position: center;
                 <h2>Teachers' Circular</h2>
             </center>
             <div class="circular-box">
-                <p><span>Teacher#1:</span> Hello teachers!</p>
-                <p><span>Teacher#3:</span> Second circular!</p>
-                <p><span>Teacher#2:</span> Third circular!</p>
-                <label for="teacher-create-message">Enter the message</label>
-                <textarea name="teacher-create-message" rows="1" cols="60">Enter</textarea>
+                {% for cirs in teacher_circular_messages %}
+                    <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[1] }}</p>
+                {% endfor %}
+                <form method="POST">
+                    <label for="teacher_circular_message">Enter the message</label>
+                    <textarea name="teacher_circular_message" rows="1" cols="60">Enter</textarea>
+                    <input type="submit" value="Send Message" name='teacher_circular_send'>
+                </form>
             </div>
             <center>
                 <h2>Students' Circular</h2>
@@ -277,14 +236,16 @@ background-position: center;
                 {% for cirs in student_circular_messages %}
                 <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[1 ]}}</p>
                 {% endfor %}
-                <label for="student_circular_message">Enter the message</label>
-                <textarea name="student_circular_message" rows="1" cols="60">Enter</textarea>
-                <select name="circular_class" id="circular_class">
-					{% for class in eval(current_teacher.classeshandled) %}
-						<option>{{ class }}</option>
-					{% endfor %}
-				</select>
-                <input type="submit" value="Send Message" name='teacher_circular_send'>
+                <form method='POST'>
+                    <label for="student_circular_message">Enter the message</label>
+                    <textarea name="student_circular_message" rows="1" cols="60">Enter</textarea>
+                    <select name="circular_class" id="circular_class">
+                        {% for class in eval(current_teacher.classeshandled) %}
+                            <option>{{ class }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Send Message" name='student_circular_send'>
+                </form>
             </div>
         </section>
     </div>
