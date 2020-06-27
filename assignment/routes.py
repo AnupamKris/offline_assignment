@@ -233,7 +233,7 @@ def user_home(circmess = None, ):
 
 			print('\n\n Stud Data', current_student)
 
-			return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=student_circular_messages)
+			return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=student_circular_messages, str = str)
 		else:
 			current_teacher = Teacher.query.filter_by(email=current_user.email).first()
 			print(current_teacher)
