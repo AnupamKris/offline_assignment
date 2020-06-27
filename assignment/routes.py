@@ -210,7 +210,7 @@ def user_home(circmess = None, ):
 	global client
 	circularsheet = client.open('circular')
 	studentcirculars = circularsheet.worksheet('student')
-	student_circular_messages = studentcirculars.get_all_values()[::-1]
+	student_circular_messages = studentcirculars.get_all_values()[::-1]		
 	teachercirculars = circularsheet.worksheet('teacher')
 	teacher_circular_messages = teachercirculars.get_all_values()[::-1][:10]
 	if request.method == 'POST':
@@ -230,7 +230,12 @@ def user_home(circmess = None, ):
 			row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
 			for i in range(5):
 				current_student[fields[i]] = row[i]
-
+			scm = []
+			count = 0
+			for i in student_circular_messages:
+				if i[1] == str(current_user['class']) + ' ' + current_student['section'] and count < 11:
+					scm.append(i)
+					count += 1
 			print('\n\n Stud Data', current_student)
 
 			return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=student_circular_messages, str = str)

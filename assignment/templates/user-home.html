@@ -215,9 +215,7 @@ ul {
             </center>
             <div class="circular-box">
                 {% for cirs in student_circular_messages %}
-                    {{ count = 0}}
-                    {% if cirs[1] == str(student['class']) + ' ' + student['section'] and count < 11 %}
-                        {{ count += 1 }}
+                    {% if cirs[1] == str(student['class']) + ' ' + student['section'] %}
                         <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[2] }}</p>      
                     {% endif %} 
                 {% endfor %}
