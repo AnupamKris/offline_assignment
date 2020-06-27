@@ -218,9 +218,9 @@ def user_home(circmess = None, ):
 		student_circular_message = request.form.get('student_circular_message')
 		if teacher_circular_message:
 			classes = request.form.get('circular_class')
-			teachercirculars.insert_row([current_user.name, classes ,teacher_circular_message], index = 1)
+			teachercirculars.insert_row([current_user.name, teacher_circular_message], index = 1)
 		elif student_circular_message:
-			studentcirculars.insert_row([current_user.name, teacher_circular_message], index = 1)
+			studentcirculars.insert_row([current_user.name, classes, teacher_circular_message], index=1)
 		return redirect(url_for('user_home'))
 	else:
 		if not current_user.name:
