@@ -220,6 +220,7 @@ def user_home(circmess = None, ):
 			teachercirculars.insert_row([current_user.name, teacher_circular_message], index = 1)
 		elif student_circular_message:
 			studentcirculars.insert_row([current_user.name, teacher_circular_message], index = 1)
+		return redirect(url_for('user_home'))
 	else:
 		if not current_user.name:
 			global fullstudentdata
