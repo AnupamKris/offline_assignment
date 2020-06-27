@@ -240,7 +240,7 @@ ul {
                     <label for="student_circular_message">Enter the message</label>
                     <textarea name="student_circular_message" rows="1" cols="60">Enter</textarea>
                     <select name="circular_class" id="circular_class">
-                        {% for class in eval(current_teacher.classeshandled) %}
+                        {% for class in eval(teacher.classeshandled) %}
                             <option>{{ class }}</option>
                         {% endfor %}
                     </select>

@@ -233,7 +233,7 @@ def user_home(circmess = None, ):
 			scm = []
 			count = 0
 			for i in student_circular_messages:
-				if i[1] == str(current_user['class']) + ' ' + current_student['section'] and count < 11:
+				if i[1] == str(current_student['class']) + ' ' + current_student['section'] and count < 11:
 					scm.append(i)
 					count += 1
 			print('\n\n Stud Data', current_student)
