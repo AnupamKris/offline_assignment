@@ -220,25 +220,25 @@ def user_home(circmess = None, ):
 			teachercirculars.insert_row([current_user.name, teacher_circular_message], index = 1)
 		elif student_circular_message:
 			studentcirculars.insert_row([current_user.name, teacher_circular_message], index = 1)
-
-	if not current_user.name:
-		global fullstudentdata
-		global s_adm
-		global fields
-
-		current_student = {}
-		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
-		for i in range(5):
-			current_student[fields[i]] = row[i]
-
-		print('\n\n Stud Data', current_student)
-
-		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=student_circular_messages)
 	else:
-		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
-		print(current_teacher)
+		if not current_user.name:
+			global fullstudentdata
+			global s_adm
+			global fields
+
+			current_student = {}
+			row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
+			for i in range(5):
+				current_student[fields[i]] = row[i]
+
+			print('\n\n Stud Data', current_student)
+
+			return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=student_circular_messages)
+		else:
+			current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+			print(current_teacher)
 	
-		return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher, eval=eval, len=len)
+			return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher, eval=eval, len=len, student_circular_messages = student_circular_messages, teacher_circular_messages = teacher_circular_messages)
 
 @app.route('/home-assignment', methods = ['GET', 'POST'])
 @login_required
