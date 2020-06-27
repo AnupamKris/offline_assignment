@@ -1,256 +1,301 @@
-{% extends "layout.html" %}
-{% block embeddedcss %}
-	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
-	<style type="text/css">
-		.container{
-			transition: .1s;
-			background-repeat: repeat;
-			background: url({{ url_for('static', filename='email-pattern.png') }});
-		}
+{% extends "layout.html" %} {% block embeddedcss %}
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+<style type="text/css">
+.container {
+        transition: .1s;
+        background-repeat: repeat;
+        background: url({{ url_for('static', filename='email-pattern.png')
+    }
+}
+);
 
-		.container#blur.active{
-			filter: blur(7px);
-			transition: 0.1s;
-			pointer-events: none;
-			user-select: none;
-		}
+}
+.container#blur.active {
+    filter: blur(7px);
+    transition: 0.1s;
+    pointer-events: none;
+    user-select: none;
+}
+.container-mid {
+    width: 60vw;
+    height: 100%;
+    position: relative;
+    background-color: #ffffff85;
+    /*margin: 0 auto;*/
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 30px;
+    box-sizing: border-box;
+}
+.container-mid section:nth-child(1) {
+    margin:20px auto;
+    width: 100%;
+    /*text-align: center;*/
+    padding: 0 25px;
+}
+.container-mid section:nth-child(1) h1 {
+    font-family: 'Source Sans Pro',
+    sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+@media only screen and (orientation: portrait) {
+    .container-mid {
+        width: 100%;
+    }
+}
+.container-mid #usericon {
+    width: 150px;
+    height:150px;
+}
+.container-mid .detailsbox1 {
+    display: flex;
+}
+.container-mid .detailsbox1 ul:nth-child(1) {
+    flex:1;
+    /*text-align: center;*/
+}
+.container-mid .detailsbox1 ul:nth-child(2) {
+    flex:2;
+    padding-left: 15px;
+    font-size: 18px;
+    border-left: 1px solid #00000020;
+    margin: auto 0;
+}
+.container-mid .detailsbox1 ul a {
+    text-decoration: none;
+    color: #ff375f50;
+    font-size: 12px;
+}
+ul {
+    list-style: none;
+}
+.container-mid .detailsbox1 span {
+    font-weight: 700;
+}
+.container-mid section:nth-child(2) {
+    border-top: 1px solid #00000040;
+    display: flex;
+    /*flex-direction: column;*/
+    width: 100%;
+    padding: 30px 5px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+.container-mid section:nth-child(2) a button {
+    width: 300px;
+    height: 300px;
+    margin:5px 10px;
+    border-radius: 10px;
+    font-family: 'Source Sans Pro',
+    sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    border: none;
+    transition: 1s;
+    box-shadow: 0px 5px 3px #888888;
+    ;
+}
+.container-mid section:nth-child(2) a:nth-child(1) button {
+    background: url({{ url_for('static', filename='2.jpg')
+}
 
-		.container-mid{
-			width: 60vw;
-			height: 100%;
-			position: relative;
-			background-color: #ffffff85;
-			/*margin: 0 auto;*/
-			left: 50%;
-			transform: translateX(-50%);
-			padding-bottom: 30px;
-			box-sizing: border-box;
-		}
-		.container-mid section:nth-child(1){
-			margin:20px auto;
-			width: 100%;
-			/*text-align: center;*/
-			padding: 0 25px;
-		}
-		.container-mid section:nth-child(1) h1{
-			font-family: 'Source Sans Pro', sans-serif;
-			font-weight: 700;
-			font-size: 32px;
-			margin-bottom: 25px;
-		}
-		@media only screen and (orientation: portrait){
-			.container-mid{
-				width: 100%;
-			}
-		}
-		.container-mid #usericon{
-			width: 150px;
-			height:150px;
-		}
-		.container-mid .detailsbox1{
-			display: flex;
-		}
-		.container-mid .detailsbox1 ul:nth-child(1){
-			flex:1;
-			/*text-align: center;*/
-		}
-		.container-mid .detailsbox1 ul:nth-child(2){
-			flex:2;
-			padding-left: 15px;
-			font-size: 18px;
-			border-left: 1px solid #00000020;
-			margin: auto 0;
-		}
-		.container-mid .detailsbox1 ul a{
-			text-decoration: none;
-			color: #ff375f50;
-			font-size: 12px;
-		}
-		ul{
-			list-style: none;
-		}
-		.container-mid .detailsbox1 span{
-			font-weight: 700;
-		}
-		.container-mid section:nth-child(2){
-			border-top: 1px solid #00000040;
-			display: flex;
-			/*flex-direction: column;*/
-			width: 100%;
-			padding: 30px 5px;
-			box-sizing: border-box;
-			justify-content: space-between;
+}
+);
+background-size: cover;
+background-position: center;
 
-		}
-		.container-mid section:nth-child(2) a button{
-			width: 300px;
-			height: 300px;
-			margin:5px 10px;
-			border-radius: 10px;
-			font-family: 'Source Sans Pro', sans-serif;
-			font-size: 24px;
-			font-weight: 600;
-			color: white;
-			border: none;
-			transition: 1s;
-			box-shadow: 0px 5px 3px #888888;;
-		}
-		.container-mid section:nth-child(2) a:nth-child(1) button{
-			background: url({{ url_for('static', filename='2.jpg') }});
-			background-size: cover;
-			background-position: center;
-		}
-		.container-mid section:nth-child(2) a:nth-child(2) button{
-			background: url({{ url_for('static', filename='pricing.jpg') }});
-			background-size: cover;
-			background-position: center;
-		}
-		.container-mid section:nth-child(2) a:nth-child(3) button{
-			background: url({{ url_for('static', filename='teacher.jpg') }});
-			background-size: cover;
-			background-position: center;
-		}
-		.container-mid section:nth-child(2) a button:hover{
+}
+.container-mid section:nth-child(2) a:nth-child(2) button {
+    background: url({{ url_for('static', filename='pricing.jpg')
+}
 
-			transition: 1s;
-		}
+}
+);
+background-size: cover;
+background-position: center;
 
-		.container-mid section:nth-child(3){
-			border-top: 1px solid #00000040;
+}
+.container-mid section:nth-child(2) a:nth-child(3) button {
+    background: url({{ url_for('static', filename='teacher.jpg')
+}
 
-		}
+}
+);
+background-size: cover;
+background-position: center;
 
-		.container-mid section:nth-child(3) h2{
-			font-family: 'Source Sans Pro', sans-serif;
-			font-weight: 700;
-			font-size: 28px;
-			margin: 25px 0;
-			/*text-decoration: underline;			*/
-		}
+}
+.container-mid section:nth-child(2) a button:hover {
+    transition: 1s;
+}
+.container-mid section:nth-child(3) {
+    border-top: 1px solid #00000040;
+}
+.container-mid section:nth-child(3) h2 {
+    font-family: 'Source Sans Pro',
+    sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin: 25px 0;
+    /*text-decoration: underline;			*/
+}
+.container-mid .circular-box {
+    margin: auto;
+    border: 3px solid #40E0D0;
+    border-radius: 10px;
+    width: 75%;
+    text-align: left;
+    padding: 25px 40px;
+}
+.container-mid .circular-box p {
+    font-family: 'Source Sans Pro',
+    sans-serif;
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 400;
+}
+.container-mid .circular-box span {
+    font-family: 'Source Sans Pro',
+    sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+.container-mid .circular-box span:nth-child(1) {
+    color: {
+        {
+            choice(['#131460',
+            '#b289c5',
+            '#450000',
+            '#b723a5'])
+        }
+    }
+    ;
+}
+.container-mid .circular-box span:nth-child(2) {
+    color: {
+        {
+            choice(['#b289c5',
+            '#450000',
+            '#5a004d',
+            '#b723a5'])
+        }
+    }
+    ;
+}
+.container-mid .circular-box span:nth-child(3) {
+    color: {
+        {
+            choice(['#131460',
+            '#b289c5',
+            '#450000',
+            '#5a004d'])
+        }
+    }
+    ;
+}
+#popup-pic,
+#popup-det {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,
+    -50%);
+    width: 40vw;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0,
+    0,
+    0,
+    .30);
+    background: #fff;
+    box-sizing: border-box;
+    visibility: hidden;
+    opacity: 0;
+    transition: .5s;
+}
+#popup-pic h2,
+#popup-det h2 {
+    margin-bottom: 10px;
+}
+#popup-pic.active,
+#popup-det.active {
+    top: 50%;
+    visibility: visible;
+    opacity: 1;
+    transition: .5s;
+}
+</style>
+{% endblock embeddedcss %} {% block body %}
 
-		.container-mid .circular-box{
-			margin: auto;
-			border: 3px solid #40E0D0;
-			border-radius: 10px;
-			width: 75%;
-			text-align: left;
-			padding: 25px 40px;
-		}
+<div class="container" id="blur">
+    <div class="container-mid">
+        <section>
+            <h1>{{ student['name'] }}</h1>
+            <div class="detailsbox1">
+                <ul>
+                    <li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
+                    <li><a href="#" onclick="togglepic()">Change profile picture</a></li>
+                </ul>
+                <ul>
+                    <li>Name: <span>{{ student['name'] }}</span></li>
+                    <li>Class: <span>{{ student['class'] }}</span></li>
+                    <li>Section: <span>{{ student['section'] }}</span></li>
+                    <li>Admission #<span>{{ current_user.admission }}</span></li>
+                    <li><a href="#" onclick="toggledet()">See more details</a></li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <a><button>Weekly Time-table</button></a>
+            <a><button>Faculty Details</button></a>
+            <a href="{{ url_for('home_assignment') }}"><button>Home Assignment</button></a>
+        </section>
+        <section>
+            <center>
+                <h2>Circular</h2>
+            </center>
+            <div class="circular-box">
+                {% for cirs in student_circular_messages: %} {% if cirs[1] == current_student['class'] %}
+                <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[2] }}</p>
+                {% endif %} {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+<div id="popup-pic">
+    <h2>Update Profile</h2>
+    <a href="#" onclick="togglepic()">Close</a></li>
+</div>
+<div id="popup-det">
+    <h2> {{ student['Name'] }} 's Details</h2>
+    <ul>
+        <li>Address: <span>{{ student['Address'] }}</span></li>
+        <li>Blood group: <span>{{ student['Bloodgroup'] }}</span></li>
+        <li>Mother name: <span>{{ student['Mothername'] }}</span></li>
+        <li>Father name: <span>{{ student['Fathername'] }}</span></li>
+        <li>Teacher1: <span>{{ student['Teacher1'] }}</span><img class="teachericon" src=""></li>
+        <li>Teacher2: <span>{{ student['Teacher2'] }}</span><img class="teachericon" src=""></li>
+        <li>Teacher3: <span>{{ student['Teacher3'] }}</span><img class="teachericon" src=""></li>
+        <li>Teacher4: <span>{{ student['Teacher4'] }}</span><img class="teachericon" src=""></li>
+        <li>Teacher5: <span>{{ student['Teacher5'] }}</span><img class="teachericon" src=""></li>
+    </ul>
+    <a href="#" onclick="toggledet()">Close</a>
+</div>
+<script type="text/javascript">
+    function togglepic() {
+        var blur = document.getElementById('blur')
+        blur.classList.toggle('active')
+        var popup = document.getElementById('popup-pic')
+        popup.classList.toggle('active')
+    }
 
-		.container-mid .circular-box p{
-			font-family: 'Source Sans Pro', sans-serif;
-			margin-bottom: 10px;
-			font-size: 22px;
-			font-weight: 400;
-		}
-
-		.container-mid .circular-box span{
-			font-family: 'Source Sans Pro', sans-serif;
-			font-size: 22px;
-			font-weight: 700;
-		}
-		.container-mid .circular-box span:nth-child(1){
-			color:{{ choice(['#131460','#b289c5','#450000','#b723a5']) }};
-		}
-		.container-mid .circular-box span:nth-child(2){
-			color: {{choice(['#b289c5','#450000','#5a004d','#b723a5'])}};
-		}
-		.container-mid .circular-box span:nth-child(3){
-			color:{{ choice(['#131460','#b289c5','#450000','#5a004d']) }};
-		}
-		#popup-pic, #popup-det{
-			position: absolute;
-			top: 40%;
-			left: 50%;
-			transform: translate(-50%,-50%);
-			width: 40vw;
-			padding: 50px;
-			box-shadow: 0 5px 30px rgba(0,0,0,.30);
-			background: #fff;
-			box-sizing: border-box;
-			visibility: hidden;
-			opacity: 0;
-			transition: .5s;
-
-		}
-		#popup-pic h2, #popup-det h2{
-			margin-bottom: 10px;
-		}
-		#popup-pic.active, #popup-det.active{
-			top: 50%;
-			visibility: visible;
-			opacity: 1;
-			transition: .5s;
-		}
-	</style>
-{% endblock embeddedcss %}
-
-{% block body %}
-
-	<div class="container" id="blur">
-		<div class="container-mid">
-			<section>
-				<h1>{{ student['name'] }}</h1>
-				<div class="detailsbox1">
-					<ul>
-						<li><img id='usericon' src="{{ url_for('static', filename='def-usericon.png') }}"></li>
-						<li><a href="#" onclick="togglepic()">Change profile picture</a></li>
-					</ul>
-					<ul>
-						<li>Name: <span>{{ student['name'] }}</span></li>
-						<li>Class: <span>{{ student['class'] }}</span></li>
-						<li>Section: <span>{{ student['section'] }}</span></li>
-						<li>Admission #<span>{{ current_user.admission }}</span></li>
-						<li><a href="#" onclick="toggledet()">See more details</a></li>
-					</ul>
-				</div>
-			</section>
-			<section>
-				<a><button>Weekly Time-table</button></a>
-				<a><button>Faculty Details</button></a>
-				<a href="{{ url_for('home_assignment') }}"><button>Home Assignment</button></a>
-			</section>
-			<section>
-				<center><h2>Circular</h2></center>
-				<div class="circular-box">
-					{% for cirs in circular_messages: %}
-						<p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[1 ]}}</p>
-					{% endfor %}
-				</div>
-			</section>
-		</div>
-	</div>
-	<div id="popup-pic">
-		<h2>Update Profile</h2>
-		<a href="#" onclick="togglepic()">Close</a></li>
-	</div>
-	<div id="popup-det">
-		<h2> {{ student['Name'] }} 's Details</h2>
-		<ul>
-			<li>Address: <span>{{ student['Address'] }}</span></li>
-			<li>Blood group: <span>{{ student['Bloodgroup'] }}</span></li>
-			<li>Mother name: <span>{{ student['Mothername'] }}</span></li>
-			<li>Father name: <span>{{ student['Fathername'] }}</span></li>
-			<li>Teacher1: <span>{{ student['Teacher1'] }}</span><img class="teachericon" src=""></li>
-			<li>Teacher2: <span>{{ student['Teacher2'] }}</span><img class="teachericon" src=""></li>
-			<li>Teacher3: <span>{{ student['Teacher3'] }}</span><img class="teachericon" src=""></li>
-			<li>Teacher4: <span>{{ student['Teacher4'] }}</span><img class="teachericon" src=""></li>
-			<li>Teacher5: <span>{{ student['Teacher5'] }}</span><img class="teachericon" src=""></li>
-		</ul>
-		<a href="#" onclick="toggledet()">Close</a>
-	</div>
-	<script type="text/javascript">
-		function togglepic(){
-			var blur = document.getElementById('blur')
-			blur.classList.toggle('active')
-			var popup = document.getElementById('popup-pic')
-			popup.classList.toggle('active')
-		}
-		function toggledet(){
-			var blur = document.getElementById('blur')
-			blur.classList.toggle('active')
-			var popup = document.getElementById('popup-det')
-			popup.classList.toggle('active')
-		}
-	</script>
+    function toggledet() {
+        var blur = document.getElementById('blur')
+        blur.classList.toggle('active')
+        var popup = document.getElementById('popup-det')
+        popup.classList.toggle('active')
+    }
+</script>
 {% endblock body %}
