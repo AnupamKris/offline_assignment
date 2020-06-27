@@ -211,6 +211,11 @@ def user_home():
 		global fullstudentdata
 		global s_adm
 		global fields
+		global client
+		circularsheet = client.open('circulars')
+		circulars = circularsheet.worksheet('student')
+		circular_messages = circulars.get_all_values()[:5]
+
 		current_student = {}
 		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
 		for i in range(5):
@@ -218,7 +223,7 @@ def user_home():
 
 		print('\n\n Stud Data', current_student)
 
-		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student)
+		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, circular_messages=circular_messages)
 	else:
 		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
 		print(current_teacher)

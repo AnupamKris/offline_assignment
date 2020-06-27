@@ -213,9 +213,9 @@
 			<section>
 				<center><h2>Circular</h2></center>
 				<div class="circular-box">
-					<p><span>Teacher#1:</span> Hello students!</p>
-					<p><span>Teacher#3:</span> Second circular!</p>
-					<p><span>Teacher#2:</span> Third circular!</p>
+					{% for cirs in circular_messages: %}
+						<p><span>{{ cirs[0] }}</span> {{ cirs[1 ]}}</p>
+					{% endfor %}
 				</div>
 			</section>
 		</div>
