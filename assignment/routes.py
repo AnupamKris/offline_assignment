@@ -214,7 +214,7 @@ def user_home():
 		global client
 		circularsheet = client.open('circular')
 		circulars = circularsheet.worksheet('student')
-		circular_messages = circulars.get_all_values()[:5]
+		circular_messages = circulars.get_all_values()[::-1][:5]
 
 		current_student = {}
 		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
