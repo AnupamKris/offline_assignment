@@ -212,7 +212,7 @@ def user_home():
 		global s_adm
 		global fields
 		global client
-		circularsheet = client.open('circulars')
+		circularsheet = client.open('circular')
 		circulars = circularsheet.worksheet('student')
 		circular_messages = circulars.get_all_values()[:5]
 
