@@ -234,7 +234,9 @@ ul {
             </center>
             <div class="circular-box">
                 {% for cirs in student_circular_messages %}
-                <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[1 ]}}</p>
+                {% if teacher['name'] == cirs[0] %}
+                <p><span>To class {{ cirs[1] }} : </span> {{ cirs[2] }}</p>
+                {% endif %}
                 {% endfor %}
                 <form method='POST'>
                     <label for="student_circular_message">Enter the message</label>
