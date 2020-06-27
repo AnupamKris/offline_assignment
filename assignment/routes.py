@@ -203,7 +203,7 @@ def contact():
 def pricing():
 	return render_template('pricing.html',title='Pricing')
 
-@app.route('/user-home', method=['GET', 'POST'])
+@app.route('/user-home', methods=['GET', 'POST'])
 @login_required
 def user_home(circmess = None, ):
 	global current_user
@@ -233,7 +233,7 @@ def user_home(circmess = None, ):
 
 		print('\n\n Stud Data', current_student)
 
-		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=circular_messages)
+		return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=student_circular_messages)
 	else:
 		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
 		print(current_teacher)
