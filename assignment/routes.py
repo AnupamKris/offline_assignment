@@ -12,13 +12,13 @@ import os
 #GSpread---------------------------------------------------------------------------
 scope = ['https://www.googleapis.com/auth/drive']
 
-cred = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
+cred = ServiceAccountCredentials.from_json_keyfile_name('/home/mngeforkvhvf/mnge/offline_assignment/assignment/cred.json', scope)
 
 client = gspread.authorize(cred)
 #----------------------------------------------------------------------------------
 
 #Student Excel Loading-------------------------------------------------------------
-fullstudentdata = pd.read_excel("students.xlsx")
+fullstudentdata = pd.read_excel("/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/students.xlsx")
 # Bye
 s_adm = fullstudentdata['admission']
 
