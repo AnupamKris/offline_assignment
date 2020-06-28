@@ -210,7 +210,7 @@ def user_home(circmess = None, ):
 	global client
 	circularsheet = client.open('circular')
 	studentcirculars = circularsheet.worksheet('student')
-	student_circular_messages = studentcirculars.get_all_values()[::-1]		
+	student_circular_messages = studentcirculars.get_all_values()[::-1]
 	teachercirculars = circularsheet.worksheet('teacher')
 	teacher_circular_messages = teachercirculars.get_all_values()[::-1][:10]
 	if request.method == 'POST':
@@ -244,7 +244,7 @@ def user_home(circmess = None, ):
 		else:
 			current_teacher = Teacher.query.filter_by(email=current_user.email).first()
 			print(current_teacher)
-	
+
 			return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher, eval=eval, len=len, student_circular_messages = student_circular_messages, teacher_circular_messages = teacher_circular_messages)
 
 @app.route('/home-assignment', methods = ['GET', 'POST'])
