@@ -59,7 +59,7 @@ def uploadfile(filename, foldername):
 def home():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -70,7 +70,7 @@ def home():
 def flash12():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -80,7 +80,7 @@ def flash12():
 # def flash():
 try:
 	if session['filename']:			
-		os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+		os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 		session['filename'] = ''
 	except:
 		pass
@@ -92,7 +92,7 @@ try:
 def register():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -131,7 +131,7 @@ def register():
 def tregister():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -189,7 +189,7 @@ def tregister():
 def login():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -212,7 +212,7 @@ def login():
 def tlogin():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -237,7 +237,7 @@ def tlogin():
 def about():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -247,7 +247,7 @@ def about():
 def contact():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -257,7 +257,7 @@ def contact():
 def pricing():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -268,7 +268,7 @@ def pricing():
 def user_home(circmess = None, ):
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -318,7 +318,7 @@ def user_home(circmess = None, ):
 def home_assignment():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -391,7 +391,7 @@ def home_assignment():
 def view_assignment_details(testname=None):
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -449,7 +449,7 @@ def view_assignment_details(testname=None):
 def pdf_viewer(testname = None, admno = None, mark=None):
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -509,7 +509,7 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 def create_assignment():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -548,7 +548,7 @@ def create_assignment():
 def submit_assignment(testname=None):
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -614,7 +614,7 @@ def submit_assignment(testname=None):
 def resultpage(testname=None, admission=None):
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
@@ -636,7 +636,7 @@ def resultpage(testname=None, admission=None):
 def logout():
 	try:
 		if session['filename']:				
-			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 		except:
 			pass
