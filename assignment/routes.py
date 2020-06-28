@@ -76,17 +76,7 @@ def flash12():
 		pass
     flash('This is a flashed message', 'success')
     return render_template('flash.html',title='flash')
-# =======
-# def flash():
-try:
-	if session['filename']:			
-		os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
-		session['filename'] = ''
-except:
-	pass
-#     flash(message='This is a flashed message!', category='nice')
-# 	return render_template('flash.html',title='flash')
-# >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
+
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
