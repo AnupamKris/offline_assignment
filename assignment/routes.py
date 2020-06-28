@@ -28,7 +28,7 @@ fields = list(fullstudentdata.columns)
 
 def createfolder(foldername):
     client = MediaFireClient()
-    client.login( email='mngeforkvhvf@gmail.com',
+    client.login( email='media.mngeforhvf@gmail.com',
         password='hard2reach',
         app_id='42511')
     client.create_folder('/'+foldername)
@@ -40,7 +40,7 @@ def uploadfile(filename, foldername):
     print(filename)
     client = MediaFireClient()
     print('login')
-    client.login( email='mngeforkvhvf@gmail.com',
+    client.login( email='media.mngeforhvf@gmail.com',
         password='hard2reach',
         app_id='42511')
     for i in range(20):
@@ -57,21 +57,45 @@ def uploadfile(filename, foldername):
 @app.route('/')
 @app.route('/home')
 def home():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	return render_template('home.html',title='Home')
 
 @app.route('/flash')
 # <<<<<<< HEAD
 def flash12():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     flash('This is a flashed message', 'success')
     return render_template('flash.html',title='flash')
 # =======
 # def flash():
+try:
+	if session['filename']:			
+		os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+		session['filename'] = ''
+	except:
+		pass
 #     flash(message='This is a flashed message!', category='nice')
 # 	return render_template('flash.html',title='flash')
 # >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     if current_user.is_authenticated:
         return redirect(url_for('home'))
 
@@ -105,6 +129,12 @@ def register():
 
 @app.route('/tregister', methods = ['GET','POST'])
 def tregister():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     if current_user.is_authenticated:
     	return redirect(url_for('home'))
 
@@ -157,6 +187,12 @@ def tregister():
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     if current_user.is_authenticated:
     	return redirect(url_for('home'))
     form = LoginForm()
@@ -174,6 +210,12 @@ def login():
 
 @app.route('/tlogin', methods = ['GET', 'POST'])
 def tlogin():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     if current_user.is_authenticated:
     	return redirect(url_for('home'))
     form = TeacherLoginForm()
@@ -193,19 +235,43 @@ def tlogin():
 
 @app.route('/about')
 def about():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	return render_template('about.html',title='About')
 
 @app.route('/contact')
 def contact():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	return render_template('contact.html',title='Contact')
 
 @app.route('/pricing')
 def pricing():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	return render_template('pricing.html',title='Pricing')
 
 @app.route('/user-home', methods=['GET', 'POST'])
 @login_required
 def user_home(circmess = None, ):
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	global current_user
 	global client
 	circularsheet = client.open('circular')
@@ -250,6 +316,12 @@ def user_home(circmess = None, ):
 @app.route('/home-assignment', methods = ['GET', 'POST'])
 @login_required
 def home_assignment():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	global fullstudentdata
 	global s_adm
 	global fields
@@ -317,6 +389,12 @@ def home_assignment():
 @app.route('/view-details/<testname>', methods = ['GET', 'POST'])
 @login_required
 def view_assignment_details(testname=None):
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	if current_user.name:
 		if testname:
 			current_teacher = Teacher.query.filter_by(email=current_user.email).first()
@@ -369,6 +447,12 @@ def view_assignment_details(testname=None):
 @app.route('/pdf-viewer/<testname>/<admno>/<mark>', methods=['GET','POST'])
 @login_required
 def pdf_viewer(testname = None, admno = None, mark=None):
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     if current_user.name:
         if request.method == 'POST':
             # input field name?? and submit_marks is the submit
@@ -401,19 +485,18 @@ def pdf_viewer(testname = None, admno = None, mark=None):
             return redirect(url_for('view_assignment_details', testname=testname))
             s_class = str(current_student['class'])+' '+current_student['section']
         else:
-            # mclient = MediaFireClient()
-            # mclient.login(email='mngeforkvhvf@gmail.com', password = 'hard2reach', app_id = '42511')
-            # mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"{testname}{admno}.pdf")
-            # loc=f'{testname}{admno}.pdf'
-            # filename = testname+admno+'.pdf'
-# <<<<<<< HEAD
+            mclient = MediaFireClient()
+            mclient.login(email='media.mngeforhvf@gmail.com', password = 'hard2reach', app_id = '42511')
+            mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{testname}{admno}.pdf")
+            loc=f'{testname}{admno}.pdf'
+            filename = testname+admno+'.pdf'
+			session['filename'] = filename
             if mark == 'None':
                 mark = None
 # =======
 
 # >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
-            return render_template('embedpdf.html', footer='hah', mark = mark)
-        # os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{testname}{admno}.pdf')\
+            return render_template('embedpdf.html', filename=filename, footer='hah', mark = mark)
     else:
         #got it
         return redirect(url_for('user_home'))
@@ -424,6 +507,12 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 @app.route('/create-assignment', methods=['GET','POST'])
 @login_required
 def create_assignment():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     if current_user.name:
         current_teacher = Teacher.query.filter_by(email=current_user.email).first()
         if request.method == 'POST':
@@ -457,6 +546,12 @@ def create_assignment():
 @app.route('/submit-assignment/<testname>', methods = ['GET', 'POST'])
 @login_required
 def submit_assignment(testname=None):
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	if not current_user.name:
 		if request.method == 'POST':
 			global client
@@ -517,6 +612,12 @@ def submit_assignment(testname=None):
 
 @app.route('/resultpage/<testname>/<admission>')
 def resultpage(testname=None, admission=None):
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
     global client
     worksheet = client.open('tests')
     testsheet = worksheet.worksheet('testsheet')
@@ -533,5 +634,11 @@ def resultpage(testname=None, admission=None):
 
 @app.route('/logout')
 def logout():
+	try:
+		if session['filename']:				
+			os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf')
+			session['filename'] = ''
+		except:
+			pass
 	logout_user()
 	return redirect(url_for('home'))
