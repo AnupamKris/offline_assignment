@@ -25,7 +25,6 @@ s_adm = fullstudentdata['admission']
 fields = list(fullstudentdata.columns)
 #----------------------------------------------------------------------------------
 
-
 def createfolder(foldername):
     client = MediaFireClient()
     client.login( email='media.mngeforhvf@gmail.com',
@@ -65,18 +64,7 @@ def home():
 		pass
 	return render_template('home.html',title='Home')
 
-@app.route('/flash')
-# <<<<<<< HEAD
-def flash12():
-	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
-			session['filename'] = ''
-	except:
-		pass
-    flash('This is a flashed message', 'success')
-    return render_template('flash.html',title='flash')
-
+	
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
