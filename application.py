@@ -11,7 +11,7 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-from routes import *
+from assignment import routes
 
 if __name__ == '__main__':
     app.run(debug=True)
