@@ -1,6 +1,5 @@
-<html>
-<head>
-  <title>MNGE | About</title>
+{% extends "layout.html" %}
+{% block embeddedcss %}
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='slick/slick.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='slick/slick-theme.css')}}">
@@ -67,17 +66,7 @@ p {
      text-transform: uppercase;
 }
 
-.logo {
-     position: absolute;
-     margin: 2em;
-     float: left;
-}
 
-.menu-btn {
-     position: relative;
-     float: right;
-     margin: 2em;
-}
 
 .bottom {
      position: absolute;
@@ -90,155 +79,10 @@ p {
      font-weight: 400;
      background: #f12929;
 }
-.menu{
-	background-color: #000;
-	width: 100%;
-	height:70px;
-	position: sticky;
-	top: 0;
-	z-index: 100;
-	align-items: center;
-}
-
-.logo{
-	margin: 15px 20px;
-	padding: 0px 15px;
-	position: absolute;
-	letter-spacing: 5px;
-	font-size: 28px;
-	font-family: oswald;
-	color: #fff;
-	font-weight: 400px;
-	font-style: bold;
-	text-decoration: none;
-}
-
-.logo a{
-	text-decoration: none;
-	color: #fff;
-	font-family: oswald;
-}
-
-.logo a:hover{
-	color: #fff;
-}
-
-.menu ul{
-	text-decoration: none;
-	float:right;
-}
-
-.menu ul li{
-	list-style: none;
-	display: inline-block;
-	margin: 20px;
-	margin-right: 40px;
-	color: #fff;
-}
-
-.menu ul li a{
-	text-decoration: none;
-	color: #fff;
-}
-
-.menu ul #active{
-	color: #ff375f;
-}
-
-.menu ul #activebtn{
-	background-color: #ff375f;
-}
-
-.menu ul li button{
-	padding: 4px 10px;
-	font-size: 1em;
-	display: inline-block;
-	background-color: rgba(255,255,255,.5);
-	text-decoration: none;
-	border: none;
-	border-radius: 9px;
-	text-align: center;
-	color: #fff;
-	cursor: pointer;
-}
-
-.menu ul li button:hover{
-	background-color: #727272;
-}
-
-.checkbtn{
-	font-size: 28px;
-	color: white;
-	padding:20px 15px;
-	float: right;
-	display: none;
-
-}
-
-#check{
-	display: none;
-}
-
-
-@media (max-width: 1080px){
-  .checkbtn{
-    display: block;
-    margin-right: 40px;
-  }
-  .menu ul{
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: #404040;
-    top: 70px;
-    right: -100%;
-    text-align: left;
-    transition: all .5s;
-  }
-  .menu ul li{
-    display: block;
-    margin: 50px 50px;
-
-    line-height: 30px;
-  }
-  .menu ul li a{
-    font-size: 20px;
-  }
-  a:hover,a.active{
-    background: none;
-    color: #0082e6;
-  }
-  #check:checked ~ ul{
-    right: -60%;
-  }
-}
 
   </style>
-</head>
-
-<nav class="Menu">
-	<input type="checkbox" id="check">
-	<label for="check" class="checkbtn">
-		<i class="fas fa-bars"></i>
-	</label>
-	<label class="logo"><a href="{{ url_for('home') }}">M N G E</a></label>
-	<ul>
-		{% if not current_user.is_authenticated %}
-			<li><a href="{{ url_for('home') }}" id="active">Home</a></li>
-		{% endif %}
-		<li><a href="{{ url_for('about') }}">About</a></li>
-		<li><a href="{{ url_for('pricing') }}">Pricing</a></li>
-		<li><a href="{{ url_for('contact') }}">Contact</a></li>
-		{% if current_user.is_authenticated %}
-			<li><button type="button" onclick="window.location.href='{{ url_for('user_home') }}';">Profile</button></li>
-			<li> <button type="button" onclick="window.location.href='{{ url_for('logout') }}';">Logout</button></li>
-		{% else %}
-			<li> <button type="button" onclick="window.location.href='{{ url_for('login') }}';">Login</button></li>
-			<li><button type="button" onclick="window.location.href='{{ url_for('register') }}';">Register</button></li>
-		{% endif %}
-	</ul>
-</nav>
-
+{% endblock embeddedcss %}
+{% block body %}
 <body>
 
      <div class="navbar">
@@ -338,4 +182,4 @@ p {
 
      </script>
 </body>
-</html>
+{% endblock body %}
