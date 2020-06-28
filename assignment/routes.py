@@ -423,9 +423,11 @@ def view_assignment_details(testname=None):
 	else:
 		return redirect(url_for('user_home'))
 
+
+
 @app.route('/pdf-viewer/<testname>/<admno>/<mark>', methods=['GET','POST'])
 @login_required
-	def pdf_viewer(testname = None, admno = None, mark=None):
+def pdf_viewer(testname = None, admno = None, mark=None):
 	try:
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
