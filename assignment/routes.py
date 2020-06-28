@@ -61,8 +61,8 @@ def home():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	return render_template('home.html',title='Home')
 
 @app.route('/flash')
@@ -72,8 +72,8 @@ def flash12():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     flash('This is a flashed message', 'success')
     return render_template('flash.html',title='flash')
 # =======
@@ -82,8 +82,8 @@ try:
 	if session['filename']:			
 		os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 		session['filename'] = ''
-	except:
-		pass
+except:
+	pass
 #     flash(message='This is a flashed message!', category='nice')
 # 	return render_template('flash.html',title='flash')
 # >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
@@ -94,8 +94,8 @@ def register():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     if current_user.is_authenticated:
         return redirect(url_for('home'))
 
@@ -133,8 +133,8 @@ def tregister():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     if current_user.is_authenticated:
     	return redirect(url_for('home'))
 
@@ -191,8 +191,8 @@ def login():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     if current_user.is_authenticated:
     	return redirect(url_for('home'))
     form = LoginForm()
@@ -214,8 +214,8 @@ def tlogin():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     if current_user.is_authenticated:
     	return redirect(url_for('home'))
     form = TeacherLoginForm()
@@ -239,8 +239,8 @@ def about():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	return render_template('about.html',title='About')
 
 @app.route('/contact')
@@ -249,8 +249,8 @@ def contact():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	return render_template('contact.html',title='Contact')
 
 @app.route('/pricing')
@@ -259,8 +259,8 @@ def pricing():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	return render_template('pricing.html',title='Pricing')
 
 @app.route('/user-home', methods=['GET', 'POST'])
@@ -270,8 +270,8 @@ def user_home(circmess = None, ):
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	global current_user
 	global client
 	circularsheet = client.open('circular')
@@ -320,8 +320,8 @@ def home_assignment():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	global fullstudentdata
 	global s_adm
 	global fields
@@ -393,8 +393,8 @@ def view_assignment_details(testname=None):
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	if current_user.name:
 		if testname:
 			current_teacher = Teacher.query.filter_by(email=current_user.email).first()
@@ -451,8 +451,8 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     if current_user.name:
         if request.method == 'POST':
             # input field name?? and submit_marks is the submit
@@ -511,8 +511,8 @@ def create_assignment():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     if current_user.name:
         current_teacher = Teacher.query.filter_by(email=current_user.email).first()
         if request.method == 'POST':
@@ -550,8 +550,8 @@ def submit_assignment(testname=None):
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	if not current_user.name:
 		if request.method == 'POST':
 			global client
@@ -616,8 +616,8 @@ def resultpage(testname=None, admission=None):
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
     global client
     worksheet = client.open('tests')
     testsheet = worksheet.worksheet('testsheet')
@@ -638,7 +638,7 @@ def logout():
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
-		except:
-			pass
+	except:
+		pass
 	logout_user()
 	return redirect(url_for('home'))
