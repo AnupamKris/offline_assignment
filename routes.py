@@ -1,7 +1,7 @@
 from flask import render_template, flash, url_for, redirect, request, session
-from assignment import app, db, bcrypt
-from assignment.forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
-from assignment.models import User, Teacher
+from app import app, db, bcrypt
+from forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
+from models import User, Teacher
 from flask_login import login_user, current_user, logout_user, login_required
 from random import choice
 import gspread
@@ -12,13 +12,13 @@ import os
 #GSpread---------------------------------------------------------------------------
 scope = ['https://www.googleapis.com/auth/drive']
 
-cred = ServiceAccountCredentials.from_json_keyfile_name('/home/mngeforkvhvf/mnge/offline_assignment/assignment/cred.json', scope)
+cred = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
 
 client = gspread.authorize(cred)
 #----------------------------------------------------------------------------------
 
 #Student Excel Loading-------------------------------------------------------------
-fullstudentdata = pd.read_excel("/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/students.xlsx")
+fullstudentdata = pd.read_excel("students.xlsx")
 # Bye
 s_adm = fullstudentdata['admission']
 
@@ -28,19 +28,19 @@ fields = list(fullstudentdata.columns)
 
 def createfolder(foldername):
     client = MediaFireClient()
-    client.login( email='mediamngeforkvhvf@gmail.com',
+    client.login( email='mngeforkvhvf@gmail.com',
         password='hard2reach',
         app_id='42511')
     client.create_folder('/'+foldername)
 
 def uploadfile(filename, foldername):
-    imagepath = '/home/mngeforkvhvf/mnge/'
+    imagepath = ''
     imagepath+=filename
     print(imagepath)
     print(filename)
     client = MediaFireClient()
     print('login')
-    client.login( email='mediamngeforkvhvf@gmail.com',
+    client.login( email='mngeforkvhvf@gmail.com',
         password='hard2reach',
         app_id='42511')
     for i in range(20):
@@ -397,14 +397,14 @@ def pdf_viewer(testname = None, admno = None, mark=None):
                     i['marks'] = marks
             print('\n\n\n\n\nDATA',marks,'\n\n\n\n\n')
             testsheet.update_cell(rowindex, 5, str(submitteddata))
-            # os.remove(f'/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf')
+            # os.remove(f'{testname}{admno}.pdf')
             return redirect(url_for('view_assignment_details', testname=testname))
             s_class = str(current_student['class'])+' '+current_student['section']
         else:
             # mclient = MediaFireClient()
-            # mclient.login(email='mediamngeforkvhvf@gmail.com', password = 'hard2reach', app_id = '42511')
-            # mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf")
-            # loc=f'/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/{testname}{admno}.pdf'
+            # mclient.login(email='mngeforkvhvf@gmail.com', password = 'hard2reach', app_id = '42511')
+            # mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"{testname}{admno}.pdf")
+            # loc=f'{testname}{admno}.pdf'
             # filename = testname+admno+'.pdf'
 # <<<<<<< HEAD
             if mark == 'None':
@@ -413,7 +413,7 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 
 # >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
             return render_template('embedpdf.html', footer='hah', mark = mark)
-        # os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/static/{testname}{admno}.pdf')\
+        # os.remove(f'/home/mngeforkvhvf/mngeoffline_assignment/assignment/{testname}{admno}.pdf')\
     else:
         #got it
         return redirect(url_for('user_home'))
@@ -440,7 +440,7 @@ def create_assignment():
                 f = request.files['qpupload']
                 # Why pink!
                 # okay
-                f.save('/home/mngeforkvhvf/mnge/QP.pdf')
+                f.save('QP.pdf')
                 createfolder(filename)
                 link = uploadfile('QP.pdf', filename)
                 break
@@ -489,7 +489,7 @@ def submit_assignment(testname=None):
 						else:
 						    for retry in range(10):
     							f = request.files['assupload']
-    							f.save('/home/mngeforkvhvf/mnge/'+current_user.admission+'.pdf')
+    							f.save(''+current_user.admission+'.pdf')
     							link = uploadfile(current_user.admission+'.pdf', testname)
     							print('running else')
     							updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
@@ -497,7 +497,7 @@ def submit_assignment(testname=None):
     							break
 					except:
 						f = request.files['assupload']
-						f.save('/home/mngeforkvhvf/mnge/'+current_user.admission+'.pdf')
+						f.save(''+current_user.admission+'.pdf')
 						link = uploadfile(current_user.admission+'.pdf', testname)
 						print('running except')
 						updata.append({'admno':current_user.admission, 'link':link, 'marks':None})

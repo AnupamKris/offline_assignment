@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, AnyOf
-from assignment.models import User
+from models import User
 
 class RegistrationForm(FlaskForm):
 	admission = StringField('Admission Number', validators=[DataRequired()]
