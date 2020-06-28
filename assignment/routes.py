@@ -56,21 +56,21 @@ def uploadfile(filename, foldername):
 @app.route('/')
 @app.route('/home')
 def home():
-	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
-			session['filename'] = ''
-	except:
-		pass
-	return render_template('home.html',title='Home')
+    try:
+        if session['filename']:
+        	os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+        	session['filename'] = ''
+    except:
+    	pass
+    return render_template('home.html',title='Home')
 
-	
+
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -109,8 +109,8 @@ def register():
 @app.route('/tregister', methods = ['GET','POST'])
 def tregister():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -167,8 +167,8 @@ def tregister():
 @app.route('/login', methods = ['GET','POST'])
 def login():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -190,8 +190,8 @@ def login():
 @app.route('/tlogin', methods = ['GET', 'POST'])
 def tlogin():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -215,8 +215,8 @@ def tlogin():
 @app.route('/about')
 def about():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -225,8 +225,8 @@ def about():
 @app.route('/contact')
 def contact():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -235,8 +235,8 @@ def contact():
 @app.route('/pricing')
 def pricing():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -246,8 +246,8 @@ def pricing():
 @login_required
 def user_home(circmess = None, ):
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -296,8 +296,8 @@ def user_home(circmess = None, ):
 @login_required
 def home_assignment():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -369,8 +369,8 @@ def home_assignment():
 @login_required
 def view_assignment_details(testname=None):
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -429,8 +429,8 @@ def view_assignment_details(testname=None):
 @login_required
 def pdf_viewer(testname = None, admno = None, mark=None):
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -438,6 +438,7 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 		if request.method == 'POST':
 			# input field name?? and submit_marks is the submit
 			marks = request.form.get('marks')
+			remark = request.form.get('remark')
 			# i didnt read it
 			tests = client.open('tests')
 			testsheet = tests.worksheet('testsheet')
@@ -460,6 +461,7 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 			for i in submitteddata:
 				if i['admno'] == admno:
 					i['marks'] = marks
+					i['remark'] = remark
 			print('\n\n\n\n\nDATA',marks,'\n\n\n\n\n')
 			testsheet.update_cell(rowindex, 5, str(submitteddata))
 			# os.remove(f'{testname}{admno}.pdf')
@@ -477,7 +479,7 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 	# =======
 
 	# >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
-			return render_template('embedpdf.html', filename=filename, footer='hah', mark = mark)
+			return render_template('embedpdf.html', filename1='answersheets/'+filename, footer='hah', mark = mark)
 	else:
 		#got it
 		return redirect(url_for('user_home'))
@@ -489,8 +491,8 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 @login_required
 def create_assignment():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -529,8 +531,8 @@ def create_assignment():
 @login_required
 def submit_assignment(testname=None):
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -595,8 +597,8 @@ def submit_assignment(testname=None):
 @app.route('/resultpage/<testname>/<admission>')
 def resultpage(testname=None, admission=None):
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -612,13 +614,14 @@ def resultpage(testname=None, admission=None):
 	for i in eval(row[4]):
 		if i['admno'] == admission:
 			mark = i['marks']
-	return render_template('resultpage.html', mark=mark, testname=testname)
+			remark = i['remark']
+	return render_template('resultpage.html', mark=mark, remark=remark, testname=testname)
 
 @app.route('/logout')
 def logout():
 	try:
-		if session['filename']:				
-			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
+		if session['filename']:
+			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
