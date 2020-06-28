@@ -26,32 +26,32 @@ fields = list(fullstudentdata.columns)
 #----------------------------------------------------------------------------------
 
 def createfolder(foldername):
-    client = MediaFireClient()
-    client.login( email='media.mngeforhvf@gmail.com',
-        password='hard2reach',
-        app_id='42511')
-    client.create_folder('/'+foldername)
+	client = MediaFireClient()
+	client.login( email='media.mngeforhvf@gmail.com',
+		password='hard2reach',
+		app_id='42511')
+	client.create_folder('/'+foldername)
 
 def uploadfile(filename, foldername):
-    imagepath = ''
-    imagepath+=filename
-    print(imagepath)
-    print(filename)
-    client = MediaFireClient()
-    print('login')
-    client.login( email='media.mngeforhvf@gmail.com',
-        password='hard2reach',
-        app_id='42511')
-    for i in range(20):
-    	try:
-        	print('doing upload')
-        	result = client.upload_file(imagepath, f"mf:/{foldername}/")
-        	fileinfo = client.api.file_get_info(result.quickkey)
-        	link = fileinfo['file_info']['links']['normal_download']
-        	break
-    	except:
-        	print('retrying')
-    return link
+	imagepath = ''
+	imagepath+=filename
+	print(imagepath)
+	print(filename)
+	client = MediaFireClient()
+	print('login')
+	client.login( email='media.mngeforhvf@gmail.com',
+		password='hard2reach',
+		app_id='42511')
+	for i in range(20):
+		try:
+			print('doing upload')
+			result = client.upload_file(imagepath, f"mf:/{foldername}/")
+			fileinfo = client.api.file_get_info(result.quickkey)
+			link = fileinfo['file_info']['links']['normal_download']
+			break
+		except:
+			print('retrying')
+	return link
 
 @app.route('/')
 @app.route('/home')
@@ -74,36 +74,37 @@ def register():
 			session['filename'] = ''
 	except:
 		pass
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
 
-    form = RegistrationForm(request.form)
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
 
-    global fullstudentdata
+	form = RegistrationForm(request.form)
 
-    if form.validate_on_submit():
+	global fullstudentdata
 
-        cur_student = fullstudentdata.loc[fullstudentdata['admission'] == int(form.admission.data)]
-        print('\n\n\n\n\n\n\n\n\n', cur_student, '\n\n\n\n\n\n', form.dob.data)
-        rawdob = str(form.dob.data).split('-')[::-1]
-        dob = '/'.join(rawdob)
-        print(dob)
-        if cur_student['dob'].values == dob:
+	if form.validate_on_submit():
 
-            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+		cur_student = fullstudentdata.loc[fullstudentdata['admission'] == int(form.admission.data)]
+		print('\n\n\n\n\n\n\n\n\n', cur_student, '\n\n\n\n\n\n', form.dob.data)
+		rawdob = str(form.dob.data).split('-')[::-1]
+		dob = '/'.join(rawdob)
+		print(dob)
+		if cur_student['dob'].values == dob:
 
-            user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
+			hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 
-            db.session.add(user)
+			user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
+
+			db.session.add(user)
 
 
-            db.session.commit()
-            flash(f'Your account has been created you can now login!', 'success')
-            return redirect(url_for('login'))
-        else:
-            flash('Admission Number and DOB does not match', 'fail')
+			db.session.commit()
+			flash(f'Your account has been created you can now login!', 'success')
+			return redirect(url_for('login'))
+		else:
+			flash('Admission Number and DOB does not match', 'fail')
 
-    return render_template('registerpage.html', title='Register', form=form, footer=1)
+	return render_template('registerpage.html', title='Register', form=form, footer=1)
 
 @app.route('/tregister', methods = ['GET','POST'])
 def tregister():
@@ -113,55 +114,55 @@ def tregister():
 			session['filename'] = ''
 	except:
 		pass
-    if current_user.is_authenticated:
-    	return redirect(url_for('home'))
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
 
 
-    if current_user.is_authenticated:
-    	return redirect(url_for('home'))
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
 
-    if request.method == 'POST':
-        securitykey = request.form.get('securitykey')
-        name = request.form.get('name')
-        password = request.form.get('password')
-        confirmpassword = request.form.get('confirmpassword')
-        email = request.form.get('email')
-        subject = request.form.get('select')
-        classes = request.form.getlist('classes')
-        classteacherof = request.form.get('classteacherof')
-        # global client
-        # spreadsheet = client.open('teachers')
-        # worksheet = spreadsheet.worksheet('Sheet1')
-        # teacherdetails = [str(name), str(email), str(subject), str(classes), str(classteacherof)]
-        # worksheet.insert_row(teacherdetails,2)
-        print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
-        teacher = Teacher.query.filter_by(email = email).first()
+	if request.method == 'POST':
+		securitykey = request.form.get('securitykey')
+		name = request.form.get('name')
+		password = request.form.get('password')
+		confirmpassword = request.form.get('confirmpassword')
+		email = request.form.get('email')
+		subject = request.form.get('select')
+		classes = request.form.getlist('classes')
+		classteacherof = request.form.get('classteacherof')
+		# global client
+		# spreadsheet = client.open('teachers')
+		# worksheet = spreadsheet.worksheet('Sheet1')
+		# teacherdetails = [str(name), str(email), str(subject), str(classes), str(classteacherof)]
+		# worksheet.insert_row(teacherdetails,2)
+		print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
+		teacher = Teacher.query.filter_by(email = email).first()
 
-        if securitykey != 'qwertyuiop':
-            flash("Security Key is Not Correct", 'fail')
-        elif teacher != None:
-            flash('Email already registered', 'fail')
-        elif password != confirmpassword:
-            flash("Passwords and confirm password doesn't match", 'fail')
-        if teacher == None and password == confirmpassword and securitykey == 'qwertyuiop':
+		if securitykey != 'qwertyuiop':
+			flash("Security Key is Not Correct", 'fail')
+		elif teacher != None:
+			flash('Email already registered', 'fail')
+		elif password != confirmpassword:
+			flash("Passwords and confirm password doesn't match", 'fail')
+		if teacher == None and password == confirmpassword and securitykey == 'qwertyuiop':
 
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+			hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-            user = User(name=name, password=hashed_password, email =email)
+			user = User(name=name, password=hashed_password, email =email)
 
-            db.session.add(user)
+			db.session.add(user)
 
 
-            db.session.commit()
-            teacher = Teacher(name=name, email=email, classeshandled =str(classes), classteacher=classteacherof, subject=subject)
-            db.session.add(teacher)
-            db.session.commit()
-            flash(f'Your account has been created you can now login!', 'success')
-            return redirect(url_for('tlogin'))
-        else:
-            return render_template('tregister.html', title='Teacher Register', footer=1)
-    else:
-        return render_template('tregister.html', title='Teacher Register', footer=1)
+			db.session.commit()
+			teacher = Teacher(name=name, email=email, classeshandled =str(classes), classteacher=classteacherof, subject=subject)
+			db.session.add(teacher)
+			db.session.commit()
+			flash(f'Your account has been created you can now login!', 'success')
+			return redirect(url_for('tlogin'))
+		else:
+			return render_template('tregister.html', title='Teacher Register', footer=1)
+	else:
+		return render_template('tregister.html', title='Teacher Register', footer=1)
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
@@ -171,20 +172,20 @@ def login():
 			session['filename'] = ''
 	except:
 		pass
-    if current_user.is_authenticated:
-    	return redirect(url_for('home'))
-    form = LoginForm()
-    if form.validate_on_submit():
-    	user = User.query.filter_by(admission=form.admission.data).first()
-    	if not user:
-    	    flash("This admission isn't registered. Please try registering.", 'fail')
-    	elif user and bcrypt.check_password_hash(user.password, form.password.data):
-    		login_user(user)
-    		next_page = request.args.get('next')
-    		return redirect(next_page) if next_page else redirect(url_for('user_home'))
-    	elif bcrypt.check_password_hash(user.password, form.password.data) == False:
-    	    flash('Entered password is wrong. Please try again.', 'fail')
-    return render_template('login.html', form=form, title='Student Login', footer=1)
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
+	form = LoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(admission=form.admission.data).first()
+		if not user:
+			flash("This admission isn't registered. Please try registering.", 'fail')
+		elif user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user)
+			next_page = request.args.get('next')
+			return redirect(next_page) if next_page else redirect(url_for('user_home'))
+		elif bcrypt.check_password_hash(user.password, form.password.data) == False:
+			flash('Entered password is wrong. Please try again.', 'fail')
+	return render_template('login.html', form=form, title='Student Login', footer=1)
 
 @app.route('/tlogin', methods = ['GET', 'POST'])
 def tlogin():
@@ -194,22 +195,22 @@ def tlogin():
 			session['filename'] = ''
 	except:
 		pass
-    if current_user.is_authenticated:
-    	return redirect(url_for('home'))
-    form = TeacherLoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if not user:
-            flash("This email isn't registered. Please try registering.", 'fail')
-        elif user.admission:
-            flash("This email isn't registered. Please try registering.", 'fail')
-        elif user and bcrypt.check_password_hash(user.password, form.password.data):
-        	login_user(user)
-        	next_page = request.args.get('next')
-        	return redirect(next_page) if next_page else redirect(url_for('user_home'))
-        elif bcrypt.check_password_hash(user.password, form.password.data) == False:
-            flash('Entered password is wrong. Please try again.', 'fail')
-    return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
+	form = TeacherLoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(email=form.email.data).first()
+		if not user:
+			flash("This email isn't registered. Please try registering.", 'fail')
+		elif user.admission:
+			flash("This email isn't registered. Please try registering.", 'fail')
+		elif user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user)
+			next_page = request.args.get('next')
+			return redirect(next_page) if next_page else redirect(url_for('user_home'))
+		elif bcrypt.check_password_hash(user.password, form.password.data) == False:
+			flash('Entered password is wrong. Please try again.', 'fail')
+	return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
 
 @app.route('/about')
 def about():
@@ -424,60 +425,60 @@ def view_assignment_details(testname=None):
 
 @app.route('/pdf-viewer/<testname>/<admno>/<mark>', methods=['GET','POST'])
 @login_required
-def pdf_viewer(testname = None, admno = None, mark=None):
+	def pdf_viewer(testname = None, admno = None, mark=None):
 	try:
 		if session['filename']:				
 			os.remove(f"/home/mngeforkvhvf/mngeoffline_assignment/assignment/{session['filename']}.pdf")
 			session['filename'] = ''
 	except:
 		pass
-    if current_user.name:
-        if request.method == 'POST':
-            # input field name?? and submit_marks is the submit
-            marks = request.form.get('marks')
-            # i didnt read it
-            tests = client.open('tests')
-            testsheet = tests.worksheet('testsheet')
-            testname1 = testsheet.col_values(3)
-            for i in range(len(testname1)):
-                if testname1[i] == testname:
-                    row = testsheet.row_values(i+1)
-                    rowindex = i+1
-                    break
-            submitteddata = eval(row[4])# this is python indexing
-            # dd = {}
-            # #!!dict['marks'] is the key for marks of the student
-            # # dict['admno'] is admno right?? ok
-            # exec(f'datalist = {submitteddata}')
-            # datalist = dd['datalist']
-            # for i in range(len(datalist)):
-            #     if datalist[i]['admno'] == admno:
-            #         datalist[i]['marks'] = marks
-            #         break
-            for i in submitteddata:
-                if i['admno'] == admno:
-                    i['marks'] = marks
-            print('\n\n\n\n\nDATA',marks,'\n\n\n\n\n')
-            testsheet.update_cell(rowindex, 5, str(submitteddata))
-            # os.remove(f'{testname}{admno}.pdf')
-            return redirect(url_for('view_assignment_details', testname=testname))
-            s_class = str(current_student['class'])+' '+current_student['section']
-        else:
-            mclient = MediaFireClient()
-            mclient.login(email='media.mngeforhvf@gmail.com', password = 'hard2reach', app_id = '42511')
-            mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{testname}{admno}.pdf")
-            loc=f'{testname}{admno}.pdf'
-            filename = testname+admno+'.pdf'
+	if current_user.name:
+		if request.method == 'POST':
+			# input field name?? and submit_marks is the submit
+			marks = request.form.get('marks')
+			# i didnt read it
+			tests = client.open('tests')
+			testsheet = tests.worksheet('testsheet')
+			testname1 = testsheet.col_values(3)
+			for i in range(len(testname1)):
+				if testname1[i] == testname:
+					row = testsheet.row_values(i+1)
+					rowindex = i+1
+					break
+			submitteddata = eval(row[4])# this is python indexing
+			# dd = {}
+			# #!!dict['marks'] is the key for marks of the student
+			# # dict['admno'] is admno right?? ok
+			# exec(f'datalist = {submitteddata}')
+			# datalist = dd['datalist']
+			# for i in range(len(datalist)):
+			#     if datalist[i]['admno'] == admno:
+			#         datalist[i]['marks'] = marks
+			#         break
+			for i in submitteddata:
+				if i['admno'] == admno:
+					i['marks'] = marks
+			print('\n\n\n\n\nDATA',marks,'\n\n\n\n\n')
+			testsheet.update_cell(rowindex, 5, str(submitteddata))
+			# os.remove(f'{testname}{admno}.pdf')
+			return redirect(url_for('view_assignment_details', testname=testname))
+			s_class = str(current_student['class'])+' '+current_student['section']
+		else:
+			mclient = MediaFireClient()
+			mclient.login(email='media.mngeforhvf@gmail.com', password = 'hard2reach', app_id = '42511')
+			mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{testname}{admno}.pdf")
+			loc=f'{testname}{admno}.pdf'
+			filename = testname+admno+'.pdf'
 			session['filename'] = filename
-            if mark == 'None':
-                mark = None
-# =======
+			if mark == 'None':
+				mark = None
+	# =======
 
-# >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
-            return render_template('embedpdf.html', filename=filename, footer='hah', mark = mark)
-    else:
-        #got it
-        return redirect(url_for('user_home'))
+	# >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
+			return render_template('embedpdf.html', filename=filename, footer='hah', mark = mark)
+	else:
+		#got it
+		return redirect(url_for('user_home'))
 
 
 
@@ -491,36 +492,37 @@ def create_assignment():
 			session['filename'] = ''
 	except:
 		pass
-    if current_user.name:
-        current_teacher = Teacher.query.filter_by(email=current_user.email).first()
-        if request.method == 'POST':
-            filename = request.form.get('testname')
-            global client
-            worksheet = client.open('tests')
-            testsheet = worksheet.worksheet('testsheet')
-            testnames = testsheet.col_values(3)
-            for test in testnames:
-                if filename == test:
-                    flash('Test Name already exists please use another name', 'fail2')
-                    return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
-            for i in range(10):
-                f = request.files['qpupload']
-                # Why pink!
-                # okay
-                f.save('QP.pdf')
-                createfolder(filename)
-                link = uploadfile('QP.pdf', filename)
-                break
-            testsheet = client.open('tests')
-            worksheet = testsheet.worksheet('testsheet')
-            datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
-            worksheet.insert_row(datalist, 2)
-            flash('Assignment created Successfully!', 'success2')
-            return redirect(url_for('home_assignment'))
-        else:
-        	return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
-    else:
-    	return redirect(url_for('user_home'))
+	if current_user.name:
+		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+		if request.method == 'POST':
+			filename = request.form.get('testname')
+			global client
+			worksheet = client.open('tests')
+			testsheet = worksheet.worksheet('testsheet')
+			testnames = testsheet.col_values(3)
+			for test in testnames:
+				if filename == test:
+					flash('Test Name already exists please use another name', 'fail2')
+					return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
+			for i in range(10):
+				f = request.files['qpupload']
+				# Why pink!
+				# okay
+				f.save('QP.pdf')
+				createfolder(filename)
+				link = uploadfile('QP.pdf', filename)
+				break
+			testsheet = client.open('tests')
+			worksheet = testsheet.worksheet('testsheet')
+			datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
+			worksheet.insert_row(datalist, 2)
+			flash('Assignment created Successfully!', 'success2')
+			return redirect(url_for('home_assignment'))
+		else:
+			return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
+	else:
+		return redirect(url_for('user_home'))
+
 @app.route('/submit-assignment/<testname>', methods = ['GET', 'POST'])
 @login_required
 def submit_assignment(testname=None):
@@ -596,19 +598,19 @@ def resultpage(testname=None, admission=None):
 			session['filename'] = ''
 	except:
 		pass
-    global client
-    worksheet = client.open('tests')
-    testsheet = worksheet.worksheet('testsheet')
-    testnames = testsheet.col_values(3)
-    for i in range(len(testnames)):
-        if testnames[i] == testname:
-            row = testsheet.row_values(i+1)
-            rowindex = i+1
-            break
-    for i in eval(row[4]):
-        if i['admno'] == admission:
-            mark = i['marks']
-    return render_template('resultpage.html', mark=mark, testname=testname)
+	global client
+	worksheet = client.open('tests')
+	testsheet = worksheet.worksheet('testsheet')
+	testnames = testsheet.col_values(3)
+	for i in range(len(testnames)):
+		if testnames[i] == testname:
+			row = testsheet.row_values(i+1)
+			rowindex = i+1
+			break
+	for i in eval(row[4]):
+		if i['admno'] == admission:
+			mark = i['marks']
+	return render_template('resultpage.html', mark=mark, testname=testname)
 
 @app.route('/logout')
 def logout():
