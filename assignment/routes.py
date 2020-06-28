@@ -1,7 +1,7 @@
 from flask import render_template, flash, url_for, redirect, request, session
-from app import app, db, bcrypt
-from forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
-from models import User, Teacher
+from application import app, db, bcrypt
+from assignment.forms import RegistrationForm, LoginForm, TeacherRegistrationForm, TeacherLoginForm
+from assignment.models import User, Teacher
 from flask_login import login_user, current_user, logout_user, login_required
 from random import choice
 import gspread
