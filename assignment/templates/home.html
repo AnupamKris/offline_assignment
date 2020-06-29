@@ -10,6 +10,18 @@
 			width: 100%;
 			height:auto;
 		}
+		.home-top-slider div:nth-child(1){
+			background: url({{ url_for('static', filename='temp.jpg') }});
+		}
+		.home-top-slider div:nth-child(2){
+			background: url({{ url_for('static', filename='temp2.jpg') }});
+		}
+		.home-top-slider div:nth-child(3){
+			background: url({{ url_for('static', filename='temp.jpg') }});
+		}
+		.home-top-slider div:nth-child(4){
+			background: url({{ url_for('static', filename='temp2.jpg') }});
+		}
 	</style>
 {% endblock embeddedcss %}
 
@@ -18,10 +30,10 @@
 	<div class="container">
 		<div class="articles">
 			<section class="home-top-slider">
-				<div><img src="{{ url_for('static', filename='temp.jpg') }}"></div>
-				<div><img src="{{ url_for('static', filename='temp2.jpg') }}"></div>
-				<div><img src="{{ url_for('static', filename='temp.jpg') }}"></div>
-				<div><img src="{{ url_for('static', filename='temp2.jpg') }}"></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
 			</section>
 
 			<section class="home-intro">
