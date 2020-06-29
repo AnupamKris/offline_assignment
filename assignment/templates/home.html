@@ -3,29 +3,10 @@
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='slick/slick.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='slick/slick-theme.css')}}">
 	<style type="text/css">
-		.img-slider-container .img-slider .img-slide.slide1{
-	background: url({{ url_for('static', filename='1.jpg') }});
-	background-size: cover;
-	background-position: center;
-}
-		.img-slider-container .img-slider .img-slide.slide2{
-	background: url({{ url_for('static', filename='2.jpg') }});
-	background-size: cover;
-	background-position: center;
-}
-		.img-slider-container .img-slider .img-slide.slide3{
-	background: url({{ url_for('static', filename='1.jpg') }});
-	background-size: cover;
-	background-position: center;
-}
-	.img-slider-container .img-slider .img-slide.slide4{
-	background: url({{ url_for('static', filename='2.jpg') }});
-	background-size: cover;
-	background-position: center;
-}
-	.home-why-mnge{
-		background: url({{ url_for('static', filename='2.jpg') }});
-	}
+		.articles .home-top-slider{
+			justify-content: center;
+			align-items: center;
+		}
 	</style>
 {% endblock embeddedcss %}
 
