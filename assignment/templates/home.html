@@ -18,10 +18,14 @@
 	<div class="container">
 		<div class="articles">
 			<section class="home-top-slider">
-				<div><img src="{{ url_for('static', filename='temp.jpg') }}"></div>
-				<div><img src="{{ url_for('static', filename='temp2.jpg') }}"></div>
-				<div><img src="{{ url_for('static', filename='temp.jpg') }}"></div>
-				<div><img src="{{ url_for('static', filename='temp2.jpg') }}"></div>
+				<div><img src="{{ url_for('static', filename='temp.jpg') }}"
+					srcset="{{ url_for('static', filename='temp3.jpg') }} 1024w"></div>
+				<div><img src="{{ url_for('static', filename='temp2.jpg') }}"
+					srcset="{{ url_for('static', filename='temp4.jpg') }} 1024w"></div>
+				<div><img src="{{ url_for('static', filename='temp.jpg') }}"
+					srcset="{{ url_for('static', filename='temp3.jpg') }} 1024w"></div>
+				<div><img src="{{ url_for('static', filename='temp2.jpg') }}"
+					srcset="{{ url_for('static', filename='temp4.jpg') }} 1024w"></div>
 			</section>
 
 			<section class="home-intro">
