@@ -6,6 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
 
 html{
 	display: flex;
@@ -17,7 +18,13 @@ html{
 	padding: 0;
 	font-family: Montserrat;
 	font-weight: 400;
+    box-sizing:border-box;
+}
 
+@media only screen and (orientation: portrait){
+    *{
+        font-size:1.5rem;
+    }
 }
 
 .container{
@@ -40,11 +47,12 @@ html{
 }
 
 .logo{
+    justify-content:center;
 	margin: 15px 20px;
 	padding: 0px 15px;
 	position: absolute;
 	letter-spacing: 5px;
-	font-size: 28px;
+	font-size: 3rem;
 	font-family: oswald;
 	color: #fff;
 	font-weight: 400px;
@@ -106,7 +114,7 @@ html{
 }
 
 .checkbtn{
-	font-size: 28px;
+	font-size: 1.75rempx;
 	color: white;
 	padding:20px 15px;
 	float: right;
@@ -118,8 +126,28 @@ html{
 	display: none;
 }
 
+@media only screen and (orientation: portrait){
+    .logo{
+        margin:20px;
+        font-size:50px;
+    }
+    .menu{
+        height:100px;
+        align-items:center;
+    }
+    .menu ul li{
+        font-size:1.3rem;
+    }
+    .checkbtn{
+        font-size:2.2rem;
+        margin:20px;
+    }
+}
 
 @media only screen and (max-width: 1000px){
+    .logo label{
+    font-size:1.2rem;
+    }
   .checkbtn{
     display: block;
     margin-right: 40px;
@@ -137,7 +165,7 @@ html{
   .menu ul li{
     display: block;
     margin: 50px 50px;
-
+    font-size:1.05rem;
     line-height: 30px;
   }
   .menu ul li a{
@@ -160,6 +188,7 @@ html{
 .container .articles{
 	display: flex;
 	flex-direction: column;
+	font-family:'Lato', sans-serif;
 }
 
 .img-slider-container{
@@ -278,18 +307,23 @@ html{
 	width: 100%;
 	margin-bottom: 20px;
 	box-sizing: border-box;
+	position:relative;
 }
 
 .home-intro h2{
+    font-size:2rem;
+    font-family:'Lato', sans-serif;
+    font-style:italic;
 	font-weight: 700;
 	text-align: center;
 	margin-bottom: 10px;
 }
 
 .home-intro p,.home-intro a{
-	font-size: 1em;
+	font-size: 1.4rem;
 	padding: 5px;
 	text-align: center;
+	font-family:'Lato', sans-serif;
 }
 
 .home-intro a:hover{
@@ -309,18 +343,25 @@ html{
 	margin-bottom: 20px;
 	padding-bottom: 20px;
 	box-sizing: border-box;
+	font-size:1.2rem;
+	font-family:'Lato', sans-serif;
+	position:relative;
 }
 
 .home-why-mnge h2{
+    font-size:2rem;
 	font-weight: 700;
 	text-align: center;
 	margin-bottom: 10px;
+	font-family:'Lato', sans-serif;
+	font-style:italic;
 }
 
 .home-why-mnge p,.home-why-mnge a{
-	font-size: 1em;
+	font-size: 1.4rem;
 	padding: 5px;
 	text-align: center;
+	font-family:'Lato', sans-serif;
 }
 
 .home-why-mnge a:hover{

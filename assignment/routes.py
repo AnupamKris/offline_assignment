@@ -220,7 +220,7 @@ def about():
 			session['filename'] = ''
 	except:
 		pass
-	return render_template('about.html',title='About')
+	return render_template('about.html',title='About', footer='haello')
 
 @app.route('/contact')
 def contact():

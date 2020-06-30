@@ -3,13 +3,27 @@
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='slick/slick.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='slick/slick-theme.css')}}">
 	<style type="text/css">
+	    .home-top-slider{
+	        background:url("{{ url_for('static', filename='triangle-mosaic.png') }}") repeat;
+	    }
 		.home-top-slider div{
 			width: 100%;
+			height:500px;
 		}
 		.home-top-slider img{
-			width: 100%;
-			height:auto;
+			width: auto;
+			height:500px;
+			display:block;
+			margin:auto;
 		}
+        .home-top-slider div:nth-child(1){
+
+        }
+        .home-top-slider div:nth-child(4) h2{
+            margin:10px;
+            font-weight:600;
+        }
+
 	</style>
 {% endblock embeddedcss %}
 
@@ -19,26 +33,16 @@
 		<div class="articles">
 			<section class="home-top-slider">
 				<div>
-					<h2>Welcome to MNGE x KVHVF</h2>
-					<p>The one destination for all your school needs</p>
-					<p>We're Happy to have you here!</p>
+					<img src="{{ url_for('static', filename='release1.jpg') }}">
 				</div>
 				<div>
-					<h3>Meet the creators</h3>
-					<img src="{{ url_for('static', filename='anupam.jpg') }}">
-					<img src="{{ url_for('static', filename='anupam.jpg') }}">
-					<a href="{{ url_for('about') }}"></a>
+					<img src="{{ url_for('static', filename='release2.jpg') }}">
 				</div>
 				<div>
-					<h2>Welcome to MNGE x KVHVF</h2>
-					<p>The one destination for all your school needs</p>
-					<p>We're Happy to have you here!</p>
+                    <img src="{{ url_for('static', filename='release3.jpg') }}">
 				</div>
 				<div>
-					<h3>Meet the creators</h3>
-					<img src="{{ url_for('static', filename='anupam.jpg') }}">
-					<img src="{{ url_for('static', filename='anupam.jpg') }}">
-					<a href="{{ url_for('about') }}"></a>
+					<img src="{{ url_for('static', filename='temp5.jpg') }}">
 				</div>
 			</section>
 
@@ -52,10 +56,11 @@
 
 			<section class="home-why-mnge">
 				<span id="page-divider">_____</span>
-				<h2>Why exactly M N G E?</h2>
-				<p>M N G E provides you with so many features at a very low cost to power your school.</p>
-				<p>It provides a robust cloud support and you always have the technical team's back to help you manually in every situation</p>
-				<a href="{{ url_for('pricing')}}">Look at our plans and pricing</a>
+				<h2>What is M N G E?</h2>
+				<p>MNGE brings your school work to your device.</p>
+				<p>MNGE helps make schoolwork easy for you. Assign and grade, Access and upload assignments with a couple of clicks, from anywhere in your home.</p>
+				<p>Keep colleagues and students posted, with MNGE's own circular system and timetable.</p>
+				<a href="{{ url_for('about')}}">Know more about us.</a>
 			</section>
 			<section class="home-intro">
 				<span id="page-divider">_____</span>
@@ -75,10 +80,9 @@
 				dots: true,
 				infinite: true,
 				autoplay:true,
-				speed: 300,
+				speed: 600,
 				slidesToShow: 1,
-				arrows: false,
-				adaptiveHeight: true
+				arrows: false
 			});
 		});
 	</script>
