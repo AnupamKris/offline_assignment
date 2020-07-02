@@ -2,13 +2,31 @@
 {% block embeddedcss %}
 	<style type="text/css">
 		body{
-			display: block;
+		    min-height:100%;
+		    background: url({{ url_for('static', filename='teacher.jpg') }}) no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+
 		}
 		.container{
+		    position:relative;
+		    top:70px;
+		    min-height:100%;
+		    margin:0;
 			position: absolute;
-			top:70px;
-			background: url({{ url_for('static', filename='teacher.jpg') }}) no-repeat;
-			background-size: cover;
+			background:transparent;
+
+		}
+		.login-box{
+		    top:70%;
+		}
+		.chosen-container-multi .chosen-choices{
+		    width: 25vw;
+        	padding: 10px;
+        	height: 50px;
+        	border:none;
+        	border-radius: 5px;
+        	border-bottom: 2px solid rgb(255,95,55);
 		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='chosen.min.css') }}">
@@ -67,7 +85,7 @@
 							<option>12 B</option>
 						</optgroup>
 					</select><br><br>
-					<i class="fa fa-graduation-cap" aria-hidden="true" style="font-size: 30px;"></i>
+					<i class="fa fa-graduation-cap" aria-hidden="true"></i>
 					<select id="mselect" multiple="" name = "classes" style="width: 25vw;">
 						<option disabled selected>Select all classes handled</option>
 						<optgroup label="10th Std">

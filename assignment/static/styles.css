@@ -21,15 +21,12 @@ html{
     box-sizing:border-box;
 }
 
-@media only screen and (orientation: portrait){
-    *{
-        font-size:1.5rem;
-    }
-}
 
 .container{
+    padding:0;
+    margin:0;
 	width: 100%;
-	height: 100%;
+	min-height: 100%;
 	background: #fff;
 	display: flex;
 	flex-direction: column;
@@ -52,7 +49,7 @@ html{
 	padding: 0px 15px;
 	position: absolute;
 	letter-spacing: 5px;
-	font-size: 3rem;
+	font-size: 1.75rem;
 	font-family: oswald;
 	color: #fff;
 	font-weight: 400px;
@@ -114,7 +111,7 @@ html{
 }
 
 .checkbtn{
-	font-size: 1.75rempx;
+	font-size: 1.75rem;
 	color: white;
 	padding:20px 15px;
 	float: right;
@@ -128,26 +125,55 @@ html{
 
 @media only screen and (orientation: portrait){
     .logo{
-        margin:20px;
-        font-size:50px;
+        margin:15px 20px;
+        font-size:3rem;
     }
     .menu{
         height:100px;
         align-items:center;
     }
     .menu ul li{
-        font-size:1.3rem;
+        line-height:70px;
+    }
+    .menu ul li a{
+        font-size:2.2rem;
     }
     .checkbtn{
+        font-size:3rem;
+        margin:10px;
+    }
+    .menu ul li button{
         font-size:2.2rem;
-        margin:20px;
+    }
+    .checkbtn{
+    display: block;
+    margin-right: 40px;
+    }
+    .menu ul{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #404040;
+    top: 100px;
+    right: -100%;
+    text-align: left;
+    transition: all .5s;
+    }
+    .menu ul li{
+    display: block;
+    margin: 50px 50px;
+    line-height: 50px;
+    }
+    a:hover,a.active{
+    background: none;
+    color: #0082e6;
+    }
+    #check:checked ~ ul{
+    right: -60%;
     }
 }
 
 @media only screen and (max-width: 1000px){
-    .logo label{
-    font-size:1.2rem;
-    }
   .checkbtn{
     display: block;
     margin-right: 40px;
@@ -157,7 +183,7 @@ html{
     width: 100%;
     height: 100vh;
     background: #404040;
-    top: 70px;
+    top: 100px;
     right: -100%;
     text-align: left;
     transition: all .5s;
@@ -165,11 +191,7 @@ html{
   .menu ul li{
     display: block;
     margin: 50px 50px;
-    font-size:1.05rem;
-    line-height: 30px;
-  }
-  .menu ul li a{
-    font-size: 20px;
+    line-height: 50px;
   }
   a:hover,a.active{
     background: none;
@@ -305,7 +327,8 @@ html{
 	flex-direction: column;
 	font-family: 'Work Sans';
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
+	padding:0 30px 30px 30px;
 	box-sizing: border-box;
 	position:relative;
 }
@@ -316,7 +339,7 @@ html{
     font-style:italic;
 	font-weight: 700;
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 }
 
 .home-intro p,.home-intro a{
@@ -340,8 +363,8 @@ html{
 	font-family: 'Work Sans';
 	width: 100%;
 	background:#d8d6d6;
-	margin-bottom: 20px;
-	padding-bottom: 20px;
+	margin-bottom: 30px;
+	padding:0 30px 30px 30px;
 	box-sizing: border-box;
 	font-size:1.2rem;
 	font-family:'Lato', sans-serif;
@@ -367,6 +390,22 @@ html{
 .home-why-mnge a:hover{
 	color: #ff375f;
 }
+
+@media only screen and (orientation: portrait){
+    .home-intro h2{
+        font-size:2.5rem;
+    }
+    .home-intro p{
+        font-size:2rem;
+    }
+    .home-why-mnge h2{
+        font-size:2.5rem;
+    }
+    .home-why-mnge p{
+        font-size:2rem;
+    }
+}
+
 .flash{
     width:auto;
     justify-content:center;
@@ -425,8 +464,7 @@ html{
 	color:#FF0000;
 }
 .login-box{
-	padding: 0;
-	margin:0;
+	padding:50px 0;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -458,7 +496,7 @@ html{
 	background: rgba(64,64,64,.5);
 	color: white;
 	border:none;
-	font-size: 20px;
+	font-size: 1.25rem;
 	border-radius: 25px;
 	position: relative;
 	margin-bottom: 15px;
@@ -488,6 +526,38 @@ html{
 	font-size: 0.75em;
 }
 
+@media only screen and (orientation: portrait){
+    .login-box{
+        font-size:2rem;
+    }
+    .login-box h1{
+        font-size:4rem;
+    }
+    .login-box fieldset{
+        border-left:10px solid rgb(255,55,95);
+    }
+    .login-box fieldset input, select{
+    	width: 80%;
+    	padding: 20px;
+    	height: 100px;
+    	border:none;
+    	border-radius: 10px;
+    	border-bottom: 5px solid rgb(255,95,55);
+    	font-size:2rem;
+    }
+    .login-box #registerbtn{
+        width:100%;
+        height:80px;
+        font-size:2rem;
+        border-radius:40px;
+    }
+    .login-box a{
+        font-size:2rem;
+    }
+    .fa .fa-graduation-cap{
+        font-size:1.8rem;
+    }
+}
 
 .txtanim-container{
 	font-family: 'Source Sans Pro', sans-serif;

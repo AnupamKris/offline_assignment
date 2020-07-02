@@ -125,15 +125,14 @@ ul {
 }
 .container-mid .circular-box {
     margin: auto;
-    border: 3px solid #40E0D0;
+    border: 3px solid #ff375f;
     border-radius: 10px;
     width: 75%;
     text-align: left;
     padding: 25px 40px;
 }
 .container-mid .circular-box p {
-    font-family: 'Source Sans Pro',
-    sans-serif;
+    font-family: 'Lato', sans-serif;
     margin-bottom: 10px;
     font-size: 22px;
     font-weight: 400;
@@ -143,16 +142,9 @@ ul {
     sans-serif;
     font-size: 22px;
     font-weight: 700;
+    color:#404040;
 }
-.container-mid .circular-box span:nth-child(1) {
-    color: {{ choice(['#131460','#b289c5','#450000','#b723a5']) }};
-}
-.container-mid .circular-box span:nth-child(2) {
-    color: {{ choice(['#b289c5','#450000','#5a004d','#b723a5']) }};
-}
-.container-mid .circular-box span:nth-child(3) {
-    color: {{ choice(['#131460','#b289c5','#450000','#5a004d']) }};
-}
+
 #popup-pic,
 #popup-det {
     position: absolute;
@@ -205,7 +197,7 @@ ul {
             </div>
         </section>
         <section>
-            <a><button>Weekly Time-table</button></a>
+            <a href="{{ url_for('view_timetable', stud_class = str(student['class'])+' '+student['section']) }}"><button>Weekly Time-table</button></a>
             <a><button>Faculty Details</button></a>
             <a href="{{ url_for('home_assignment') }}"><button>Home Assignment</button></a>
         </section>
@@ -216,8 +208,8 @@ ul {
             <div class="circular-box">
                 {% for cirs in student_circular_messages %}
                     {% if cirs[1] == str(student['class']) + ' ' + student['section'] %}
-                        <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[2] }}</p>      
-                    {% endif %} 
+                        <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[2] }}</p>
+                    {% endif %}
                 {% endfor %}
             </div>
         </section>

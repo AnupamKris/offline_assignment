@@ -1,29 +1,131 @@
 {% extends "layout.html" %}
+{% block embeddedcss %}
+    <style>
+        html{
+            min-height:100% !important;
+        }
+        body{
+            position:relative;
+            min-height:100%;
+
+        }
+        .container{
+            font-family:'Lato', sans-serif
+            min-height:100% !important;
+            justify-content:center;
+            align-items:center;
+            padding:0 3rem;
+            background:url({{ url_for('static', filename='pipes.png') }});
+        }
+        .contact-container{
+            font-size:1rem;
+            background:#ffffff95;
+            padding:4rem 2rem;
+            width:50%;
+            height:100%;
+            border-left:1px solid #424242;
+            border-right:1px solid #424242;
+        }
+        .contact-container h2{
+            font-size:2.5em;
+            font-weight:700;
+            margin-bottom:3rem;
+        }
+        .contact-container p{
+            font-size:1.3em;
+            margin:1rem 0;
+        }
+        .contact-inputbx{
+            font-size:1rem;
+            display:block;
+            padding-bottom:2rem;
+            border-bottom:1px solid #424242;
+        }
+        .contact-inputbx textarea{
+            display:block;
+            margin:1em 0;
+            padding:0.8em;
+            font-size:1em;
+            font-style:italic;
+            border:none;
+            border-bottom:2px solid #ff375f;
+            border-radius:.5em;
+        }
+        .contact-inputbx input{
+            display:block;
+            margin:1rem 0;
+            padding:0.8rem;
+            font-size:1em;
+            font-style:italic;
+            border:none;
+            border-bottom:2px solid #ff375f;
+            border-radius:.5rem;
+            background:#fff;
+        }
+        .contact-inputbx input[type='submit']{
+            font-weight:600;
+            font-style:normal;
+            cursor:pointer;
+        }
+        .contact-container i{
+            font-size:3em;
+            margin-right:.7rem;
+            color:#ff375f;
+        }
+        .contact-container a{
+            text-decoration:none;
+            line-height:3rem;
+            color:#000;
+            font-size:1.3em;
+            position:relative;
+            bottom:.8em;
+        }
+        @media only screen and (orientation: portrait){
+            .contact-container{
+                width:100%;
+                min-height:100vh;
+            }
+            .contact-container{
+                font-size:2rem;
+            }
+            .contact-inputbx{
+                font-size:2rem;
+            }
+        }
+    </style>
+{% endblock embeddedcss %}
 {% block body %}
 	<div class="container">
-		<section class="contact-container">
+		<div class="contact-container">
+			<h2>Contact Us</h2>
+			<p>Fill in below and let us know quickly</p>
 			<div class="contact-formbx">
-				<form>
-					<h2>Contact Us</h2>
-					<div class="contact-inputbx">
-						<input type="text" name="" required="required">
-						<span>Full Name</span>
-					</div>
-					<div class="contact-inputbx">
-						<input type="email" name="" required="required">
-						<span>Email Address</span>
-					</div>
-					<div class="contact-inputbx">
-						<textarea required="required"></textarea>
-						<span>Type your query</span>
-					</div>
-					<div class="contact-inputbx">
-						<input type="submit" value="Send" name="">
-					</div>
+				<form class="contact-inputbx">
+					<input type="text" name="" required="required" placeholder='Full Name'>
+					<input type="email" name="" required="required" placeholder='Your valid e-mail'>
+					<textarea required="required" rows=7 cols=40 placeholder='Your message'></textarea>
+					<input type="submit" value="Send" name="">
 				</form>
 			</div>
 			<div class="contact-imgbx">
 			</div>
-		</section>
+			<br>
+			<div style='border-bottom:1px solid #424242; padding-bottom:2rem;'>
+    			<p style='font-weight:600;font-size:1.5em;'>Get in touch with us</p>
+    			<i class="fab fa-instagram" style='display:inline-block;margin-bottom:.8em;'></i><a href='https://www.instagram.com/mnge_/' style='display:inline-block;'>@mnge_</a><br>
+    			<i class="far fa-envelope" style='font-size:2.7em;display:inline-block;margin-bottom:.8em;'></i><a href='mailto:mngeforkvhvf@gmail.com' style='display:inline-block;'>mngeforkvhvf@gmail.com</a>
+            </div>
+            <div style='border-bottom:1px solid #424242; padding:2rem 0;'>
+                <p style='font-weight:600;font-size:1.5em;'>Get in touch with our creators</p>
+                <p style='font-weight:600;'>Kural</p>
+                <i class="fab fa-instagram" style='display:inline-block;margin-bottom:.8em;'></i><a href='https://www.instagram.com/spectakural/' style='display:inline-block;'>@spectakural</a><br>
+    			<i class="far fa-envelope" style='font-size:2.7em;margin-bottom:.8em;display:inline-block'></i><a href='mailto:this.is.kural987@gmail.com' style='display:inline-block;'>Mail me</a><br>
+    			<i class="fas fa-phone-alt" style='font-size:2.7em;margin-bottom:.8em;display:inline-block'></i><a href='tel:9498046382' style='display:inline-block;'>Call me</a><br>
+    			<p style='font-weight:600;'>Anupam</p>
+                <i class="fab fa-instagram" style='display:inline-block;margin-bottom:.8em;'></i><a href='https://www.instagram.com/anupamkris/' style='display:inline-block;'>@anupamkris</a><br>
+    			<i class="far fa-envelope" style='font-size:2.7em;margin-bottom:.8em;display:inline-block'></i><a href='mailto:anupamkris13262@gmail.com' style='display:inline-block;'>Mail me</a><br>
+    			<i class="fas fa-phone-alt" style='font-size:2.em;margin-bottom:.8em;display:inline-block'></i><a href='tel:6369900860' style='display:inline-block;'>Call me</a><br>
+            </div>
+		</div>
 	</div>
 {% endblock body %}

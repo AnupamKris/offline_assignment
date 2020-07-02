@@ -1,7 +1,16 @@
 {% extends "layout.html" %} {% block embeddedcss %}
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
 <style type="text/css">
+html{
+    min-height:100vh;
+}
+body{
+    min-height:100%;
+    position:relative;
+}
 .container {
+        position:relative;
+        min-height:100%;
         transition: .1s;
         background-repeat: repeat;
         background: url({{ url_for('static', filename='email-pattern.png')}});
@@ -40,8 +49,8 @@
     .container-mid {
         width: 100%;
     }
-    .container-mid section:nth-child(1) h1 {
-        font-size: 100px;
+    h1{
+        font-size:2rem;
     }
 }
 .container-mid #usericon {
@@ -129,7 +138,7 @@ ul {
 }
 .container-mid .circular-box {
     margin: auto;
-    border: 3px solid #40E0D0;
+    border: 3px solid #ff375f;
     border-radius: 10px;
     width: 75%;
     text-align: left;
@@ -159,8 +168,8 @@ ul {
 #popup-pic,
 #popup-det {
     position: absolute;
-    top: 40%;
-    left: 50%;
+    top: 40vh;
+    left: 50vw;
     transform: translate(-50%,
     -50%);
     width: 40vw;
@@ -181,10 +190,43 @@ ul {
 }
 #popup-pic.active,
 #popup-det.active {
-    top: 50%;
+    top: 50vh;
     visibility: visible;
     opacity: 1;
     transition: .5s;
+}
+.circ-bottom-btns{
+    display:block;
+}
+#sendbtn1{
+    padding:8px 15px;
+    border-radius:15px;
+    margin:10px;
+    color:#fff;
+    font-weight:bold;
+    background:#ff375f80;
+    border: 1px solid #ff375f;
+}
+#sendbtn1 .hide{
+    display:none;
+}
+.circular-box textarea{
+    display:block;
+    margin: 10px;
+    border: 3px solid #ff375f;
+    border-radius: 10px;
+    width: 75%;
+    text-align: left;
+    padding: 8px 15px;
+    resize:none;
+}
+#circular_class{
+    margin:10px 0;
+    padding:8px 10px;
+    background:#fff;
+    color:#000;
+    border:1px solid #ff375f;
+    font-size:1rem;
 }
 </style>
 {% endblock embeddedcss %} {% block body %}
@@ -223,10 +265,10 @@ ul {
                 {% for cirs in teacher_circular_messages %}
                     <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[1] }}</p>
                 {% endfor %}
-                <form method="POST">
-                    <label for="teacher_circular_message">Enter the message</label>
-                    <textarea name="teacher_circular_message" rows="1" cols="60">Enter</textarea>
-                    <input type="submit" value="Send Message" name='teacher_circular_send'>
+                <form method="POST" id='circ-bottom-btns'>
+
+                    <textarea name="teacher_circular_message" rows="1" cols="60" placeholder='Enter your message'></textarea><br>
+                    <input type="submit" value="Send Message" name='teacher_circular_send' class='sendbtn' id='sendbtn1' onclick='hidebtn()'>
                 </form>
             </div>
             <center>
@@ -238,15 +280,15 @@ ul {
                 <p><span>To class {{ cirs[1] }} : </span> {{ cirs[2] }}</p>
                 {% endif %}
                 {% endfor %}
-                <form method='POST'>
-                    <label for="student_circular_message">Enter the message</label>
-                    <textarea name="student_circular_message" rows="1" cols="60">Enter</textarea>
+                <form method='POST' id='circ-bottom-btns'>
+
+                    <textarea name="student_circular_message" rows="1" cols="40" placeholder='Enter you message'></textarea>
                     <select name="circular_class" id="circular_class">
                         {% for class in eval(teacher.classeshandled) %}
                             <option>{{ class }}</option>
                         {% endfor %}
                     </select>
-                    <input type="submit" value="Send Message" name='student_circular_send'>
+                    <input type="submit" value="Send Message" name='student_circular_send' class='sendbtn' id='sendbtn1' onclick="hidebtn()">
                 </form>
             </div>
         </section>
@@ -254,24 +296,30 @@ ul {
 </div>
 <div id="popup-pic">
     <h2>Update Profile</h2>
+    <br><br>
+    <p>Soon, in next update!</p>
     <a href="#" onclick="togglepic()">Close</a></li>
 </div>
 <div id="popup-det">
-    <h2> {{ teacher['Name'] }} 's Details</h2>
+    <h2> {{ teacher['name'] }}'s Details</h2>
+    <br><br>
+    <p>Soon in next update!</p>
     <ul>
-        <li>Address: <span>{{ teacher['Address'] }}</span></li>
-        <li>Blood group: <span>{{ teacher['Bloodgroup'] }}</span></li>
-        <li>Mother name: <span>{{ teacher['Mothername'] }}</span></li>
-        <li>Father name: <span>{{ teacher['Fathername'] }}</span></li>
-        <li>Teacher1: <span>{{ teacher['Teacher1'] }}</span><img class="teachericon" src=""></li>
-        <li>Teacher2: <span>{{ teacher['Teacher2'] }}</span><img class="teachericon" src=""></li>
-        <li>Teacher3: <span>{{ teacher['Teacher3'] }}</span><img class="teachericon" src=""></li>
-        <li>Teacher4: <span>{{ teacher['Teacher4'] }}</span><img class="teachericon" src=""></li>
-        <li>Teacher5: <span>{{ teacher['Teacher5'] }}</span><img class="teachericon" src=""></li>
+        <!--<li>Address: <span>{{ teacher['Address'] }}</span></li>-->
+        <!--<li>Blood group: <span>{{ teacher['Bloodgroup'] }}</span></li>-->
+        <!--<li>Mother name: <span>{{ teacher['Mothername'] }}</span></li>-->
+        <!--<li>Father name: <span>{{ teacher['Fathername'] }}</span></li>-->
+        <!--<li>Teacher1: <span>{{ teacher['Teacher1'] }}</span><img class="teachericon" src=""></li>-->
+        <!--<li>Teacher2: <span>{{ teacher['Teacher2'] }}</span><img class="teachericon" src=""></li>-->
+        <!--<li>Teacher3: <span>{{ teacher['Teacher3'] }}</span><img class="teachericon" src=""></li>-->
+        <!--<li>Teacher4: <span>{{ teacher['Teacher4'] }}</span><img class="teachericon" src=""></li>-->
+        <!--<li>Teacher5: <span>{{ teacher['Teacher5'] }}</span><img class="teachericon" src=""></li>-->
     </ul>
     <a href="#" onclick="toggledet()">Close</a>
 </div>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+    $('textarea').autoResize();
     function togglepic() {
         var blur = document.getElementById('blur')
         blur.classList.toggle('active')
@@ -284,6 +332,11 @@ ul {
         blur.classList.toggle('active')
         var popup = document.getElementById('popup-det')
         popup.classList.toggle('active')
+    }
+    function hidebtn() {
+        var hide = document.getElementById('sendbtn1')
+        hide.classList.toggle('hide')
+
     }
 </script>
 {% endblock body %}

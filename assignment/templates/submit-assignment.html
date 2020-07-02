@@ -2,11 +2,13 @@
 {% block embeddedcss %}
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&display=swap" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<style type="text/css">
 		*{
 			box-sizing: border-box;
 		}
 		.container{
+		    font-size:1rem;
 			min-height: calc(100vh);
 			transition: .1s;
 			background-repeat: repeat;
@@ -36,8 +38,8 @@
 			.container-mid{
 				width: 100%;
 			}
-			.container-mid section:nth-child(1) h1{
-				font-size: 100px;
+			.container{
+			    font-size:1.75rem;
 			}
 		}
 
@@ -51,14 +53,14 @@
 		.container-mid section:nth-child(1) h1{
 			font-family: 'Source Sans Pro', sans-serif;
 			font-weight: 700;
-			font-size: 32px;
+			font-size: 2em;
 			margin-bottom: 25px;
 		}
 
 		.container-mid section:nth-child(1) button{
 			box-sizing: border-box;
 			margin-top: 20px;
-			font-size: 16px;
+			font-size: 1em;
 			padding: 10px;
 			color: #ff738f;
 			text-decoration: none;
@@ -112,7 +114,7 @@
 		.container-mid section:nth-child(2) h2{
 			font-family: 'Source Sans Pro', sans-serif;
 			font-weight: 700;
-			font-size: 28px;
+			font-size: 1.75em;
 			margin: 25px 0;
 			/*text-decoration: underline;			*/
 		}
@@ -129,7 +131,7 @@
 		}
 
 
-		#assuploadbutt{
+		.assuploadcss{
 			background: #fff;
 			padding: 10px 20px;
 			margin-top: 30px;
@@ -142,19 +144,19 @@
 			cursor: pointer;
 		}
 
-		#assuploadbutt:hover{
+		.assuploadcss:hover{
 			transform: scale(1.01);
 			transition: .2s;
 			background: #00000010
 		}
 
-		#assuploadbutt.active{
+		.assuploadcss.active{
 			background-color: #ff738f;
 			border:2px solid #fff;
 			color: #fff;
 		}
 
-		#assuploadbutt span{
+		.assuploadcss span{
 			font-weight: normal;
 		}
 
@@ -262,6 +264,33 @@
 				filter: blur(30px);
 
 			}
+            #popup-pdf, #popup-img {
+                position: absolute;
+                top: 40vh;
+                left: 50vw;
+                transform: translate(-50%,
+                -50%);
+                width: 40vw;
+                padding: 50px;
+                box-shadow: 0 5px 30px rgba(0,
+                0,
+                0,
+                .30);
+                background: #fff;
+                box-sizing: border-box;
+                visibility: hidden;
+                opacity: 0;
+                transition: .5s;
+            }
+            #popup-pdf h2, #popup-img h2 {
+                margin-bottom: 10px;
+            }
+            #popup-pdf.active, #popup-img.active {
+                top: 50vh;
+                visibility: visible;
+                opacity: 1;
+                transition: .5s;
+            }
 	</style>
 {% endblock embeddedcss %}
 
@@ -272,17 +301,10 @@
 			<section>
 				<h1>Submit Assignment</h1>
 				<p>Welcome to the Submit Assignment section. Please attach your assignment in the form of pdf below.</p>
-				<form method="POST" enctype="multipart/form-data">
-					<fieldset>
-						<label for="assupload" id="assuploadbutt">
-							Upload PDF
-						</label>
-						<input type="file" id="assupload" name="assupload" accept=".pdf" hidden="" required>
-						<br><br>
-						<input type="Submit" name="submit" id="submit" onclick="toggleloader()">
-						<br>
-					</fieldset>
-				</form>
+				<button style='display:inline-block;' onclick='togglePDF()'>Upload a PDF</button>
+				<span style='display:inline-block;'>&nbsp;&nbsp; OR &nbsp;&nbsp;</span>
+				<button style='display:inline-block;' onclick='toggleImg()'>Upload Images</button>
+
 			</section>
 		</div>
 	</div>
@@ -294,6 +316,37 @@
 			<h2>M &nbsp; N &nbsp; G &nbsp; E</h2>
 		</center>
 	</section>
+    <div id="popup-img">
+        <h2>Upload a Img file</h2>
+        <br><br>
+        <form method="POST" enctype="multipart/form-data" id='imageform'>
+			<fieldset>
+				<input type="file" id='assupload' name="imgupload" accept=".jpg" multiple>
+				<br><br>
+				<input type="Submit" name="submit" id="submit" onclick="toggleImg();toggleloader()">
+				<br>
+			</fieldset>
+		</form>
+		<br><br>
+        <a href="" onclick="toggleImg()">Close</a></li>
+    </div>
+	<div id="popup-pdf">
+        <h2>Upload a PDF file</h2>
+        <br><br>
+        <form method="POST" enctype="multipart/form-data">
+			<fieldset>
+				<label for="assupload" id="assuploadbutt" class='assuploadcss'>
+					Upload PDF
+				</label>
+				<input type="file" id="assupload" name="pdfupload" accept=".pdf" hidden="">
+				<br><br>
+				<input type="Submit" name="submit" id="submit" onclick="togglePDF();toggleloader()">
+				<br>
+			</fieldset>
+		</form>
+		<br><br>
+        <a href="" onclick="togglePDF()">Close</a></li>
+    </div>
 	<script type="text/javascript">
 		function toggleloader(){
 			var blur = document.getElementById('blur')
@@ -313,5 +366,18 @@
 
 		let fileInput = document.getElementById("assupload");
 		fileInput.addEventListener("change",loader);
+
+		function togglePDF() {
+        var blur = document.getElementById('blur')
+        blur.classList.toggle('active')
+        var popup = document.getElementById('popup-pdf')
+        popup.classList.toggle('active')
+    }
+        function toggleImg() {
+        var blur = document.getElementById('blur')
+        blur.classList.toggle('active')
+        var popup = document.getElementById('popup-img')
+        popup.classList.toggle('active')
+    }
 	</script>
 {% endblock body %}

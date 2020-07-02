@@ -9,6 +9,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 from mediafire.client import MediaFireClient, File, Folder
 import pandas as pd
 import os
+from PIL import Image
+import img2pdf
 #GSpread---------------------------------------------------------------------------
 scope = ['https://www.googleapis.com/auth/drive']
 
@@ -105,6 +107,17 @@ def register():
 			flash('Admission Number and DOB does not match', 'fail')
 
 	return render_template('registerpage.html', title='Register', form=form, footer=1)
+
+@app.route('/time-table/<stud_class>')
+@login_required
+def view_timetable(stud_class):
+    if current_user.admission:
+        df = pd.read_excel('/home/mngeforkvhvf/mnge/tt.xlsx')
+        for i in list(df.values):
+            if i[0] == stud_class:
+                fpl = i[1::2]
+                spl = i[2::2]
+                return render_template('timetable.html', fpl = fpl, spl = spl, stud_class = stud_class)
 
 @app.route('/tregister', methods = ['GET','POST'])
 def tregister():
@@ -230,7 +243,7 @@ def contact():
 			session['filename'] = ''
 	except:
 		pass
-	return render_template('contact.html',title='Contact')
+	return render_template('contact.html',title='Contact', footer='lol')
 
 @app.route('/pricing')
 def pricing():
@@ -403,9 +416,9 @@ def view_assignment_details(testname=None):
 			for i in range(len(Class)):
 				print(i)
 				if Class[i] == test_class:
-					print(i, name[i])
-					print(i, Class[i])
-					print(i, admno[i])
+				# 	print(i, name[i])
+				# 	print(i, Class[i])
+				# 	print(i, admno[i])
 					# student_details['name'] = name[i]
 					# student_details['class'] = Class[i]
 					# student_details['admno'] = admno[i]
@@ -530,69 +543,118 @@ def create_assignment():
 @app.route('/submit-assignment/<testname>', methods = ['GET', 'POST'])
 @login_required
 def submit_assignment(testname=None):
-	try:
-		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
-			session['filename'] = ''
-	except:
-		pass
-	if not current_user.name:
-		if request.method == 'POST':
-			global client
-			spreadsheet = client.open('tests')
-			worksheet = spreadsheet.worksheet('testsheet')
-			fulldata = worksheet.get_all_values()
-
-
-			print('\n\n\n\n\n\n\n\n\n\n_________________________________n\\n\n\n\n\n\n\n\n\n\n\n')
-			print(fulldata)
-			for i in range(len(fulldata)):
-
-				if fulldata[i][2] == testname:
-					print(fulldata[i][2])
-					dd = {}
-					exec(f"updata = {fulldata[i][4]}", dd)
-					updata = dd['updata']
-					print('\n\n\n\n\n\n\n', updata)
-					try:
-						print('running Try block')
-						if len(updata) == 0:
-							raise Error
-						for j in updata:
-							print(j)
-							if current_user.admission in list(j.values()):
-								print('running if')
-								print('\n\n\n\n\n\n\n\n Already Submitted you fool! \n\n\n\n\n\n\n\n')
-								return render_template('register.html')
-
-						else:
-						    for retry in range(10):
-    							f = request.files['assupload']
-    							f.save(''+current_user.admission+'.pdf')
-    							link = uploadfile(current_user.admission+'.pdf', testname)
-    							print('running else')
-    							updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
-    							worksheet.update_cell(i+1, 5, str(updata))
-    							break
-					except:
-						f = request.files['assupload']
-						f.save(''+current_user.admission+'.pdf')
-						link = uploadfile(current_user.admission+'.pdf', testname)
-						print('running except')
-						updata.append({'admno':current_user.admission, 'link':link, 'marks':None})
-						print(updata)
-						worksheet.update_cell(i+1, 5, str(updata))
-			flash('Assignment Submitted!', 'success2')
-			return redirect(url_for('home_assignment'))
-		else:
-			global fullstudentdata
-			global s_adm
-			global fields
-			current_student = {}
-			row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
-			for i in range(5):
-				current_student[fields[i]] = row[i]
-			return render_template('submit-assignment.html', student=current_student, eval=eval, str=str)
+    try:
+    	if session['filename']:
+    		os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+    		session['filename'] = ''
+    except:
+    	pass
+    if not current_user.name:
+        if request.method == 'POST':
+            global client
+            spreadsheet = client.open('tests')
+            worksheet = spreadsheet.worksheet('testsheet')
+            fulldata = worksheet.get_all_values()
+            print('\n\n\n\n\n\n\n\n\n\n_________________________________n\\n\n\n\n\n\n\n\n\n\n\n')
+            print(fulldata)
+            for i in range(len(fulldata)):
+                if fulldata[i][2] == testname:
+                    print(fulldata[i][2])
+                    dd = {}
+                    exec(f"updata = {fulldata[i][4]}", dd)
+                    updata = dd['updata']
+                    print('\n\n\n\n\n\n\n', updata)
+                    try:
+                        print('running Try block')
+                        if len(updata) == 0:
+                            raise Error
+                            for j in updata:
+                                print(j)
+                            if current_user.admission in list(j.values()):
+                                print('running if')
+                                print('\n\n\n\n\n\n\n\n Already Submitted you fool! \n\n\n\n\n\n\n\n')
+                                return render_template('register.html')
+                        else:
+                            for retry in range(10):
+                                try:
+                                    f = request.files['pdfupload']
+                                except:
+                                    f = None
+                                if f:
+                                    f.save(''+current_user.admission+'.pdf')
+                                    link = uploadfile(current_user.admission+'.pdf', testname)
+                                    print('running else')
+                                    updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
+                                    worksheet.update_cell(i+1, 5, str(updata))
+                                    break
+                                else:
+                                    f = request.files.getlist('assupload')
+                                    file = open("server.log",'a')
+                                    dellist = []
+                                    for i in range(len(f)):
+                                        f.save(current_user.admission+str(i)+.jpg)
+                                        dellist.append(current_user.admission+str(i)+.jpg)
+                                    for i in delllist:
+                                        img = Image.open(i)
+                                        w,h = img.size
+                                        w,h = int(w/3), int(h/3)
+                                        img = img.resize((w,h))
+                                        img.save(i)
+                                    with open(current_user.admission+'.pdf') as pdffile:
+                                        f.write(img2pdf.convert(dellist))
+                                    for i in dellist:
+                                        os.remove(i)
+                                    link = uploadfile(current_user.admission+'.pdf', testname)
+                                    print('running else')
+                                    updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
+                                    worksheet.update_cell(i+1, 5, str(updata))
+                                    break
+                    except:
+                        try:
+                            f = request.files['pdfupload']
+                        except:
+                            f = None
+                        if f:
+                            f.save(''+current_user.admission+'.pdf')
+                            link = uploadfile(current_user.admission+'.pdf', testname)
+                            print('running except')
+                            updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
+                            print(updata)
+                            worksheet.update_cell(i+1, 5, str(updata))
+                        else:
+                            f = request.files.getlist('assupload')
+                            file = open("server.log",'a')
+                            dellist = []
+                            for i in range(len(f)):
+                                f.save(current_user.admission+str(i)+.jpg)
+                                dellist.append(current_user.admission+str(i)+.jpg)
+                            for i in delllist:
+                                img = Image.open(i)
+                                w,h = img.size
+                                w,h = int(w/3), int(h/3)
+                                img = img.resize((w,h))
+                                img.save(i)
+                            with open(current_user.admission+'.pdf') as pdffile:
+                                f.write(img2pdf.convert(dellist))
+                            for i in dellist:
+                                os.remove(i)
+                            link = uploadfile(current_user.admission+'.pdf', testname)
+                        	print('running else')
+                        	updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
+                        	worksheet.update_cell(i+1, 5, str(updata))
+                            break
+            os.remove(current_user.admission+'.pdf')
+            flash('Assignment Submitted!', 'success2')
+            return redirect(url_for('home_assignment'))
+        else:
+            global fullstudentdata
+            global s_adm
+            global fields
+            current_student = {}
+            row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
+            for i in range(5):
+                current_student[fields[i]] = row[i]
+            return render_template('submit-assignment.html', student=current_student, eval=eval, str=str)
 
 @app.route('/resultpage/<testname>/<admission>')
 def resultpage(testname=None, admission=None):
