@@ -270,15 +270,15 @@
                         <br>
                         <label for="testtimeduration">Test Time Duration:</label>
 						<br>
-                        <input type="number" name="testtimeduration" placeholder="Enter in minutes">
+                        <input type="time" name="testtimeduration" placeholder="Enter in minutes">
                         <br>
                         <label for="teststarttime">Test Start Time:</label>
 						<br>
-                        <input type="datetime-local" name="teststarttime" placeholder="Start time">
+                        <input type="date" name="teststarttime" placeholder="Start time"> &nbsp; <input type="time" name="teststarttime" placeholder="Start time">
                         <br>
                         <label for="testendtime">Test End Time:</label>
 						<br>
-                        <input type="datetime-local" name="testendtime" placeholder="End time">
+                        <input type="date" name="testenddate" placeholder="End time"> &nbsp; <input type="time" name="testendtime" placeholder="End time"> 
                         <br>
 						<label for="qpupload" id="qpuploadbutt" class='uploadbutt'>
 							Upload a PDF
@@ -290,7 +290,7 @@
 						</label>
 						<input type="file" id="imgupload" name="imgupload" accept=".jpg" multiple hidden="">
 						<br><br><br>
-						<input type="submit" class='uploadbutt' name="submit" value="Create Assignment" onclick='toggleloader()'>
+						<input type="submit" class='uploadbutt' name="submit" value="Create Test" onclick='toggleloader()'>
 					</fieldset>
 				</form>
 			</section>
