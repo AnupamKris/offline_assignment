@@ -167,20 +167,20 @@
     					{% endfor %}
     				{% endif %}
     			{% endwith %}
-				<h1>Home Assignment</h1>
-				<p>Welcome to the Home Assignment section. Click on the below button to create a new assignment</p>
-				<a href="{{ url_for('create_assignment', teacher=teacher, eval=eval) }}"><button>Create Assignment</button></a>
+				<h1>Online Tests</h1>
+				<p>Welcome to the Online Test section. Click on the below button to create a test</p>
+				<a href="{{ url_for('create_test', teacher=teacher, eval=eval) }}"><button>Create Test</button></a>
 			</section>
 			<section>
-				<h2>Previous assignments</h2>
+				<h2>Previous Tests</h2>
 				<table>
 					<thead>
 						<tr>
 							<th>Serial</th>
 							<th>Name</th>
 							<th>Class</th>
-							<th>Date</th>
-							<th>Completion</th>
+							<th>Date of Start</th>
+							<th>Date of Completion</th>
 							<th>Correction</th>
 						</tr>
 					</thead>
@@ -194,9 +194,9 @@
 									<td>N/A</td>
 									<td>{{ len(eval(test[4])) }}/{{ strength[test[1]] }}</td>
 									{% if 'None' in sub_marks[test[2]] %}
-										<td><a href="{{ url_for('view_assignment_details', testname=test[2]) }}">View Details</a></td>
+										<td><a href="{{ url_for('view_test_details', testname=test[2]) }}">View Details</a></td>
 									{% else %}
-										<td><a href="{{ url_for('view_assignment_details', testname=test[2]) }}">View details</a></td>
+										<td><a href="{{ url_for('view_test_details', testname=test[2]) }}">View details</a></td>
 									{% endif %}
 								</tr>
 							{% endfor %}

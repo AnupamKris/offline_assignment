@@ -14,15 +14,20 @@ import img2pdf
 #GSpread---------------------------------------------------------------------------
 scope = ['https://www.googleapis.com/auth/drive']
 
+# cred = ServiceAccountCredentials.from_json_keyfile_name(
+#     '/home/mngeforkvhvf/mnge/offline_assignment/assignment/cred.json', scope)
 cred = ServiceAccountCredentials.from_json_keyfile_name(
-    '/home/mngeforkvhvf/mnge/offline_assignment/assignment/cred.json', scope)
+     "D:/I'm a Developer/Web designing/MNGE/offline_assignment/cred.json", scope)
+
 
 client = gspread.authorize(cred)
 #----------------------------------------------------------------------------------
 
 #Student Excel Loading-------------------------------------------------------------
+#fullstudentdata = pd.read_excel(
+#   "/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/students.xlsx")
 fullstudentdata = pd.read_excel(
-    "/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/students.xlsx")
+   "D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/students.xlsx")
 # Bye
 s_adm = fullstudentdata['admission']
 
@@ -63,22 +68,26 @@ def uploadfile(filename, foldername):
 @app.route('/')
 @app.route('/home')
 def home():
-    try:
-        if session['filename']:
-        	os.remove(
-        	    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
-        	session['filename'] = ''
-    except:
-    	pass
-    return render_template('home.html', title='Home')
+	try:
+		if session['filename']:
+			#os.remove(
+				#   f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+				f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			session['filename'] = ''
+	except:
+		pass
+	return render_template('home.html', title='Home')
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	try:
 		if session['filename']:
+			# os.remove(
+			#     f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -120,21 +129,24 @@ def register():
 @app.route('/time-table/<stud_class>')
 @login_required
 def view_timetable(stud_class):
-    if current_user.admission:
-        df = pd.read_excel('/home/mngeforkvhvf/mnge/tt.xlsx')
-        for i in list(df.values):
-            if i[0] == stud_class:
-                fpl = i[1::2]
-                spl = i[2::2]
-                return render_template('timetable.html', fpl=fpl, spl=spl, stud_class=stud_class)
+	if current_user.admission:
+		#df = pd.read_excel('/home/mngeforkvhvf/mnge/tt.xlsx')
+		df = pd.read_excel("D:/I'm a Developer/Web designing/MNGE/offline_assignment")
+		for i in list(df.values):
+			if i[0] == stud_class:
+				fpl = i[1::2]
+				spl = i[2::2]
+				return render_template('timetable.html', fpl=fpl, spl=spl, stud_class=stud_class)
 
 
 @app.route('/tregister', methods=['GET', 'POST'])
 def tregister():
 	try:
 		if session['filename']:
+			#os.remove(
+			#    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -194,7 +206,7 @@ def login():
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -219,7 +231,7 @@ def tlogin():
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -246,7 +258,7 @@ def about():
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -258,7 +270,7 @@ def contact():
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -270,7 +282,7 @@ def pricing():
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -283,7 +295,7 @@ def user_home(circmess=None, ):
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -338,7 +350,7 @@ def home_assignment():
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -413,7 +425,7 @@ def view_assignment_details(testname=None):
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -476,7 +488,7 @@ def pdf_viewer(testname=None, admno=None, mark=None):
 	try:
 		if session['filename']:
 			os.remove(
-			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			    f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -518,7 +530,7 @@ def pdf_viewer(testname=None, admno=None, mark=None):
 			mclient.login(email='media.mngeforhvf@gmail.com',
 			              password='hard2reach', app_id='42511')
 			mclient.download_file(f"mf:/{testname}/{admno}.pdf",
-			                      f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{testname}{admno}.pdf")
+			                      f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{testname}{admno}.pdf")
 			loc = f'{testname}{admno}.pdf'
 			filename = testname+admno+'.pdf'
 			session['filename'] = filename
@@ -547,7 +559,7 @@ def create_assignment():
     try:
         if session['filename']:
             os.remove(
-                f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+                f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
             session['filename'] = ''
     except:
         pass
@@ -620,7 +632,7 @@ def create_assignment():
 def submit_assignment(testname=None):
     try:
         if session['filename']:
-            os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+            os.remove(f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
             session['filename'] = ''
     except:
         pass
@@ -740,7 +752,7 @@ def submit_assignment(testname=None):
 def resultpage(testname=None, admission=None):
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -763,7 +775,7 @@ def resultpage(testname=None, admission=None):
 def logout():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(f"D:/I'm a Developer/Web designing/MNGE/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -772,7 +784,7 @@ def logout():
 
 @app.route('/online-tests')
 def online_test():
-	if current_user['admission']:
+	if not current_user.name:
 		return render_template('s-onlinetests.html', title='Online Tests')
 	else:
 		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
@@ -785,4 +797,70 @@ def online_test():
 			if emails[i] == current_user.email:
 				row = testsheet.row_values(i+1)
 				teacher_tests.append(row)
-		return render_template('t-onlinetests.html', title='Online Tests')
+		return render_template('t-onlinetest.html', title='Online Tests')
+
+@app.route('/create-test')
+def create_test():
+	if not current_user.name:
+		return redirect('user_home', title='Profile')
+	else:
+		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+		if request.method == 'POST':
+			filename = request.form.get('testname')
+			global client
+			worksheet = client.open('tests')
+			testsheet = worksheet.worksheet('testsheet')
+			testnames = testsheet.col_values(3)
+			for test in testnames:
+				if filename == test:
+					flash('Test Name already exists please use another name', 'fail2')
+					return render_template('create-assignment.html', teacher=current_teacher, eval=eval)
+			for i in range(10):
+				try:
+					f = request.files['qpupload']
+				except:
+					try:
+						f = request.files.getlist('imgupload')
+					except:
+						f = None
+				if f:
+					# Why pink!
+					# okay
+					f.save('QP.pdf')
+					createfolder(filename)
+					link = uploadfile('QP.pdf', filename)
+					break
+
+				elif f:
+					file = open("server.log", 'a')
+					dellist = []
+					for j in range(len(f)):
+						f = request.files.getlist('imgupload')
+						f[j].save(current_user.name.split()[0]+str(j)+'.jpg')
+						dellist.append(current_user.name.split()[0]+str(j)+'.jpg')
+						file.write(dellist[j])
+					for j in dellist:
+						img = Image.open(j)
+						w,h = img.size
+						w,h = int(w/3), int(h/3)
+						img = img.resize((w,h))
+						img.save(j)
+					with open('QP.pdf','wb') as pdffile:
+						pdffile.write(img2pdf.convert(dellist))
+					for j in dellist:
+						os.remove(j)
+					createfolder(filename)
+					link = uploadfile('QP.pdf', filename)
+					break
+				else:
+					flash("You must choose atleast one type of file", 'fail2')
+					return redirect(url_for('create_assignment'))
+			testsheet = client.open('tests')
+			worksheet = testsheet.worksheet('testsheet')
+			datalist = [current_user.email, request.form.get('class'), filename,request.get('qpnos'),request.get('testtimeduration'), request.get('teststarttime'), request.get('testendtime'), link, '[]']
+			worksheet.insert_row(datalist, 2)
+			flash('Assignment created Successfully!', 'success2')
+			os.remove('QP.pdf')
+			return redirect(url_for('home_assignment'))
+		else:
+			return render_template('create-test.html', teacher = current_teacher, eval = eval)
