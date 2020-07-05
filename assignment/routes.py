@@ -14,34 +14,38 @@ import img2pdf
 #GSpread---------------------------------------------------------------------------
 scope = ['https://www.googleapis.com/auth/drive']
 
-cred = ServiceAccountCredentials.from_json_keyfile_name('/home/mngeforkvhvf/mnge/offline_assignment/assignment/cred.json', scope)
+cred = ServiceAccountCredentials.from_json_keyfile_name(
+    '/home/mngeforkvhvf/mnge/offline_assignment/assignment/cred.json', scope)
 
 client = gspread.authorize(cred)
 #----------------------------------------------------------------------------------
 
 #Student Excel Loading-------------------------------------------------------------
-fullstudentdata = pd.read_excel("/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/students.xlsx")
+fullstudentdata = pd.read_excel(
+    "/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/students.xlsx")
 # Bye
 s_adm = fullstudentdata['admission']
 
 fields = list(fullstudentdata.columns)
 #----------------------------------------------------------------------------------
 
+
 def createfolder(foldername):
 	client = MediaFireClient()
-	client.login( email='media.mngeforhvf@gmail.com',
+	client.login(email='media.mngeforhvf@gmail.com',
 		password='hard2reach',
 		app_id='42511')
 	client.create_folder('/'+foldername)
 
+
 def uploadfile(filename, foldername):
 	imagepath = ''
-	imagepath+=filename
+	imagepath += filename
 	print(imagepath)
 	print(filename)
 	client = MediaFireClient()
 	print('login')
-	client.login( email='media.mngeforhvf@gmail.com',
+	client.login(email='media.mngeforhvf@gmail.com',
 		password='hard2reach',
 		app_id='42511')
 	for i in range(20):
@@ -55,24 +59,26 @@ def uploadfile(filename, foldername):
 			print('retrying')
 	return link
 
+
 @app.route('/')
 @app.route('/home')
 def home():
     try:
         if session['filename']:
-        	os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+        	os.remove(
+        	    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
         	session['filename'] = ''
     except:
     	pass
-    return render_template('home.html',title='Home')
+    return render_template('home.html', title='Home')
 
 
-
-@app.route('/register', methods = ['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -86,19 +92,21 @@ def register():
 
 	if form.validate_on_submit():
 
-		cur_student = fullstudentdata.loc[fullstudentdata['admission'] == int(form.admission.data)]
+		cur_student = fullstudentdata.loc[fullstudentdata['admission'] == int(
+		    form.admission.data)]
 		print('\n\n\n\n\n\n\n\n\n', cur_student, '\n\n\n\n\n\n', form.dob.data)
 		rawdob = str(form.dob.data).split('-')[::-1]
 		dob = '/'.join(rawdob)
 		print(dob)
 		if cur_student['dob'].values == dob:
 
-			hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+			hashed_password = bcrypt.generate_password_hash(
+			    form.password.data).decode('utf-8')
 
-			user = User(admission=form.admission.data, password=hashed_password, email =form.email.data)
+			user = User(admission=form.admission.data,
+			            password=hashed_password, email=form.email.data)
 
 			db.session.add(user)
-
 
 			db.session.commit()
 			flash(f'Your account has been created you can now login!', 'success')
@@ -107,6 +115,7 @@ def register():
 			flash('Admission Number and DOB does not match', 'fail')
 
 	return render_template('registerpage.html', title='Register', form=form, footer=1)
+
 
 @app.route('/time-table/<stud_class>')
 @login_required
@@ -117,19 +126,20 @@ def view_timetable(stud_class):
             if i[0] == stud_class:
                 fpl = i[1::2]
                 spl = i[2::2]
-                return render_template('timetable.html', fpl = fpl, spl = spl, stud_class = stud_class)
+                return render_template('timetable.html', fpl=fpl, spl=spl, stud_class=stud_class)
 
-@app.route('/tregister', methods = ['GET','POST'])
+
+@app.route('/tregister', methods=['GET', 'POST'])
 def tregister():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
-
 
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
@@ -148,8 +158,9 @@ def tregister():
 		# worksheet = spreadsheet.worksheet('Sheet1')
 		# teacherdetails = [str(name), str(email), str(subject), str(classes), str(classteacherof)]
 		# worksheet.insert_row(teacherdetails,2)
-		print('\n\n\n\n\n\n\n\n\n\n\n\n\n',securitykey, name, password, confirmpassword, email, subject, classes)
-		teacher = Teacher.query.filter_by(email = email).first()
+		print('\n\n\n\n\n\n\n\n\n\n\n\n\n', securitykey, name,
+		      password, confirmpassword, email, subject, classes)
+		teacher = Teacher.query.filter_by(email=email).first()
 
 		if securitykey != 'qwertyuiop':
 			flash("Security Key is Not Correct", 'fail')
@@ -161,13 +172,13 @@ def tregister():
 
 			hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-			user = User(name=name, password=hashed_password, email =email)
+			user = User(name=name, password=hashed_password, email=email)
 
 			db.session.add(user)
 
-
 			db.session.commit()
-			teacher = Teacher(name=name, email=email, classeshandled =str(classes), classteacher=classteacherof, subject=subject)
+			teacher = Teacher(name=name, email=email, classeshandled=str(
+			    classes), classteacher=classteacherof, subject=subject)
 			db.session.add(teacher)
 			db.session.commit()
 			flash(f'Your account has been created you can now login!', 'success')
@@ -177,11 +188,13 @@ def tregister():
 	else:
 		return render_template('tregister.html', title='Teacher Register', footer=1)
 
-@app.route('/login', methods = ['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -200,11 +213,13 @@ def login():
 			flash('Entered password is wrong. Please try again.', 'fail')
 	return render_template('login.html', form=form, title='Student Login', footer=1)
 
-@app.route('/tlogin', methods = ['GET', 'POST'])
+
+@app.route('/tlogin', methods=['GET', 'POST'])
 def tlogin():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -225,42 +240,50 @@ def tlogin():
 			flash('Entered password is wrong. Please try again.', 'fail')
 	return render_template('tlogin.html', form=form, title='Faculty Login', footer=1)
 
+
 @app.route('/about')
 def about():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
-	return render_template('about.html',title='About', footer='haello')
+	return render_template('about.html', title='About', footer='haello')
+
 
 @app.route('/contact')
 def contact():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
-	return render_template('contact.html',title='Contact', footer='lol')
+	return render_template('contact.html', title='Contact', footer='lol')
+
 
 @app.route('/pricing')
 def pricing():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
-	return render_template('pricing.html',title='Pricing')
+	return render_template('pricing.html', title='Pricing')
+
 
 @app.route('/user-home', methods=['GET', 'POST'])
 @login_required
-def user_home(circmess = None, ):
+def user_home(circmess=None, ):
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -275,10 +298,12 @@ def user_home(circmess = None, ):
 		teacher_circular_message = request.form.get('teacher_circular_message')
 		student_circular_message = request.form.get('student_circular_message')
 		if teacher_circular_message:
-			teachercirculars.insert_row([current_user.name, teacher_circular_message], index = 1)
+			teachercirculars.insert_row(
+			    [current_user.name, teacher_circular_message], index=1)
 		elif student_circular_message:
 			classes = request.form.get('circular_class')
-			studentcirculars.insert_row([current_user.name, classes, student_circular_message], index=1)
+			studentcirculars.insert_row(
+			    [current_user.name, classes, student_circular_message], index=1)
 		return redirect(url_for('user_home'))
 	else:
 		if not current_user.name:
@@ -287,30 +312,33 @@ def user_home(circmess = None, ):
 			global fields
 
 			current_student = {}
-			row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
+			row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(
+			    current_user.admission)].values[0])
 			for i in range(5):
 				current_student[fields[i]] = row[i]
 			scm = []
 			count = 0
 			for i in student_circular_messages:
-				if i[1] == str(current_student['class']) + ' ' + current_student['section'] and count < 11:
+				if (i[1] == str(current_student['class']) + ' ' + current_student['section'] or i[1] == 'All') and count < 11:
 					scm.append(i)
 					count += 1
 			print('\n\n Stud Data', current_student)
 
-			return render_template('user-home.html',title='Profile', user=current_user, choice = choice, student=current_student, student_circular_messages=student_circular_messages, str = str)
+			return render_template('user-home.html', title='Profile', user=current_user, choice=choice, student=current_student, student_circular_messages=student_circular_messages, str=str)
 		else:
 			current_teacher = Teacher.query.filter_by(email=current_user.email).first()
 			print(current_teacher)
 
-			return render_template('t-user-home.html',title='Profile', user=current_user, choice = choice, teacher=current_teacher, eval=eval, len=len, student_circular_messages = student_circular_messages, teacher_circular_messages = teacher_circular_messages)
+			return render_template('t-user-home.html', title='Profile', user=current_user, choice=choice, teacher=current_teacher, eval=eval, len=len, student_circular_messages=student_circular_messages, teacher_circular_messages=teacher_circular_messages)
 
-@app.route('/home-assignment', methods = ['GET', 'POST'])
+
+@app.route('/home-assignment', methods=['GET', 'POST'])
 @login_required
 def home_assignment():
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -320,7 +348,8 @@ def home_assignment():
 	if not current_user.name:
 		#Fetching current student details from EXCEL
 		current_student = {}
-		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(current_user.admission)].values[0])
+		row = list(fullstudentdata.loc[fullstudentdata['admission'] == int(
+		    current_user.admission)].values[0])
 		for i in range(5):
 			current_student[fields[i]] = row[i]
 		#Fetching current student's test details from GOOGLESHEETS
@@ -337,10 +366,10 @@ def home_assignment():
 		submitted_admno = {}
 		for test in student_tests:
 			submitted_admno[test[2]] = [sub['admno'] for sub in eval(test[4])]
-		print('\n\n\n\n\n','Classes:',classes,'\n\n\n\n\n')
-		print('\n\n\n\n\n','Class:',s_class,'\n\n\n\n\n')
-		print('\n\n\n\n\n','Tests:',student_tests,'\n\n\n\n\n')
-		print('\n\n\n\n\n','Submits',submitted_admno,'\n\n\n\n\n')
+		print('\n\n\n\n\n', 'Classes:', classes, '\n\n\n\n\n')
+		print('\n\n\n\n\n', 'Class:', s_class, '\n\n\n\n\n')
+		print('\n\n\n\n\n', 'Tests:', student_tests, '\n\n\n\n\n')
+		print('\n\n\n\n\n', 'Submits', submitted_admno, '\n\n\n\n\n')
 
 		return render_template('s-home-assignment.html', student=current_student, student_tests=student_tests, str=str, int=int, eval=eval, sub_admno=submitted_admno)
 	else:
@@ -359,12 +388,12 @@ def home_assignment():
 		Class = list(fullstudentdata['class'])
 		section = list(fullstudentdata['section'])
 		for i in range(len(Class)):
-			Class[i]=str(Class[i])+' '+section[i]
+			Class[i] = str(Class[i])+' '+section[i]
 		strength = {}
 		for i in eval(current_teacher.classeshandled):
-			strength[i]=Class.count(i)
+			strength[i] = Class.count(i)
 		if teacher_tests:
-			print('\n\n\n\n\n',teacher_tests,'\n\n\n\n\n\n')
+			print('\n\n\n\n\n', teacher_tests, '\n\n\n\n\n\n')
 		else:
 			print('\n\n\n\n\n\n\n\nNo tests yet\n\n\n\n\n\n')
 		#fetching list of marks of tests
@@ -373,17 +402,18 @@ def home_assignment():
 			submitted_marks[test[2]] = [str(sub['marks']) for sub in eval(test[4])]
 		# print('\n\n\n\n\n','Class:',Class,'\n\n\n\n\n')
 		# print('\n\n\n\n\n','Strength:',strength,'\n\n\n\n\n')
-		print('\n\n\n\n\n','marks:',submitted_marks,'\n\n\n\n\n')
+		print('\n\n\n\n\n', 'marks:', submitted_marks, '\n\n\n\n\n')
 
-		return render_template('t-home-assignment.html', teacher = current_teacher, teacher_tests=teacher_tests, strength=strength, sub_marks=submitted_marks, eval=eval, len=len, str=str)
+		return render_template('t-home-assignment.html', teacher=current_teacher, teacher_tests=teacher_tests, strength=strength, sub_marks=submitted_marks, eval=eval, len=len, str=str)
 
 
-@app.route('/view-details/<testname>', methods = ['GET', 'POST'])
+@app.route('/view-details/<testname>', methods=['GET', 'POST'])
 @login_required
 def view_assignment_details(testname=None):
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -404,12 +434,13 @@ def view_assignment_details(testname=None):
 			Class = list(fullstudentdata['class'])
 			section = list(fullstudentdata['section'])
 			for i in range(len(Class)):
-				Class[i]=str(Class[i])+' '+section[i]
+				Class[i] = str(Class[i])+' '+section[i]
 			name = list(fullstudentdata['name'])
 			admno = list(fullstudentdata['admission'])
-			student_details = {} #u there? See, now we gotta create a folder with the name of the test to save the student's answer paper eaxh time
+			student_details = {}  # u there? See, now we gotta create a folder with the name of the test to save the student's answer paper eaxh time
 			student_list = []
-			print(f'\n\n\n\n\nClass{Class}{len(Class)}\n\n\nname{name}{len(name)}\n\n') # what dows this fucntion do??
+			# what dows this fucntion do??
+			print(f'\n\n\n\n\nClass{Class}{len(Class)}\n\n\nname{name}{len(name)}\n\n')
 #which function? view_assignment_details? yeah:... it collecsts the student info from the class to which the test is assigned and passes that data to the view_assignment_details render render_template#
 # so we'll make a nwe route for downloading or for the embed page, just pass the testname and student admno as vars for urlfor('pdf_viewer', testname = '', admno = '')?got it
 #for showing the table of students who finishhed and who didnt finish
@@ -422,28 +453,30 @@ def view_assignment_details(testname=None):
 					# student_details['name'] = name[i]
 					# student_details['class'] = Class[i]
 					# student_details['admno'] = admno[i]
-					student_details = {'name': name[i], 'class':Class[i],'admno':admno[i],}
+					student_details = {'name': name[i],
+					    'class': Class[i], 'admno': admno[i], }
 					student_list.append(student_details)
 			sub_adm = []
 			sub_adm = [str(sub['admno']) for sub in eval(current_test[4])]
 			notsub_count = len(student_list) - len(sub_adm)
 			for student in student_list:
 				if str(student['admno']) in sub_adm:
-					print('\n\n\n\n\n\n',current_test)
-					print(f'\n\n\n\n',eval(current_test[4])[sub_adm.index(str(student['admno']))]['link'],'\n\n\n\n\n\n')
+					print('\n\n\n\n\n\n', current_test)
+					print(f'\n\n\n\n', eval(current_test[4])[sub_adm.index(
+					    str(student['admno']))]['link'], '\n\n\n\n\n\n')
 
 			return render_template('t-view-ass-details.html', student_list=student_list, current_test=current_test, sub_adm=sub_adm, eval=eval, str=str, len=len, render_template=render_template)
 	else:
 		return redirect(url_for('user_home'))
 
 
-
-@app.route('/pdf-viewer/<testname>/<admno>/<mark>', methods=['GET','POST'])
+@app.route('/pdf-viewer/<testname>/<admno>/<mark>', methods=['GET', 'POST'])
 @login_required
-def pdf_viewer(testname = None, admno = None, mark=None):
+def pdf_viewer(testname=None, admno=None, mark=None):
 	try:
 		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+			os.remove(
+			    f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
 			session['filename'] = ''
 	except:
 		pass
@@ -461,7 +494,7 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 					row = testsheet.row_values(i+1)
 					rowindex = i+1
 					break
-			submitteddata = eval(row[4])# this is python indexing
+			submitteddata = eval(row[4])  # this is python indexing
 			# dd = {}
 			# #!!dict['marks'] is the key for marks of the student
 			# # dict['admno'] is admno right?? ok
@@ -475,16 +508,18 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 				if i['admno'] == admno:
 					i['marks'] = marks
 					i['remark'] = remark
-			print('\n\n\n\n\nDATA',marks,'\n\n\n\n\n')
+			print('\n\n\n\n\nDATA', marks, '\n\n\n\n\n')
 			testsheet.update_cell(rowindex, 5, str(submitteddata))
 			# os.remove(f'{testname}{admno}.pdf')
 			return redirect(url_for('view_assignment_details', testname=testname))
 			s_class = str(current_student['class'])+' '+current_student['section']
 		else:
 			mclient = MediaFireClient()
-			mclient.login(email='media.mngeforhvf@gmail.com', password = 'hard2reach', app_id = '42511')
-			mclient.download_file(f"mf:/{testname}/{admno}.pdf", f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{testname}{admno}.pdf")
-			loc=f'{testname}{admno}.pdf'
+			mclient.login(email='media.mngeforhvf@gmail.com',
+			              password='hard2reach', app_id='42511')
+			mclient.download_file(f"mf:/{testname}/{admno}.pdf",
+			                      f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{testname}{admno}.pdf")
+			loc = f'{testname}{admno}.pdf'
 			filename = testname+admno+'.pdf'
 			session['filename'] = filename
 			if mark == 'None':
@@ -492,63 +527,103 @@ def pdf_viewer(testname = None, admno = None, mark=None):
 	# =======
 
 	# >>>>>>> 85143769cf2966a4709fe1bfd0209960da6eee1e
-			return render_template('embedpdf.html', filename1='answersheets/'+filename, footer='hah', mark = mark)
+			return render_template('embedpdf.html', filename1='answersheets/'+filename, footer='hah', mark=mark)
 	else:
 		#got it
 		return redirect(url_for('user_home'))
 
+@app.route('/downloadfile/<testname>')
+def downloadfile(testname):
+    client = MediaFireClient()
+    client.login(email='media.mngeforhvf@gmail.com',
+		password='hard2reach',
+		app_id='42511')
+    link = client.get_direct_download_link(f'mf:/{testname}/QP.pdf')
+    return redirect(link)
 
-
-
-@app.route('/create-assignment', methods=['GET','POST'])
+@app.route('/create-assignment', methods=['GET', 'POST'])
 @login_required
 def create_assignment():
-	try:
-		if session['filename']:
-			os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
-			session['filename'] = ''
-	except:
-		pass
-	if current_user.name:
-		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
-		if request.method == 'POST':
-			filename = request.form.get('testname')
-			global client
-			worksheet = client.open('tests')
-			testsheet = worksheet.worksheet('testsheet')
-			testnames = testsheet.col_values(3)
-			for test in testnames:
-				if filename == test:
-					flash('Test Name already exists please use another name', 'fail2')
-					return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
-			for i in range(10):
-				f = request.files['qpupload']
-				# Why pink!
-				# okay
-				f.save('QP.pdf')
-				createfolder(filename)
-				link = uploadfile('QP.pdf', filename)
-				break
-			testsheet = client.open('tests')
-			worksheet = testsheet.worksheet('testsheet')
-			datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
-			worksheet.insert_row(datalist, 2)
-			flash('Assignment created Successfully!', 'success2')
-			return redirect(url_for('home_assignment'))
-		else:
-			return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
-	else:
-		return redirect(url_for('user_home'))
+    try:
+        if session['filename']:
+            os.remove(
+                f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+            session['filename'] = ''
+    except:
+        pass
+    if current_user.name:
+        current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+        if request.method == 'POST':
+            filename = request.form.get('testname')
+            global client
+            worksheet = client.open('tests')
+            testsheet = worksheet.worksheet('testsheet')
+            testnames = testsheet.col_values(3)
+            for test in testnames:
+                if filename == test:
+                    flash('Test Name already exists please use another name', 'fail2')
+                    return render_template('create-assignment.html', teacher=current_teacher, eval=eval)
+            for i in range(10):
+                try:
+                    f = request.files['qpupload']
+                except:
+                    try:
+                        f = request.files.getlist('imgupload')
+                    except:
+                        f = None
+                if f:
+                    # Why pink!
+                    # okay
+                    f.save('QP.pdf')
+                    createfolder(filename)
+                    link = uploadfile('QP.pdf', filename)
+                    break
+
+                elif f:
+                    file = open("server.log", 'a')
+                    dellist = []
+                    for j in range(len(f)):
+                        f = request.files.getlist('imgupload')
+                        f[j].save(current_user.name.split()[0]+str(j)+'.jpg')
+                        dellist.append(current_user.name.split()[0]+str(j)+'.jpg')
+                        file.write(dellist[j])
+                    for j in dellist:
+                        img = Image.open(j)
+                        w,h = img.size
+                        w,h = int(w/3), int(h/3)
+                        img = img.resize((w,h))
+                        img.save(j)
+                    with open('QP.pdf','wb') as pdffile:
+                        pdffile.write(img2pdf.convert(dellist))
+                    for j in dellist:
+                        os.remove(j)
+                    createfolder(filename)
+                    link = uploadfile('QP.pdf', filename)
+                    break
+                else:
+                    flash("You must choose atleast one type of file", 'fail2')
+                    return redirect(url_for('create_assignment'))
+            testsheet = client.open('tests')
+            worksheet = testsheet.worksheet('testsheet')
+            datalist = [current_user.email, request.form.get('class'), filename, link, '[]']
+            worksheet.insert_row(datalist, 2)
+            flash('Assignment created Successfully!', 'success2')
+            os.remove('QP.pdf')
+            return redirect(url_for('home_assignment'))
+        else:
+            return render_template('create-assignment.html', teacher = current_teacher, eval = eval)
+    else:
+        return redirect(url_for('user_home'))
 
 @app.route('/submit-assignment/<testname>', methods = ['GET', 'POST'])
 @login_required
 def submit_assignment(testname=None):
     try:
-    	if session['filename']:
-    		os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
-    		session['filename'] = ''
+        if session['filename']:
+            os.remove(f"/home/mngeforkvhvf/mnge/offline_assignment/assignment/static/answersheets/{session['filename']}")
+            session['filename'] = ''
     except:
-    	pass
+        pass
     if not current_user.name:
         if request.method == 'POST':
             global client
@@ -588,22 +663,23 @@ def submit_assignment(testname=None):
                                     worksheet.update_cell(i+1, 5, str(updata))
                                     break
                                 else:
-                                    f = request.files.getlist('assupload')
+                                    f = request.files.getlist('imgupload')
                                     file = open("server.log",'a')
                                     dellist = []
-                                    for i in range(len(f)):
-                                        f.save(current_user.admission+str(i)+.jpg)
-                                        dellist.append(current_user.admission+str(i)+.jpg)
-                                    for i in delllist:
-                                        img = Image.open(i)
+                                    for j in range(len(f)):
+                                        f[j].save(current_user.admission+str(j)+'.jpg')
+                                        dellist.append(current_user.admission+str(j)+'.jpg')
+                                        file.write(dellist[j])
+                                    for j in dellist:
+                                        img = Image.open(j)
                                         w,h = img.size
                                         w,h = int(w/3), int(h/3)
                                         img = img.resize((w,h))
-                                        img.save(i)
-                                    with open(current_user.admission+'.pdf') as pdffile:
-                                        f.write(img2pdf.convert(dellist))
-                                    for i in dellist:
-                                        os.remove(i)
+                                        img.save(j)
+                                    with open(current_user.admission+'.pdf','wb') as pdffile:
+                                        pdffile.write(img2pdf.convert(dellist))
+                                    for j in dellist:
+                                        os.remove(j)
                                     link = uploadfile(current_user.admission+'.pdf', testname)
                                     print('running else')
                                     updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
@@ -622,26 +698,30 @@ def submit_assignment(testname=None):
                             print(updata)
                             worksheet.update_cell(i+1, 5, str(updata))
                         else:
-                            f = request.files.getlist('assupload')
-                            file = open("server.log",'a')
+                            f = request.files.getlist('imgupload')
+                            file = open("/home/mngeforkvhvf/server.log",'a')
+                            file.write('Filelist : '+str(f))
                             dellist = []
-                            for i in range(len(f)):
-                                f.save(current_user.admission+str(i)+.jpg)
-                                dellist.append(current_user.admission+str(i)+.jpg)
-                            for i in delllist:
-                                img = Image.open(i)
+                            for j in range(len(f)):
+                                f[j].save(current_user.admission+str(j)+'.jpg')
+                                file.write(str(j))
+                                dellist.append(current_user.admission+str(j)+'.jpg')
+                                file.write(dellist[j])
+                            file.write(str(dellist))
+                            for j in dellist:
+                                img = Image.open(j)
                                 w,h = img.size
                                 w,h = int(w/3), int(h/3)
                                 img = img.resize((w,h))
-                                img.save(i)
-                            with open(current_user.admission+'.pdf') as pdffile:
-                                f.write(img2pdf.convert(dellist))
-                            for i in dellist:
-                                os.remove(i)
+                                img.save(j)
+                            with open(current_user.admission+'.pdf','wb') as pdffile:
+                                pdffile.write(img2pdf.convert(dellist))
+                            for j in dellist:
+                                os.remove(j)
                             link = uploadfile(current_user.admission+'.pdf', testname)
-                        	print('running else')
-                        	updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
-                        	worksheet.update_cell(i+1, 5, str(updata))
+                            print('running else')
+                            updata.append({'admno':current_user.admission, 'link':link, 'marks':None, 'remarks':None})
+                            worksheet.update_cell(i+1, 5, str(updata))
                             break
             os.remove(current_user.admission+'.pdf')
             flash('Assignment Submitted!', 'success2')

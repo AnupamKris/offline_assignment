@@ -185,7 +185,7 @@
 				font-weight: 500;
 				margin-bottom: 3px;
 			}
-			#qpuploadbutt{
+			.uploadbutt{
 				background: #fff;
 				padding: 10px 20px;
 				margin-top: 30px;
@@ -198,19 +198,19 @@
 				cursor: pointer;
 			}
 
-			#qpuploadbutt:hover{
+			.uploadbutt:hover{
 				transform: scale(1.01);
 				transition: .2s;
 				background: #00000010
 			}
 
-			#qpuploadbutt.active{
+			.uploadbutt.active{
 				background-color: #ff738f;
 				border:2px solid #fff;
 				color: #fff;
 			}
 
-			#qpuploadbutt span{
+			.uploadbutt span{
 				font-weight: normal;
 			}
 	</style>
@@ -264,12 +264,17 @@
 							{% endfor %}
 						</select>
 						<br>
-						<label for="qpupload" id="qpuploadbutt">
-							Upload PDF
+						<label for="qpupload" id="qpuploadbutt" class='uploadbutt'>
+							Upload a PDF
 						</label>
-						<input type="file" id="qpupload" name="qpupload" accept=".pdf" hidden="" required>
+						<input type="file" id="qpupload" name="qpupload" accept=".pdf" hidden="">
+						&nbsp; OR &nbsp;
+						<label for="imgupload" id="imguploadbutt" class='uploadbutt'>
+							Upload Images
+						</label>
+						<input type="file" id="imgupload" name="imgupload" accept=".jpg" multiple hidden="">
 						<br><br><br>
-						<input type="submit" name="submit" value="Create Assignment" onclick='toggleloader()'>
+						<input type="submit" class='uploadbutt' name="submit" value="Create Assignment" onclick='toggleloader()'>
 					</fieldset>
 				</form>
 			</section>
@@ -289,17 +294,31 @@
 		var popup = document.getElementById('popup')
 		popup.classList.toggle('active')
 	}
-	var loader = function(e){
-		let file = e.target.files;
+	var loader1 = function(e1){
+		let file1 = e1.target.files;
 
-		let show = '<span>Selected file : </span>' + file[0].name;
+		let show1 = '<span>Selected file : </span>' + file1[0].name;
 
-		let output = document.getElementById("qpuploadbutt");
-		output.innerHTML = show;
-		output.classList.add('active');
+		let output1 = document.getElementById("qpuploadbutt");
+		output1.innerHTML = show1;
+		output1.classList.add('active');
 	};
 
-	let fileInput = document.getElementById("qpupload");
-	fileInput.addEventListener("change",loader);
+ 	let fileInput1 = document.getElementById("qpupload");
+ 	fileInput1.addEventListener("change",loader1);
+
+	var loader2 = function(e2){
+		let file2 = e2.target.files;
+
+		let show2 = '<span>No.of files : </span>' + file2.length;
+
+		let output2 = document.getElementById("imguploadbutt");
+		output2.innerHTML = show2;
+		output2.classList.add('active');
+	};
+
+	let fileInput2 = document.getElementById("imgupload");
+	fileInput2.addEventListener("change",loader2);
+
 </script>
 {% endblock body %}

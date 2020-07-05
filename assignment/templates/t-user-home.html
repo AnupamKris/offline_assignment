@@ -284,6 +284,7 @@ ul {
 
                     <textarea name="student_circular_message" rows="1" cols="40" placeholder='Enter you message'></textarea>
                     <select name="circular_class" id="circular_class">
+                            <option>All</option>
                         {% for class in eval(teacher.classeshandled) %}
                             <option>{{ class }}</option>
                         {% endfor %}

@@ -1,8 +1,15 @@
 {% extends "layout.html" %} {% block embeddedcss %}
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
 <style type="text/css">
+html{
+    height:100%;
+}
+body{
+    height:100%;
+}
 .container {
         transition: .1s;
+        height:100%;
         background-repeat: repeat;
         background: url({{ url_for('static', filename='email-pattern.png') }});
         }
@@ -14,7 +21,8 @@
 }
 .container-mid {
     width: 60vw;
-    height: 100%;
+    height:100%;
+    font-size:1rem;
     position: relative;
     background-color: #ffffff85;
     /*margin: 0 auto;*/
@@ -33,12 +41,25 @@
     font-family: 'Source Sans Pro',
     sans-serif;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 2em;
     margin-bottom: 25px;
 }
 @media only screen and (orientation: portrait) {
     .container-mid {
         width: 100%;
+        font-size:2rem;
+    }
+    .container-mid section:nth-child(1){
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+    }
+    .container-mid .detailsbox1 {
+        flex-direction:column;
+    }
+    .container-mid .detailsbox1 ul{
+        text-align:center;
     }
 }
 .container-mid #usericon {
@@ -55,14 +76,14 @@
 .container-mid .detailsbox1 ul:nth-child(2) {
     flex: 2;
     padding-left: 15px;
-    font-size: 18px;
+    font-size: 1.125em;
     border-left: 1px solid #00000020;
     margin: auto 0;
 }
 .container-mid .detailsbox1 ul a {
     text-decoration: none;
     color: #ff375f50;
-    font-size: 12px;
+    font-size: 0.75em;
 }
 ul {
     list-style: none;
@@ -86,7 +107,7 @@ ul {
     border-radius: 10px;
     font-family: 'Source Sans Pro',
     sans-serif;
-    font-size: 24px;
+    font-size: 1.5em;
     font-weight: 600;
     color: white;
     border: none;
@@ -119,7 +140,7 @@ ul {
     font-family: 'Source Sans Pro',
     sans-serif;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 1.75em;
     margin: 25px 0;
     /*text-decoration: underline;			*/
 }
@@ -134,13 +155,13 @@ ul {
 .container-mid .circular-box p {
     font-family: 'Lato', sans-serif;
     margin-bottom: 10px;
-    font-size: 22px;
+    font-size: 1.375em;
     font-weight: 400;
 }
 .container-mid .circular-box span {
     font-family: 'Source Sans Pro',
     sans-serif;
-    font-size: 22px;
+    font-size: 1.375rem;
     font-weight: 700;
     color:#404040;
 }
@@ -207,7 +228,7 @@ ul {
             </center>
             <div class="circular-box">
                 {% for cirs in student_circular_messages %}
-                    {% if cirs[1] == str(student['class']) + ' ' + student['section'] %}
+                    {% if cirs[1] == str(student['class']) + ' ' + student['section'] or cirs[1] == 'All' %}
                         <p><span>Mr/Mrs. {{ cirs[0] }} : </span> {{ cirs[2] }}</p>
                     {% endif %}
                 {% endfor %}

@@ -7,8 +7,12 @@
 		*{
 			box-sizing: border-box;
 		}
+		html{
+		    height:100%;
+		}
 		.container{
 		    font-size:1rem;
+		    height:100%;
 			min-height: calc(100vh);
 			transition: .1s;
 			background-repeat: repeat;
@@ -57,16 +61,16 @@
 			margin-bottom: 25px;
 		}
 
-		.container-mid section:nth-child(1) button{
-			box-sizing: border-box;
-			margin-top: 20px;
-			font-size: 1em;
-			padding: 10px;
-			color: #ff738f;
-			text-decoration: none;
-			background: #f2f2f2;
-			border:1px solid black;
-		}
+		/*.container-mid section:nth-child(1) button{*/
+		/*	box-sizing: border-box;*/
+		/*	margin-top: 20px;*/
+		/*	font-size: 1em;*/
+		/*	padding: 10px;*/
+		/*	color: #ff738f;*/
+		/*	text-decoration: none;*/
+		/*	background: #f2f2f2;*/
+		/*	border:1px solid black*/
+		/*}*/
 
 		.container-mid section:nth-child(2){
 
@@ -132,6 +136,7 @@
 
 
 		.assuploadcss{
+		    position:relative;
 			background: #fff;
 			padding: 10px 20px;
 			margin-top: 30px;
@@ -145,7 +150,6 @@
 		}
 
 		.assuploadcss:hover{
-			transform: scale(1.01);
 			transition: .2s;
 			background: #00000010
 		}
@@ -161,6 +165,7 @@
 		}
 
 		#submit{
+		    position:relative;
 			background: #fff;
 			padding: 10px 20px;
 			margin-top: 30px;
@@ -291,6 +296,34 @@
                 opacity: 1;
                 transition: .5s;
             }
+            .uploadbutt{
+				background: #fff;
+				padding: 10px 20px;
+				margin-top: 30px;
+				border:none;
+				border:2px solid #ff738f;
+				border-radius: 10px;
+				box-shadow: 0 5px 10px #00000030;
+				font-weight: bold;
+				color: #ff738f;
+				transition: .2s;
+				cursor: pointer;
+			}
+
+			.uploadbutt:hover{
+				background: #00000010
+			}
+
+			.uploadbutt.active{
+				background-color: #ff738f;
+				border:2px solid #fff;
+				color: #fff;
+			}
+
+			.uploadbutt span{
+				font-weight: normal;
+			}
+
 	</style>
 {% endblock embeddedcss %}
 
@@ -301,13 +334,27 @@
 			<section>
 				<h1>Submit Assignment</h1>
 				<p>Welcome to the Submit Assignment section. Please attach your assignment in the form of pdf below.</p>
-				<button style='display:inline-block;' onclick='togglePDF()'>Upload a PDF</button>
-				<span style='display:inline-block;'>&nbsp;&nbsp; OR &nbsp;&nbsp;</span>
-				<button style='display:inline-block;' onclick='toggleImg()'>Upload Images</button>
+				<form method="POST" enctype="multipart/form-data">
+					<fieldset>
+						<br>
+						<label for="pdfupload" id="qpuploadbutt" class='uploadbutt'>
+							Upload a PDF
+						</label>
+						<input type="file" id="pdfupload" name="pdfupload" accept=".pdf" hidden="">
+						&nbsp; OR &nbsp;
+						<label for="imgupload" id="imguploadbutt" class='uploadbutt'>
+							Upload Images
+						</label>
+						<input type="file" id="imgupload" name="imgupload" accept=".jpg" multiple hidden="">
+						<br><br><br>
+						<input type="submit" class='uploadbutt' name="submit" value="Submit Assignment" onclick='toggleloader()'>
+					</fieldset>
+				</form>
 
 			</section>
 		</div>
 	</div>
+
 	<section class="loadersec" id="popup">
 		<center>
 			<div class="loader">
@@ -316,37 +363,9 @@
 			<h2>M &nbsp; N &nbsp; G &nbsp; E</h2>
 		</center>
 	</section>
-    <div id="popup-img">
-        <h2>Upload a Img file</h2>
-        <br><br>
-        <form method="POST" enctype="multipart/form-data" id='imageform'>
-			<fieldset>
-				<input type="file" id='assupload' name="imgupload" accept=".jpg" multiple>
-				<br><br>
-				<input type="Submit" name="submit" id="submit" onclick="toggleImg();toggleloader()">
-				<br>
-			</fieldset>
-		</form>
-		<br><br>
-        <a href="" onclick="toggleImg()">Close</a></li>
-    </div>
-	<div id="popup-pdf">
-        <h2>Upload a PDF file</h2>
-        <br><br>
-        <form method="POST" enctype="multipart/form-data">
-			<fieldset>
-				<label for="assupload" id="assuploadbutt" class='assuploadcss'>
-					Upload PDF
-				</label>
-				<input type="file" id="assupload" name="pdfupload" accept=".pdf" hidden="">
-				<br><br>
-				<input type="Submit" name="submit" id="submit" onclick="togglePDF();toggleloader()">
-				<br>
-			</fieldset>
-		</form>
-		<br><br>
-        <a href="" onclick="togglePDF()">Close</a></li>
-    </div>
+
+
+
 	<script type="text/javascript">
 		function toggleloader(){
 			var blur = document.getElementById('blur')
@@ -354,30 +373,30 @@
 			var popup = document.getElementById('popup')
 			popup.classList.toggle('active')
 		}
-		var loader = function(e){
-			let file = e.target.files;
+		var loader1 = function(e1){
+		let file1 = e1.target.files;
 
-			let show = '<span>Selected file : </span>' + file[0].name;
+		let show1 = '<span>Selected file : </span>' + file1[0].name;
 
-			let output = document.getElementById("assuploadbutt");
-			output.innerHTML = show;
-			output.classList.add('active');
-		};
+		let output1 = document.getElementById("qpuploadbutt");
+		output1.innerHTML = show1;
+		output1.classList.add('active');
+	};
 
-		let fileInput = document.getElementById("assupload");
-		fileInput.addEventListener("change",loader);
+ 	let fileInput1 = document.getElementById("qpupload");
+ 	fileInput1.addEventListener("change",loader1);
 
-		function togglePDF() {
-        var blur = document.getElementById('blur')
-        blur.classList.toggle('active')
-        var popup = document.getElementById('popup-pdf')
-        popup.classList.toggle('active')
-    }
-        function toggleImg() {
-        var blur = document.getElementById('blur')
-        blur.classList.toggle('active')
-        var popup = document.getElementById('popup-img')
-        popup.classList.toggle('active')
-    }
+	var loader2 = function(e2){
+		let file2 = e2.target.files;
+
+		let show2 = '<span>No.of files : </span>' + file2.length;
+
+		let output2 = document.getElementById("imguploadbutt");
+		output2.innerHTML = show2;
+		output2.classList.add('active');
+	};
+
+	let fileInput2 = document.getElementById("imgupload");
+	fileInput2.addEventListener("change",loader2);
 	</script>
 {% endblock body %}
