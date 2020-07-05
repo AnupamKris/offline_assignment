@@ -894,7 +894,7 @@ def create_test():
             testsheet = client.open('onlinetests')
             worksheet = testsheet.worksheet('testsheet')
             datalist = [current_user.email, request.form.get('class'), filename, request.form.get('qpnos'), request.form.get(
-                'testtimeduration'), request.form.get('teststarttime'), request.form.get('testendtime'), link, '[]']
+                'testtimeduration'), request.form.get('teststartdate') + request.form.get('teststarttime'), request.form.get('testenddate') + request.form.get('testendtime'), link, '[]']
             worksheet.insert_row(datalist, 2)
             flash('Assignment created Successfully!', 'success2')
             os.remove('QP.pdf')
