@@ -769,3 +769,20 @@ def logout():
 		pass
 	logout_user()
 	return redirect(url_for('home'))
+
+@app.route('/online-tests')
+def online_test():
+	if current_user['admission']:
+		return render_template('s-onlinetests.html', title='Online Tests')
+	else:
+		current_teacher = Teacher.query.filter_by(email=current_user.email).first()
+		global client
+		worksheet = client.open('onlinetests')
+		testsheet = worksheet.worksheet('testsheet')
+		emails = testsheet.col_values(1)
+		teacher_tests = []
+		for i in range(len(emails)):
+			if emails[i] == current_user.email:
+				row = testsheet.row_values(i+1)
+				teacher_tests.append(row)
+		return render_template('t-onlinetests.html', title='Online Tests')
