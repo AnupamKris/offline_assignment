@@ -116,7 +116,7 @@
 			/*text-decoration: underline;			*/
 		}
 
-		#popup-ass, #popup-det{
+		#popup-info, #popup-det{
 			position: absolute;
 			top: 40%;
 			left: 50%;
@@ -131,10 +131,10 @@
 			transition: .5s;
 
 		}
-		#popup-ass h2, #popup-det h2{
+		#popup-info h2, #popup-det h2{
 			margin-bottom: 10px;
 		}
-		#popup-ass.active, #popup-det.active{
+		#popup-info.active, #popup-det.active{
 			top: 50%;
 			visibility: visible;
 			opacity: 1;
@@ -179,8 +179,8 @@
 							<th>Serial</th>
 							<th>Name</th>
 							<th>Class</th>
-							<th>Date of Start</th>
-							<th>Date of Completion</th>
+							<th>Completion</th>
+							<th>More info</th>
 							<th>Correction</th>
 						</tr>
 					</thead>
@@ -191,8 +191,8 @@
 									<td>{{ teacher_tests.index(test)+1 }}</td>
 									<td>{{ test[2] }}</td>
 									<td>{{ test[1] }}</td>
-									<td>N/A</td>
 									<td>{{ len(eval(test[4])) }}/{{ strength[test[1]] }}</td>
+									<td><a onclick="toggle{{ teacher_tests.index(test)+1 }}()">Test Info</a></td>
 									{% if 'None' in sub_marks[test[2]] %}
 										<td><a href="{{ url_for('view_test_details', testname=test[2]) }}">View Details</a></td>
 									{% else %}
@@ -240,7 +240,13 @@
 		</form>
 		<a href="" onclick="toggleass()">Close</a></li>
 	</div>
-
+	<div id='popup-info'>
+		<h2 id="popup-testname"></h2>
+		<p id='popup-qnos'></p>
+		<p id='popup-testdur'></p>
+		<p id='popup-teststart'></p>
+		<p id='popup-testend'></p>
+	</div>
 	<script type="text/javascript">
 		function toggleass(){
 			var blur = document.getElementById('blur')
@@ -254,5 +260,29 @@
 			var popup = document.getElementById('popup-det')
 			popup.classList.toggle('active')
 		}
+		{% if teacher_tests %}
+			{% for test in teacher_tests %}
+				function toggle{{ teacher_tests.index(test)+1 }}(){
+					var blur = document.getElementById('blur')
+					blur.classList.toggle('active')
+					var popup = document.getElementById('popup-info')
+					popup.classList.toggle('active')
+					var testname= {{ test[2] }};
+					var qnos = {{ test[3] }};
+					var testdur = {{ test[4] }};
+					var teststart = {{ test[5] }};
+					var testend = {{ test[6] }};
+				}
+				window.onload = function() {
+					//when the document is finished loading, replace everything
+					//between the <a ...> </a> tags with the value of splitText
+				document.getElementById("popup-testname").innerHTML="More info on" + testname ;
+				document.getElementById("popup-qnos").innerHTML= "No of questions - " + testname;
+				document.getElementById("popup-testdur").innerHTML= "Test Duration - " + testname;
+				document.getElementById("popup-teststart").innerHTML= "Test Start time - " + testname;
+				document.getElementById("popup-testend").innerHTML= "Test End Time - " + testname;
+				} 
+			{{ endfor }}
+		{{ endif }}
 	</script>
 {% endblock body %}

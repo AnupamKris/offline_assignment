@@ -831,7 +831,23 @@ def online_test():
             if emails[i] == current_user.email:
                 row = testsheet.row_values(i+1)
                 teacher_tests.append(row)
-        return render_template('t-onlinetest.html', title='Online Tests')
+        Class = list(fullstudentdata['class'])
+        section = list(fullstudentdata['section'])
+        for i in range(len(Class)):
+            Class[i] = str(Class[i])+' '+section[i]
+        strength = {}
+        for i in eval(current_teacher.classeshandled):
+            strength[i] = Class.count(i)
+        if teacher_tests:
+            print('\n\n\n\n\n', teacher_tests, '\n\n\n\n\n\n')
+        else:
+            print('\n\n\n\n\n\n\n\nNo tests yet\n\n\n\n\n\n')
+        # fetching list of marks of tests
+        submitted_marks = {}
+        for test in teacher_tests:
+            submitted_marks[test[2]] = [
+                str(sub['marks']) for sub in eval(test[4])]
+        return render_template('t-onlinetest.html', title='Online Tests',  teacher=current_teacher, teacher_tests=teacher_tests, strength=strength, sub_marks=submitted_marks, eval=eval, len=len, str=str)
 
 
 @app.route('/create-test', methods=['GET', 'POST'])
@@ -844,7 +860,7 @@ def create_test():
         if request.method == 'POST':
             filename = request.form.get('testname')
             global client
-            worksheet = client.open('tests')
+            worksheet = client.open('onlinetests')
             testsheet = worksheet.worksheet('testsheet')
             testnames = testsheet.col_values(3)
             for test in testnames:
@@ -885,21 +901,16 @@ def create_test():
                         pdffile.write(img2pdf.convert(dellist))
                     for j in dellist:
                         os.remove(j)
-                    createfolder('onlinetest/'+filename)
-                    link = uploadfile('QP.pdf', 'onlinetest/'+filename)
+                    createfolder(filename)
+                    link = uploadfile('QP.pdf', filename)
                     break
                 else:
                     flash("You must choose atleast one type of file", 'fail2')
                     return redirect(url_for('create_test'))
             testsheet = client.open('onlinetests')
             worksheet = testsheet.worksheet('testsheet')
-            datalist = [current_user.email,
-                        request.form.get('class'),
-                        filename, request.form.get('qpnos'),
-                        request.form.get('testtimeduration'),
-                        request.form.get('teststartdate') +request.form.get('teststarttime'),
-                        request.form.get('testenddate') +request.form.get('testendtime'),
-                        link, '[]']
+            datalist = [current_user.email, request.form.get('class'), filename, request.form.get('qpnos'), request.form.get(
+                'testtimeduration'), request.form.get('teststartdate') + request.form.get('teststarttime'), request.form.get('testenddate') + request.form.get('testendtime'), link, '[]']
             worksheet.insert_row(datalist, 2)
             flash('Assignment created Successfully!', 'success2')
             os.remove('QP.pdf')
